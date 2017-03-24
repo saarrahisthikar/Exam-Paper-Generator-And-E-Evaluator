@@ -1,12 +1,12 @@
-var express = require('express');
-var app = express();
-var port = process.env.port || 3000;
-var mongoose = require('mongoose');
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
-var router = express.Router()
-var appRoutes = require('./app/routes/api')(router);
-var path = require('path');
+var express      = require('express');
+var app          = express();
+var port         = process.env.port || 3000;
+var mongoose     = require('mongoose');
+var morgan       = require('morgan');
+var bodyParser   = require('body-parser');
+var router       = express.Router();
+var appRoutes    = require('./app/routes/api')(router);
+var path         = require('path');
 
 var User = require('./app/models/user');
 
@@ -14,6 +14,7 @@ var User = require('./app/models/user');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(__dirname+'/public'));
 app.use('/api', appRoutes);
 
 
@@ -26,6 +27,7 @@ mongoose.connect('mongodb://saarrah:saarrah@ds141450.mlab.com:41450/exam-profess
     }
 });
 
+//loading the index.html
 app.get('*', function(req, res){
     res.sendFile(path.join(__dirname+'/public/app/views/index.html'));
 });
