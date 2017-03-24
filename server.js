@@ -6,6 +6,7 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var router = express.Router()
 var appRoutes = require('./app/routes/api')(router);
+var path = require('path');
 
 var User = require('./app/models/user');
 
@@ -13,7 +14,7 @@ var User = require('./app/models/user');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(appRoutes);
+app.use('/api', appRoutes);
 
 
 //connection
@@ -23,6 +24,10 @@ mongoose.connect('mongodb://saarrah:saarrah@ds141450.mlab.com:41450/exam-profess
     } else {
         console.log('successfully connected to the database');
     }
+});
+
+app.get('*', function(req, res){
+    res.sendFile(path.join(__dirname+'/public/app/views/index.html'));
 });
 
 //server listening
