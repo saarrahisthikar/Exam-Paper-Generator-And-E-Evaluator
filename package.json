@@ -9,6 +9,7 @@
   "author": "Saarrah Isthikar",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "mongoose": "^4.9.1",
