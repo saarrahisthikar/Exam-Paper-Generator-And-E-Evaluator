@@ -16,7 +16,10 @@ app.config(function ($routeProvider, $locationProvider) {
         })
 
         .when('/register', {
-            templateUrl: 'app/views/pages/users/register.html'
+            templateUrl: 'app/views/pages/users/register.html',
+            controller: 'registerController',
+            controllerAs: 'register'
+
         })
 
         .otherwise({ redirectTo: 'app/views/pages/home.html' });
