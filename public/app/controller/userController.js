@@ -11,23 +11,30 @@ angular.module('userControllers', ['userServices'])
         //   console.log('inside register controller');
 
         var app = this;
-        this.regUser = function (regData) {
-            app.loading = true;
-            app.errMsg = false;
+        app.loading = true;
+        app.errMsg = false;
+
+        this.regUser = function (regData, valid) {
+
             //console.log('register form submitted');
             //console.log(this.regData);
-            User.create(this.regData).then(function (data) {
-                if (data.data.success) {
-                    app.loading = false;
-                    app.successMsg = data.data.message;
-                    $timeout(function () {
-                        $location.path('/');
-                    }, 2000);
+            if (valid) {
+                User.create(this.regData).then(function (data) {
+                    if (data.data.success) {
+                        app.loading = false;
+                        app.successMsg = data.data.message;
+                        $timeout(function () {
+                            $location.path('/');
+                        }, 2000);
 
-                } else {
-                    app.loading = false;
-                    app.errMsg = data.data.message;
-                }
-            });
+                    } else {
+                        app.loading = false;
+                        app.errMsg = data.data.message;
+                    }
+                });
+            } else {
+                app.loading = false;
+                app.errmsg = "Please ensure that the form is filled properly";
+            }
         };
     });
