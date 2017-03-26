@@ -23,7 +23,26 @@ module.exports = function (router) {
             user.save(function (err) {
                 if (err) {
                     // res.send('user did not save');
-                    res.json({ success: false, message: 'User did not get save' });
+                    if (err.errors != null) {
+                        if (err.errors.email) {
+                            res.json({ success: false, message: err.errors.email.message });
+                        } else if (err.errors.password) {
+                            res.json({ success: false, message: err.errors.password.message });
+                        } else if (err.errors.username) {
+                            res.json({ success: false, message: err.errors.username.message });
+                        } else {
+                            res.json({ success: false, message: err });
+                        }
+
+                    } else if (err) {
+                        if (err.code == 11000) {
+                            if (err.errmsg[61] == "u") {
+                                res.json({ success: false, message: 'Username already exists ' });
+                            } else if (err.errmsg[61] == "e") {
+                                res.json({ success: false, message: 'Email already exists ' });
+                            }
+                        }
+                    }
 
                 } else {
                     res.json({ success: true, message: 'User saved' });

@@ -6,3 +6,4 @@
 6. git push origin master
 7. mongodb -> mLab
 8. npm install jsonwebtoke --save -> token for user authentication
+9. npm install mongoose-validator --save -> validation of the feilds (backend)

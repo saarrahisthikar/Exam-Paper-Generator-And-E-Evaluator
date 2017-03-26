@@ -22,6 +22,7 @@ angular.module('mainController', ['authServices'])
                 console.log('user not logged in');
                 app.username = '';
                 app.loadme = true;
+                app.loggedIn = false;
             }
         });
 
