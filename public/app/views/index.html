@@ -67,7 +67,8 @@
                             <li><a href="#">One more separated link</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" ng-show="main.loadme">{{main.username}}</a></li>
+                     <li><a href="/profile" ng-show="main.loggedIn">Profile</a></li>
+                    <li><a href="#" ng-show="main.loggedIn">{{main.username}}</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->

@@ -18,18 +18,26 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/register', {
             templateUrl: 'app/views/pages/users/register.html',
             controller: 'registerController',
-            controllerAs: 'register'
+            controllerAs: 'register',
+            authenticated: false
 
         })
 
         .when('/login', {
-            templateUrl: 'app/views/pages/users/login.html'
+            templateUrl: 'app/views/pages/users/login.html',
+            authenticated: false
         })
 
         .when('/logout', {
-            templateUrl: 'app/views/pages/users/logout.html'
+            templateUrl: 'app/views/pages/users/logout.html',
+            authenticated: false
         })
-        
+
+        .when('/profile', {
+            templateUrl: 'app/views/pages/users/profile.html',
+            authenticated: true
+        })
+
         .otherwise({ redirectTo: 'app/views/pages/home.html' });
 
     $locationProvider.html5Mode({
@@ -39,3 +47,22 @@ app.config(function ($routeProvider, $locationProvider) {
 
 });
 
+app.run(['$rootScope', 'Auth', '$location', function ($rootScope, Auth, $location) {
+
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        if (next.$$route.authenticated == true) {
+            if (!Auth.isLoggedIn()) {
+                event.preventDefault();
+                $location.path('/');
+            }
+
+        } else if (next.$$route.authenticated == false) {
+            if (Auth.isLoggedIn()) {
+                event.preventDefault();
+                $location.path('/profile');
+            }
+
+        }
+    });
+
+}]);
