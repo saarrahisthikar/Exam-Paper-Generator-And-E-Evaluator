@@ -5,6 +5,13 @@ angular.module('mainController', ['authServices'])
     .controller('mainCtrl', function ($http, $location, $timeout, Auth) {
         // console.log('This is the main controller');
         var app = this;
+
+        if (Auth.isLoggedIn()) {
+            console.log('user is logged in');
+        } else {
+            console.log('user not logged in');
+        }
+
         app.loading = true;
         app.errMsg = false;
         this.doLogin = function (loginData) {
@@ -24,6 +31,14 @@ angular.module('mainController', ['authServices'])
             });
 
         };
+
+        this.logout=function(){
+            Auth.logout();
+            $location.path('/logout');
+            $timeout(function(){
+                $location.path('/');
+            }, 2000);
+        }
 
     });
 

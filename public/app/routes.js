@@ -26,6 +26,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/views/pages/users/login.html'
         })
 
+        .when('/logout', {
+            templateUrl: 'app/views/pages/users/logout.html'
+        })
+        
         .otherwise({ redirectTo: 'app/views/pages/home.html' });
 
     $locationProvider.html5Mode({
