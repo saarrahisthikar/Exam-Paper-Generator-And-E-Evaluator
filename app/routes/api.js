@@ -55,8 +55,13 @@ module.exports = function (router) {
     //localhost/3000/authenticate
     router.post('/authenticate', function (req, res) {
         console.log('inside post');
-        User.findOne({ username: req.body.username }).select('email username password userType').exec(function (err, user) {
-            if (err) throw err;
+        console.log(req.body.username);
+        User.findOne({ username: req.body.username }).select('username email password').exec(function (err, user) {
+            if (err) {
+                console.log("error in authenticate");
+                throw err;
+            }
+            console.log("no error in user retrieval");
             if (!user) {
                 res.json({ success: false, message: 'user not found' });
             } else if (user) {
@@ -72,12 +77,43 @@ module.exports = function (router) {
                     res.json({ success: false, message: 'password not authenticated' });
                 }
             }
+
+        });
+    });
+
+
+
+
+    router.post('/checkUsername', function (req, res) {
+        console.log('inside post');
+        User.findOne({ username: req.body.username }).select('username').exec(function (err, user) {
+            if (err) throw err;
+            if (user) {
+                res.json({ success: false, message: "username already exists" });
+            } else {
+                res.json({ success: true, message: "valid username" });
+            }
+
+        });
+    });
+
+    router.post('/checkEmail', function (req, res) {
+        console.log('inside post');
+        User.findOne({ email: req.body.email }).select('email').exec(function (err, user) {
+            if (err) throw err;
+            if (user) {
+                res.json({ success: false, message: "email already exists" });
+            } else {
+                res.json({ success: true, message: "valid email" });
+            }
+
         });
     });
 
     //middleware
     router.use(function (req, res, next) {
         var token = req.body.token || req.body.query || req.headers['x-access-token'];
+        console.log('middleware');
         if (token) {
             jwt.verify(token, secret, function (err, decoded) {
                 if (err) {

@@ -9,8 +9,18 @@ angular.module('userServices', [])
 
         userFactory = {};
 
-        userFactory.create = function (loginData) {
-            return $http.post('/api/users', loginData);
+        userFactory.create = function (regData) {
+            return $http.post('/api/users', regData);
+        }
+
+        //User.checkUsername(regData);
+        userFactory.checkUsername = function (regData) {
+            return $http.post('/api/checkUsername', regData);
+        }
+
+        //User.checkEmail(regData);
+        userFactory.checkEmail = function (regData) {
+            return $http.post('/api/checkEmail', regData);
         }
         return userFactory;
     });

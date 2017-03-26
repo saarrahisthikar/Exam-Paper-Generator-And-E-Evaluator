@@ -27,9 +27,11 @@ angular.module('mainController', ['authServices'])
         });
 
 
-        app.loading = true;
+       
         app.errMsg = false;
+        
         this.doLogin = function (loginData) {
+             app.loading = false;
             //console.log('login check');
             Auth.login(this.loginData).then(function (data) {
                 if (data.data.success) {

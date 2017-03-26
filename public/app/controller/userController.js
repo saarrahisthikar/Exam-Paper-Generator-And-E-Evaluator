@@ -37,4 +37,38 @@ angular.module('userControllers', ['userServices'])
                 app.errmsg = "Please ensure that the form is filled properly";
             }
         };
+
+        this.checkUsernmae = function (regData) {
+
+            var userInvalid = false;
+            var usernameMsg = true;
+
+            User.checkUsernmae(app.regData).then(function (data) {
+                if (data.data.success) {
+                    app.usernameInvalid=false;
+                    app.usernameMsg = data.data.message;
+                }else{
+                    app.usernameInvalid=true;
+                    app.usernameMsg = data.data.message;
+                }
+            }
+            );
+        }
+
+        this.checkEmail = function (regData) {
+
+            var emailInvalid = false;
+            var emailMsg = true;
+
+            User.checkEmail(app.regData).then(function (data) {
+                if (data.data.success) {
+                    app.emailInvalid=false;
+                    app.emailMsg = data.data.message;
+                }else{
+                    app.emailInvalid=true;
+                    app.emailMsg = data.data.message;
+                }
+            }
+            );
+        }
     });

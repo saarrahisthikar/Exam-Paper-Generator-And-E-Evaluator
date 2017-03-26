@@ -11,7 +11,7 @@ var path         = require('path');
 var User = require('./app/models/user');
 
 //middleware
-app.use(morgan('dev'));
+//sapp.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname+'/public'));

@@ -2,12 +2,13 @@
     <h1>User Registration</h1>
 </div>
 
-<form name="regForm" ng-submit="register.regUser(regData, regForm.$valid)">
+<form name="regForm" ng-submit="register.regUser(regData, regForm.$valid)" novalidate>
 
-    <div ng-class="{'has-success':(regForm.username.$valid && !regForm.username.$pristine), 'has-error':(!regForm.username.$valid && !regForm.username.$pristine) || (!regForm.username.$valid && regForm.$submitted)}">
+    <div ng-class="{'has-success':(regForm.username.$valid && !regForm.username.$pristine && !register.usernameInvalid), 'has-error':(!regForm.username.$valid && !regForm.username.$pristine) || (!regForm.username.$valid && regForm.$submitted) || register.usernameInvalid}">
         <label for="username">Username : </label>
         <input class="form-control" type="text" name="username" id="username" placeholder="Username" ng-model="register.regData.username"
-            ng-minlength="3" ng-maxlength="100" ng-pattern="/^(?!.*?[\W])(?=.*?[a-zA-Z]|=.*?[A-Z]).{3,100}$/" required>
+            ng-minlength="3" ng-maxlength="100" ng-pattern="/^(?!.*?[\W])(?=.*?[a-zA-Z]|=.*?[A-Z]).{3,100}$/" ng-blur="register.checkUsername(regData)"  required>
+            <p class="help-block" ng-show="register.usernameMsg  && regForm.username.$valid && !regForm.username.$error.required">{{register.usernameMsg}}</p>
             <p class="help-block" ng-show="(!regForm.username.$pristine && regForm.username.$error.required) || (regForm.$submitted && regForm.username.$error.required)">This feild is required</p>
             <ul ng-class="help-block" ng-show="(!regForm.username.$pristine && regForm.usernmae.$error.pattern) || (!regForm.username.$pristine && regForm.usernmae.$error.maxLength) || (!regForm.username.$pristine && regForm.usernmae.$error.minLength)">
                 <li>Must contain at least 3 characters and at most 100 characters</li>
@@ -30,24 +31,25 @@
 
     <br>
 
-    <div ng-class="{'has-success':(regForm.email.$valid && !regForm.email.$pristine), 'has-error':(!regForm.email.$valid && !regForm.email.$pristine) || (!regForm.email.$valid && regForm.$submitted)}">
+    <div ng-class="{'has-success':(regForm.email.$valid && !regForm.email.$pristine && !register.emailInvalid), 'has-error':(!regForm.email.$valid && !regForm.email.$pristine) || (!regForm.email.$valid && regForm.$submitted) || register.emailInvalid}">
         <label for="email">Email : </label>
         <input class="form-control" type="text" name="email" id="email" placeholder="Email" ng-model="register.regData.email" ng-minlength="3"
-            ng-maxlength="100" ng-pattern="/^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,100}$/" required>
+            ng-maxlength="100" ng-pattern="/^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,100}$/" ng-blur="register.checkEmail(regData)" required>
+            <p class="help-block" ng-show="register.emailMsg && regForm.email.$valid && !regForm.email.$error.required">{{register.emailMsg}}</p>
             <p class="help-block" ng-show="(!regForm.email.$pristine && regForm.email.$error.required) || (regForm.$submitted && regForm.email.$error.required)">This feild is required</p>
             <ul ng-class="help-block" ng-show="(!regForm.email.$pristine && regForm.email.$error.pattern) || (!regForm.email.$pristine && regForm.email.$error.maxLength) || (!regForm.email.$pristine && regForm.email.$error.minLength)">
                 <li>Must contain at least 3 characters and at most 100 characters</li>
                 <li>Must contain '@' sign</li>
             </ul>
     </div>
-    
+
     <br>
-    <div ng-class="{'has-success':(regForm.email.$valid && !regForm.email.$pristine), 'has-error':(!regForm.email.$valid && !regForm.email.$pristine) || (!regForm.email.$valid && regForm.$submitted)}">
+    <div ng-class="{'has-success':(regForm.userType.$valid && !regForm.userType.$pristine), 'has-error':(!regForm.userType.$valid && !regForm.userType.$pristine) || (!regForm.userType.$valid && regForm.$submitted)}">
         <label for="userType">User Type : </label>
         <input class="form-control" type="text" name="userType" id="userType" placeholder="User Type" ng-model="register.regData.userType">
         <p class="help-block" ng-show="(!regForm.email.$pristine && regForm.email.$error.required) || (regForm.$submitted && regForm.email.$error.required)">This feild is required</p>
     </div>
-     <br>
+    <br>
 
     <button class="btn btn-primary" type="submit">Register</button>
 

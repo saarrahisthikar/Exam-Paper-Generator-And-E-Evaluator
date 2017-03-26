@@ -1,77 +1,79 @@
-//console.log('inside auth services');
-
-//console.log('testing user services');
-
 angular.module('authServices', [])
 
-    /*.config(function(){
-        console.log('auth services');
-    });*/
-    .factory('Auth', function ($http, AuthToken) {
+// Factor: Auth handles all login/logout functions	
+.factory('Auth', function($http, AuthToken) {
+    var authFactory = {}; // Create the factory object
 
-        var authFactory = {};
-        //login to the system
-        authFactory.login = function (loginData) {
-            return $http.post('/api/authenticate', loginData).then(function (data) {
-                console.log(data.data.token);
-                AuthToken.setToken(data.data.token);
-                return data;
-            });
-        };
-        //checking whether the user is logged in
-        authFactory.isLoggedIn = function () {
-            //console.log(AuthToken.getToken);
-            if (AuthToken.getToken()) {
-                return true;
-            } else {
-                return false;
-            }
-        };
-        //logging out
-        authFactory.logout = function () {
-            AuthToken.setToken();
-        };
+    // Function to log the user in
+    authFactory.login = function(loginData) {
+        return $http.post('/api/authenticate', loginData).then(function(data) {
+            AuthToken.setToken(data.data.token); // Endpoint will return a token to set
+            return data;
+        });
+    };
 
-        authFactory.getUser = function () {
-            if (AuthToken.getToken()) {
-                return $http.post('/api/me');
-            } else {
-                $q.reject({ message: 'user has no token' });
-            }
-        };
-        return authFactory;
+    // Function to check if user is currently logged in
+    authFactory.isLoggedIn = function() {
+        // CHeck if token is in local storage
+        if (AuthToken.getToken()) {
+            return true; // Return true if in storage
+        } else {
+            return false; // Return false if not in storage
+        }
+    };
 
-    })
+       // Function to get current user's data
+    authFactory.getUser = function() {
+        // Check first if user has a token
+        if (AuthToken.getToken()) {
+            return $http.post('/api/me'); // Return user's data
+        } else {
+            $q.reject({ message: 'User has no token' }); // Reject if no token exists
+        }
+    };
 
-    .factory('AuthToken', function ($window) {
+    // Function to logout the user
+    authFactory.logout = function() {
+        AuthToken.setToken(); // Removes token from local storage
+    };
 
-        var authTokenFactory = {};
-        //AuthToken.setToken(token)
-        authTokenFactory.setToken = function (token) {
-            if (token) {
-                $window.localStorage.setItem('token', token);
-            }
-            else {
-                $window.localStorage.removeItem('token');
-            }
-        };
+    return authFactory; // Return object
+})
 
-        authTokenFactory.getToken = function () {
-            return $window.localStorage.getItem('token');
-        };
+// Factory: AuthToken handles all token-associated functions
+.factory('AuthToken', function($window) {
+    var authTokenFactory = {}; // Create factory object
 
-        return authTokenFactory;
+    // Function to set and remove the token to/from local storage
+    authTokenFactory.setToken = function(token) {
+        // Check if token was provided in function parameters
+        if (token) {
+            $window.localStorage.setItem('token', token); // If so, set the token in local storage
+        } else {
+            $window.localStorage.removeItem('token'); // Otherwise, remove any token found in local storage (logout)
+        }
+    };
 
-    })
+    // Function to retrieve token found in local storage
+    authTokenFactory.getToken = function() {
+        return $window.localStorage.getItem('token');
+    };
 
-    .factory('AuthInterceptors', function (AuthToken) {
-        var authInterceptorsFactory = {};
+    return authTokenFactory; // Return factory object
+})
 
-        authInterceptorsFactory.request = function (config) {
-            var token = AuthToken.getToken();
-            if (token) config.headers['x-access-token'] = token;
-            return config;
-        };
+// Factory: AuthInterceptors is used to configure headers with token (passed into config, app.js file)
+.factory('AuthInterceptors', function(AuthToken) {
+    var authInterceptorsFactory = {}; // Create factory object
 
-        return authInterceptorsFactory;
-    });
+    // Function to check for token in local storage and attach to header if so
+    authInterceptorsFactory.request = function(config) {
+        var token = AuthToken.getToken(); // Check if a token is in local storage
+        if (token) config.headers['x-access-token'] = token; //If exists, attach to headers
+
+        return config; // Return config object for use in app.js (config file)
+    };
+
+    return authInterceptorsFactory; // Return factory object
+
+});
