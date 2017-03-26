@@ -5,3 +5,4 @@
 5. git remote add origin https://github.com/saarrahisthikar/Exam-Paper-Generator-And-E-Evaluator.git
 6. git push origin master
 7. mongodb -> mLab
+8. npm install jsonwebtoke --save -> token for user authentication

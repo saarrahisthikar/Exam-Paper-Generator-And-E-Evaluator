@@ -16,8 +16,14 @@
 
     <script src="app/app.js"></script>
     <script src="app/routes.js"></script>
+
+    <!--anguler controllers-->
     <script src="app/controller/userController.js"></script>
+    <script src="app/controller/mainController.js"></script>
+
+    <!--anguler services-->
     <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
 
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
@@ -27,7 +33,7 @@
 
 </head>
 
-<body ng-app="userApp">
+<body ng-app="userApp" ng-controller="mainCtrl as main">
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -46,6 +52,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/">Home</a></li>
                     <li><a href="/about">About</a></li>
+                    <li><a href="/login">Login</a></li>
                     <li><a href="/register">Register</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>

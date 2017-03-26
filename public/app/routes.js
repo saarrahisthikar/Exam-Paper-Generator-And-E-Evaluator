@@ -1,9 +1,9 @@
-console.log('Testing route configuration');
+//console.log('Testing route configuration');
 
 var app = angular.module('appRoutes', ['ngRoute'])
 
 app.config(function ($routeProvider, $locationProvider) {
-    console.log('This is from routes')
+    //console.log('This is from routes')
 
     $routeProvider
 
@@ -20,6 +20,10 @@ app.config(function ($routeProvider, $locationProvider) {
             controller: 'registerController',
             controllerAs: 'register'
 
+        })
+
+        .when('/login', {
+            templateUrl: 'app/views/pages/users/login.html'
         })
 
         .otherwise({ redirectTo: 'app/views/pages/home.html' });

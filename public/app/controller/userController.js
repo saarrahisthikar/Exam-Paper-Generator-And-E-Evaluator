@@ -1,6 +1,6 @@
 //console.log('Testing user controller');
 
-angular.module('userControllers', [])
+angular.module('userControllers', ['userServices'])
 
     /**  .config(function () { 
           console.log('inside userController')}
@@ -14,8 +14,8 @@ angular.module('userControllers', [])
         this.regUser = function (regData) {
             app.loading = true;
             app.errMsg = false;
-            console.log('register form submitted');
-            console.log(this.regData);
+            //console.log('register form submitted');
+            //console.log(this.regData);
             User.create(this.regData).then(function (data) {
                 if (data.data.success) {
                     app.loading = false;
