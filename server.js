@@ -11,7 +11,7 @@ var path         = require('path');
 var User = require('./app/models/user');
 
 //middleware
-//sapp.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname+'/public'));
@@ -29,9 +29,9 @@ mongoose.connect('mongodb://saarrah:saarrah@ds141450.mlab.com:41450/exam-profess
 
 //loading the index.html
 app.get('*', function(req, res){
-    res.sendFile(path.join(__dirname+'/public/index.html'));
+   // res.sendFile(path.join(__dirname+'/public/index.html'));
 
-  //  res.sendFile(path.join(__dirname+'/public/app/views/index.html'));
+    res.sendFile(path.join(__dirname+'/public/app/views/index.html'));
 });
 
 //server listening

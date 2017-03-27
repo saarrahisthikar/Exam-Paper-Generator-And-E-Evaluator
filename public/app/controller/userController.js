@@ -45,10 +45,10 @@ angular.module('userControllers', ['userServices'])
 
             User.checkUsernmae(app.regData).then(function (data) {
                 if (data.data.success) {
-                    app.usernameInvalid=false;
+                    app.usernameInvalid = false;
                     app.usernameMsg = data.data.message;
-                }else{
-                    app.usernameInvalid=true;
+                } else {
+                    app.usernameInvalid = true;
                     app.usernameMsg = data.data.message;
                 }
             }
@@ -62,13 +62,48 @@ angular.module('userControllers', ['userServices'])
 
             User.checkEmail(app.regData).then(function (data) {
                 if (data.data.success) {
-                    app.emailInvalid=false;
+                    app.emailInvalid = false;
                     app.emailMsg = data.data.message;
-                }else{
-                    app.emailInvalid=true;
+                } else {
+                    app.emailInvalid = true;
                     app.emailMsg = data.data.message;
                 }
             }
             );
         }
-    });
+    })
+
+    .directive('match', function () {
+        return {
+            restrict: 'A',
+            controller: function ($scope) {
+                $scope.confirmed = false;
+                $scope.doConfirm = function (values) {
+                    values.forEach(function (ele) {
+                        // console.log(ele);
+                        //console.log($scope.confirm)
+                        if ($scope.confirm == ele) {
+                            $scope.confirmed = true;
+                        } else {
+                            $scope.confirmed = false;
+                        }
+                    });
+
+                }
+            },
+            link: function (scope, element, attrs) {
+                attrs.$observe('match', function () {
+                    scope.matches = JSON.parse(attrs.match);
+                    // console.log(attrs.match);
+                    scope.doConfirm(scope.matches);
+                });
+                scope.$watch('confirm', function () {
+                    scope.matches = JSON.parse(attrs.match);
+                    // console.log(attrs.match);
+                    scope.doConfirm(scope.matches);
+                });
+            }
+        }
+    }
+
+    );
