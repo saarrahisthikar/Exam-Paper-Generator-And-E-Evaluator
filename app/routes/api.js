@@ -12,7 +12,7 @@ module.exports = function (router) {
     router.post('/users', function (req, res) {
 
         var user = new User();
-        user.name= req.body.name;
+        user.name = req.body.name;
         user.username = req.body.username;
         user.password = req.body.password;
         user.email = req.body.email;
@@ -26,7 +26,9 @@ module.exports = function (router) {
                 if (err) {
                     // res.send('user did not save');
                     if (err.errors != null) {
-                        if (err.errors.email) {
+                        if (err.errors.name) {
+                            res.json({ success: false, message: err.errors.name.message });
+                        } else if (err.errors.email) {
                             res.json({ success: false, message: err.errors.email.message });
                         } else if (err.errors.password) {
                             res.json({ success: false, message: err.errors.password.message });
@@ -42,6 +44,8 @@ module.exports = function (router) {
                                 res.json({ success: false, message: 'Username already exists ' });
                             } else if (err.errmsg[61] == "e") {
                                 res.json({ success: false, message: 'Email already exists ' });
+                            } else {
+                                res.json({ success: false, message: err });
                             }
                         }
                     }
@@ -60,18 +64,18 @@ module.exports = function (router) {
         //console.log(req.body.username);
         User.findOne({ username: req.body.username }).select('name username email password userType').exec(function (err, user) {
             if (err) {
-               // console.log("error in authenticate");
+                // console.log("error in authenticate");
                 throw err;
             }
-           console.log("no error in user retrieval");
-           
+            console.log("no error in user retrieval");
+
             if (!user) {
                 res.json({ success: false, message: 'user not found' });
-                 console.log('user ot found - inside authenticate');
+                console.log('user ot found - inside authenticate');
             } else if (user) {
                 if (req.body.password) {
                     var validPassword = user.comparePassword(req.body.password);
-                    console.log('password validilty'+validPassword);
+                    console.log('password validilty' + validPassword);
                 } else {
                     res.json({ success: false, message: 'password not provided' });
                 }
@@ -88,7 +92,7 @@ module.exports = function (router) {
 
 
 
-// checking the availability of the username
+    // checking the availability of the username
     router.post('/checkUsername', function (req, res) {
         console.log('inside post');
         User.findOne({ username: req.body.username }).select('username').exec(function (err, user) {

@@ -19,7 +19,7 @@ app.config(function ($routeProvider, $locationProvider) {
 
         // accessing the register page
         .when('/register', {
-            templateUrl: 'app/views/pages/users/register.html',
+            templateUrl: 'app/views/pages/users/testRegister.html',
             controller: 'registerController',
             controllerAs: 'register',
             authenticated: false

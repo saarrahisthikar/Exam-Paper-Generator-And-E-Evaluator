@@ -11,26 +11,28 @@ angular.module('userController', ['userServices'])
         //   console.log('inside register controller');
 
         var app = this;
-        
+
 
 
         this.regUser = function (regData, valid) {
             app.errorMsg = false;
-           // app.successMsg = false;
+            // app.successMsg = false;
             app.loading = true;
-            //console.log('register form submitted');
+            console.log('register form submitted');
             //console.log(this.regData);
             if (valid) {
                 User.create(app.regData).then(function (data) {
                     if (data.data.success) {
+                        console.log(data.data.success);
                         app.loading = false;
-                        // app.successMsg = data.data.message;
+                        app.successMsg = data.data.message;
                         $timeout(function () {
                             $location.path('/');
                         }, 2000);
 
                     } else {
                         app.loading = false;
+                        console.log(data.data.success);
                         app.errorMsg = data.data.message;
                     }
                 });

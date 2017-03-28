@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 var validate = require('mongoose-validator');
+var titlize = require('mongoose-title-case');
 
 // validating the name
 var nameValidator = [
@@ -9,6 +10,11 @@ var nameValidator = [
         validator: 'isLength',
         arguments: [3, 100],
         message: 'name should be between {ARGS[0]} and {ARGS[1]} characters'
+    }),
+    validate({
+        validator: 'matches',
+        arguments: /^(([a-zA-Z]{3,40})+[ ]+([a-zA-Z]{3,40}))$/,
+        message: 'Name can have only letters. There should be a space between names. Cannot include numbers, special characters.'
     })
 ];
 
@@ -59,6 +65,10 @@ var UserSchema = new Schema({
     password: { type: String, require: true, validate: passwordValidator },
     email: { type: String, lowercase: true, require: true, unique: true, validate: emailValidator },
     userType: { type: String, require: true }
+});
+
+UserSchema.plugin(titlize, {
+    paths: ['name']// Array of paths 
 });
 
 //encrypting password
