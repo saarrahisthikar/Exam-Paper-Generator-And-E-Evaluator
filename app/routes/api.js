@@ -1,6 +1,7 @@
 
 var User = require('../models/user');
 var jwt = require('jsonwebtoken');
+// secret for the token
 var secret = 'secret';
 
 
@@ -9,14 +10,15 @@ module.exports = function (router) {
     //user registration
     //localhost/3000/users
     router.post('/users', function (req, res) {
+
         var user = new User();
+        user.name= req.body.name;
         user.username = req.body.username;
         user.password = req.body.password;
         user.email = req.body.email;
         user.userType = req.body.userType;
 
-
-        if (user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '' || user.userType == null || user.userType == '') {
+        if (user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '' || user.name == null || user.name == '') {
             // res.send('fields cannot be null');
             res.json({ success: false, message: 'Fields cannot be empty' });
         } else {
@@ -55,23 +57,26 @@ module.exports = function (router) {
     //localhost/3000/authenticate
     router.post('/authenticate', function (req, res) {
         console.log('inside post');
-        console.log(req.body.username);
-        User.findOne({ username: req.body.username }).select('username email password').exec(function (err, user) {
+        //console.log(req.body.username);
+        User.findOne({ username: req.body.username }).select('name username email password userType').exec(function (err, user) {
             if (err) {
-                console.log("error in authenticate");
+               // console.log("error in authenticate");
                 throw err;
             }
-            console.log("no error in user retrieval");
+           console.log("no error in user retrieval");
+           
             if (!user) {
                 res.json({ success: false, message: 'user not found' });
+                 console.log('user ot found - inside authenticate');
             } else if (user) {
                 if (req.body.password) {
                     var validPassword = user.comparePassword(req.body.password);
+                    console.log('password validilty'+validPassword);
                 } else {
                     res.json({ success: false, message: 'password not provided' });
                 }
                 if (validPassword) {
-                    var token = jwt.sign({ username: user.username, userType: user.userType }, secret, { expiresIn: '24h' });
+                    var token = jwt.sign({ username: user.username, userType: user.userType, email: user.email }, secret, { expiresIn: '24h' });
                     res.json({ success: true, message: 'login successful', token: token });
                 } else {
                     res.json({ success: false, message: 'password not authenticated' });
@@ -83,7 +88,7 @@ module.exports = function (router) {
 
 
 
-
+// checking the availability of the username
     router.post('/checkUsername', function (req, res) {
         console.log('inside post');
         User.findOne({ username: req.body.username }).select('username').exec(function (err, user) {

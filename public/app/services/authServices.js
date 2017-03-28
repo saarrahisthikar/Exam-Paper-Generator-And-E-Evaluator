@@ -5,6 +5,7 @@ angular.module('authServices', [])
     var authFactory = {}; // Create the factory object
 
     // Function to log the user in
+    //Auth.login(loginData);
     authFactory.login = function(loginData) {
         return $http.post('/api/authenticate', loginData).then(function(data) {
             AuthToken.setToken(data.data.token); // Endpoint will return a token to set
@@ -13,6 +14,7 @@ angular.module('authServices', [])
     };
 
     // Function to check if user is currently logged in
+    // Auth.isLoggedIn();
     authFactory.isLoggedIn = function() {
         // CHeck if token is in local storage
         if (AuthToken.getToken()) {
@@ -45,9 +47,11 @@ angular.module('authServices', [])
     var authTokenFactory = {}; // Create factory object
 
     // Function to set and remove the token to/from local storage
+    // AuthToken.setToken(token);
     authTokenFactory.setToken = function(token) {
         // Check if token was provided in function parameters
         if (token) {
+            console.log(token);
             $window.localStorage.setItem('token', token); // If so, set the token in local storage
         } else {
             $window.localStorage.removeItem('token'); // Otherwise, remove any token found in local storage (logout)
@@ -55,6 +59,7 @@ angular.module('authServices', [])
     };
 
     // Function to retrieve token found in local storage
+    // AuthToken.getToken();
     authTokenFactory.getToken = function() {
         return $window.localStorage.getItem('token');
     };

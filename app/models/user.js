@@ -3,6 +3,16 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 var validate = require('mongoose-validator');
 
+// validating the name
+var nameValidator = [
+    validate({
+        validator: 'isLength',
+        arguments: [3, 100],
+        message: 'name should be between {ARGS[0]} and {ARGS[1]} characters'
+    })
+];
+
+// validating the username
 var usernameValidator = [
     validate({
         validator: 'isLength',
@@ -15,6 +25,7 @@ var usernameValidator = [
     })
 ];
 
+// validating the password
 var passwordValidator = [
     validate({
         validator: 'matches',
@@ -28,6 +39,7 @@ var passwordValidator = [
     })
 ];
 
+// validating the email
 var emailValidator = [
     validate({
         validator: 'isEmail',
@@ -42,6 +54,7 @@ var emailValidator = [
 
 
 var UserSchema = new Schema({
+    name: { type: String, require: true, validate: nameValidator },
     username: { type: String, lowercase: true, require: true, unique: true, validate: usernameValidator },
     password: { type: String, require: true, validate: passwordValidator },
     email: { type: String, lowercase: true, require: true, unique: true, validate: emailValidator },

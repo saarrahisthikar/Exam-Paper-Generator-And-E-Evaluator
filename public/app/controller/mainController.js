@@ -8,32 +8,37 @@ angular.module('mainController', ['authServices'])
         var loadme = false;
         var loggedIn = false;
 
+        // everytime the page refreshes
         $rootScope.$on('$routeChangeStart', function () {
 
             if (Auth.isLoggedIn()) {
                 app.loggedIn = true;
                 console.log('user is logged in');
                 Auth.getUser().then(function (data) {
-                    console.log(data.data.username);
+                    console.log(data);
                     app.username = data.data.username;
+                    app.userType= data.data.userType;
                     app.loadme = true;
                 });
             } else {
                 console.log('user not logged in');
                 app.username = '';
+                app.userType = '';
                 app.loadme = true;
                 app.loggedIn = false;
             }
         });
 
 
-       
-        app.errMsg = false;
-        
+
+
+        // main.login(loginData);
         this.doLogin = function (loginData) {
-             app.loading = false;
-            //console.log('login check');
-            Auth.login(this.loginData).then(function (data) {
+            app.errMsg = false;
+            app.loading = false;
+            console.log('login check');
+            Auth.login(app.loginData).then(function (data) {
+                 console.log(data);
                 if (data.data.success) {
                     app.loading = false;
                     app.successMsg = data.data.message;
@@ -45,7 +50,8 @@ angular.module('mainController', ['authServices'])
 
                 } else {
                     app.loading = false;
-                    app.errMsg = data.data.message;
+                    app.errorMsg = data.data.message;
+                    
                 }
             });
 

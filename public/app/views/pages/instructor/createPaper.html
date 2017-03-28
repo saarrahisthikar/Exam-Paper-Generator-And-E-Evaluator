@@ -1,0 +1,68 @@
+<div class="page-header">
+    <h1>Generate Question Paper</h1>
+</div>
+
+<div class="panel panel-sign">
+    <section class="panel">
+
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle=""></a>
+                <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss=""></a>
+            </div>
+            <h2 class="panel-title">Generate Question Paper</h2>
+        </header>
+
+        <div class="panel-body">
+
+            <form class="form-horizontal form-bordered" method="get">
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Question Type <span class="required" aria-required="true">*</span></label>
+                    <div class="col-sm-9">
+                        <div class="radio-custom radio-primary">
+                            <input id="mcq" name="porto_is" type="radio" value="mcq" required="" aria-required="true">
+                            <label for="mcq">MCQ</label>
+                        </div>
+                        <div class="radio-custom radio-primary">
+                            <input id="structured" name="porto_is" type="radio" value="structured">
+                            <label for="structured">Structured</label>
+                        </div>
+                        <label class="error" for="porto_is"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Difficulty Level <span class="required" aria-required="true">*</span></label>
+                    <div class="col-sm-9">
+                        <div class="radio-custom radio-primary">
+                            <input id="easy" name="porto_is" type="radio" value="easy" required="" aria-required="true">
+                            <label for="easy">Easy</label>
+                        </div>
+                        <div class="radio-custom radio-primary">
+                            <input id="moderate" name="porto_is" type="radio" value="moderate">
+                            <label for="moderate">Moderate</label>
+                        </div>
+                        <div class="radio-custom radio-primary">
+                            <input id="difficult" name="porto_is" type="radio" value="difficult">
+                            <label for="difficult">Difficult</label>
+                        </div>
+                        <label class="error" for="porto_is"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="noQues">Number of Question</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Number of Questions" id="noQues">
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-primary">Add Course</button>
+            </form>
+        </div>
+    </section>
+</div>
+</div>

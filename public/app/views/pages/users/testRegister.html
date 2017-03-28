@@ -1,0 +1,79 @@
+<div class="page-header">
+    <h1>User Registration</h1>
+</div>
+
+<div class="center-sign">
+    <a href="/" class="logo pull-left">
+        <img src="assets/images/logo.png" height="54" alt="Porto Admin">
+    </a>
+
+    <div class="panel panel-sign">
+        <div class="panel-title-sign mt-xl text-right">
+            <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Sign Up</h2>
+        </div>
+        <div class="panel-body">
+            <form ng-submit="register.regUser(regData);">
+                <!--The name of the user-->
+                <div class="form-group mb-lg">
+                    <label>Name</label>
+                    <input name="name" type="text" class="form-control input-lg" ng-model="register.regData.name">
+                </div>
+                <!--The username of the user-->
+                <div class="form-group mb-lg">
+                    <label>Username</label>
+                    <input name="username" type="text" class="form-control input-lg" ng-model="register.regData.username">
+                </div>
+                <!--The email of the user-->
+                <div class="form-group mb-lg">
+                    <label>E-mail Address</label>
+                    <input name="email" type="email" class="form-control input-lg" ng-model="register.regData.email">
+                </div>
+                <!--The password of the user-->
+                <div class="form-group mb-none">
+                    <div class="row">
+                        <div class="col-sm-6 mb-lg">
+                            <label>Password</label>
+                            <input name="pwd" type="password" class="form-control input-lg" ng-model="register.regData.password">
+                        </div>
+                        <!--Confirmation of the password-->
+                        <div class="col-sm-6 mb-lg">
+                            <label>Password Confirmation</label>
+                            <input name="pwd_confirm" type="password" class="form-control input-lg">
+                        </div>
+                    </div>
+                </div>
+                <!--user type- hidden field-->
+                <div>
+                    <input type="hidden" name="userType" value="student" ng-model="register.regData.userType">
+                </div>
+                <!--submission of the form-->
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<br>
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<br>
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="register.successMsg">
+    <div class="alert alert-success">{{successMsg}}</div>
+    <p>Loading.....</p>
+</div>
+
+<br>
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="register.errorMsg">
+    <div class="alert alert-danger">{{errorMsg}}</div>
+</div>
