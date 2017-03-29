@@ -16,7 +16,7 @@ module.exports = function (router) {
         user.username = req.body.username;
         user.password = req.body.password;
         user.email = req.body.email;
-        user.userType = "student";
+        user.userType = "admin";
 
         if (user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '' || user.name == null || user.name == '') {
             // res.send('fields cannot be null');
@@ -80,7 +80,7 @@ module.exports = function (router) {
                     res.json({ success: false, message: 'password not provided' });
                 }
                 if (validPassword) {
-                    var token = jwt.sign({ username: user.username, userType: user.userType, email: user.email }, secret, { expiresIn: '24h' });
+                    var token = jwt.sign({ name: user.name, username: user.username, userType: user.userType, email: user.email }, secret, { expiresIn: '24h' });
                     res.json({ success: true, message: 'login successful', token: token });
                 } else {
                     res.json({ success: false, message: 'password not authenticated' });

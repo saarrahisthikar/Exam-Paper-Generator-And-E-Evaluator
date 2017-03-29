@@ -50,24 +50,22 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/views/pages/admin/addInstructors.html',
             controller: 'registerController',
             controllerAs: 'register',
-            authenticated: true
+            authenticated: true,
+            permission: 'admin'
         })
 
-        // accessing the viewCourses page
-        .when('/viewCourses', {
-            templateUrl: 'app/views/pages/admin/viewCourses.html',
-            authenticated: true
-        })
 
         // accessing the viewInstructors page
         .when('/viewInstructors', {
             templateUrl: 'app/views/pages/admin/viewInstructors.html',
-            authenticated: true
+            authenticated: true,
+            permission: 'admin'
         })
         // accessing the viewStudents page
         .when('/viewStudents', {
             templateUrl: 'app/views/pages/admin/viewStudents.html',
-            authenticated: true
+            authenticated: true,
+            permission: 'admin'
         })
 
         // instructor
@@ -75,19 +73,30 @@ app.config(function ($routeProvider, $locationProvider) {
         // accessing the addCourses page
         .when('/addCourses', {
             templateUrl: 'app/views/pages/instructor/addCourses.html',
-            authenticated: true
+            authenticated: true,
+            permission: 'instructor'
         })
 
         // accessing the addQuestion page
         .when('/addQuestion', {
             templateUrl: 'app/views/pages/instructor/addQuestion.html',
-            authenticated: true
+            authenticated: true,
+            permission: 'instructor'
         })
 
         // accessing the createPaper page
         .when('/createPaper', {
             templateUrl: 'app/views/pages/instructor/createPaper.html',
-            authenticated: true
+            authenticated: true,
+            permission: 'instructor'
+        })
+
+        //student
+        // accessing the viewCourses page
+        .when('/viewCourses', {
+            templateUrl: 'app/views/pages/student/viewCourses.html',
+            authenticated: true,
+            permission: 'student'
         })
 
         .otherwise({ redirectTo: 'app/views/pages/home.html' });
@@ -104,20 +113,32 @@ app.config(function ($routeProvider, $locationProvider) {
 app.run(['$rootScope', 'Auth', '$location', function ($rootScope, Auth, $location) {
 
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
-        if (next.$$route.authenticated == true) {
-            if (!Auth.isLoggedIn()) {
-                event.preventDefault();
-                $location.path('/');
+        app.isAdmin = false;
+        app.isInstructor = false;
+        app.isStudent = false;
+        if (next.$$route.authenticated) {
+            if (next.$$route.authenticated == true) {
+                if (!Auth.isLoggedIn()) {
+                    event.preventDefault();
+                    $location.path('/');
+                } else if (next.$$route.permission) {
+                    Auth.getUser().then(function (data) {
+                        app.userType = data.data.userType;
+                    });
+
+                    if (next.$$route.permission != app.userType) {
+                        event.preventDefault();
+                        $location.path('/');
+                    }
+                }
+
             }
-
-        } 
-        // else if (next.$$route.authenticated == false) {
-        //     if (Auth.isLoggedIn()) {
-        //         event.preventDefault();
-        //         $location.path('/profile');
-        //     }
-
-        // }
+            else if (next.$$route.authenticated == false) {
+                if (Auth.isLoggedIn()) {
+                    event.preventDefault();
+                    $location.path('/profile');
+                }
+            }
+        }
     });
-
 }]);

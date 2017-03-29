@@ -16,13 +16,28 @@ angular.module('mainController', ['authServices'])
                 console.log('user is logged in');
                 Auth.getUser().then(function (data) {
                     console.log(data);
-                    app.username = data.data.username;
-                    app.userType= data.data.userType;
-                    app.loadme = true;
+
+                    app.isAdmin = false;
+                    app.isInstructor = false;
+                    app.isStudent = false;
+
+                    app.name = data.data.name;
+                    app.userType = data.data.userType;
+                    // checking the role
+                    if (app.userType == "admin") {
+                        app.isAdmin = true;
+                        app.loadme = true;
+                    } else if (app.userType == "instructor") {
+                        app.isInstructor = true;
+                        app.loadme = true;
+                    } else if (app.userType == "student") {
+                        app.isStudent = true;
+                        app.loadme = true;
+                    }
                 });
             } else {
                 console.log('user not logged in');
-                app.username = '';
+                app.name = '';
                 app.userType = '';
                 app.loadme = true;
                 app.loggedIn = false;
@@ -35,7 +50,7 @@ angular.module('mainController', ['authServices'])
             app.loading = false;
             console.log('login check');
             Auth.login(app.loginData).then(function (data) {
-                 console.log(data);
+                console.log(data);
                 if (data.data.success) {
                     app.loading = false;
                     app.successMsg = data.data.message;
@@ -48,7 +63,7 @@ angular.module('mainController', ['authServices'])
                 } else {
                     app.loading = false;
                     app.errorMsg = data.data.message;
-                    
+
                 }
             });
 

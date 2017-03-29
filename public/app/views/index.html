@@ -118,11 +118,11 @@
 				<div id="userbox" class="userbox" ng-show="main.loggedIn">
 					<a href="#" data-toggle="dropdown">
 						<figure class="profile-picture">
-							<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg"
+							<img src="assets/images/!logged-user.jpg" alt="User" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg"
 							/>
 						</figure>
-						<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-							<span class="name">{{main.username}}</span>
+						<div class="profile-info" data-lock-name="User" data-lock-email="user@okler.com">
+							<span class="name">{{main.name}}</span>
 							<span class="role">{{main.userType}}</span>
 						</div>
 
@@ -169,12 +169,12 @@
 									<!--direct to home page-->
 									<!--<i class="fa fa-home" aria-hidden="true"></i>-->
 									<!--<span>Dashboard</span>-->
-									<a href="/register">Dashboard
+									<a href="/">Dashboard
 									</a>
 								</li>
 								<!--admin-->
 								<!--view students-->
-								<li>
+								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
 									<a href="/viewStudents">
 										<!--direct to student list-->
 										<!--<i class="fa fa-home" aria-hidden="true"></i>-->
@@ -183,7 +183,7 @@
 									</a>
 								</li>
 								<!--view instructor-->
-								<li>
+								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
 									<a href="/viewInstructors">
 										<!--direct to instructor list-->
 										<i class="fa fa-graduation-cap"></i>
@@ -193,17 +193,17 @@
 
 								<!--add instructor-->
 
-								<li>
+								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
 									<a href="/addInstructor">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
 										<span>Add Instructor</span>
 									</a>
 								</li>
-								<!--view courses admin and student-->
+								<!--view courses student-->
 
-								<li class="nav-active">
-									<a href="viewAllCourses.html">
+								<li class="nav-active" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
+									<a href="/viewCourses">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
 										<span>All Courses</span>
@@ -216,8 +216,8 @@
 								<!--inside each course can see add question-->
 								<!--generate paper-->
 
-								<li class="nav-active">
-									<a href="/viewCourses">
+								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
+									<a href="#">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
 										<span>Courses</span>
@@ -225,7 +225,7 @@
 								</li>
 
 								<!--add course-->
-								<li class="nav-active">
+								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
 									<a href="/addCourses">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
@@ -233,7 +233,7 @@
 									</a>
 								</li>
 
-								<li class="nav-active">
+								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
 									<a href="/addQuestion">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
@@ -242,7 +242,7 @@
 								</li>
 
 								<li class="nav-active">
-									<a href="/createPaper">
+									<a href="/createPaper" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
 										<span>Generate Question Paper</span>
@@ -253,7 +253,7 @@
 
 								<!--enrolled courses-->
 
-								<li class="nav-parent">
+								<li class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
 									<a>
 										<i class="fa fa-columns" aria-hidden="true"></i>
 										<span>Enrolled Courses</span>
