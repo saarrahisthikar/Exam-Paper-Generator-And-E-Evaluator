@@ -29,9 +29,6 @@ angular.module('mainController', ['authServices'])
             }
         });
 
-
-
-
         // main.login(loginData);
         this.doLogin = function (loginData) {
             app.errMsg = false;
@@ -44,7 +41,7 @@ angular.module('mainController', ['authServices'])
                     app.successMsg = data.data.message;
                     $timeout(function () {
                         $location.path('/');
-                        app.loginData = '';
+                        app.loginData = null;
                         app.successMsg = false;
                     }, 2000);
 

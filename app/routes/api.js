@@ -16,7 +16,7 @@ module.exports = function (router) {
         user.username = req.body.username;
         user.password = req.body.password;
         user.email = req.body.email;
-        user.userType = req.body.userType;
+        user.userType = "student";
 
         if (user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '' || user.name == null || user.name == '') {
             // res.send('fields cannot be null');

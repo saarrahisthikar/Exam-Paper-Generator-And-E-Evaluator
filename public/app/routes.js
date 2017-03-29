@@ -101,22 +101,23 @@ app.config(function ($routeProvider, $locationProvider) {
 
 
 // checking whether the user can access each route -condition: ability to access with routes
-// app.run(['$rootScope', 'Auth', '$location', function ($rootScope, Auth, $location) {
+app.run(['$rootScope', 'Auth', '$location', function ($rootScope, Auth, $location) {
 
-//     $rootScope.$on('$routeChangeStart', function (event, next, current) {
-//         if (next.$$route.authenticated == true) {
-//             if (!Auth.isLoggedIn()) {
-//                 event.preventDefault();
-//                 $location.path('/');
-//             }
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        if (next.$$route.authenticated == true) {
+            if (!Auth.isLoggedIn()) {
+                event.preventDefault();
+                $location.path('/');
+            }
 
-//         } else if (next.$$route.authenticated == false) {
-//             if (Auth.isLoggedIn()) {
-//                 event.preventDefault();
-//                 $location.path('/profile');
-//             }
+        } 
+        // else if (next.$$route.authenticated == false) {
+        //     if (Auth.isLoggedIn()) {
+        //         event.preventDefault();
+        //         $location.path('/profile');
+        //     }
 
-//         }
-//     });
+        // }
+    });
 
-// }]);
+}]);
