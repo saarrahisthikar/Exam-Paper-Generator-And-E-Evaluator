@@ -3,9 +3,21 @@ var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 // secret for the token
 var secret = 'secret';
-
+var nodemailer = require('nodemailer');
+var sgTransport = require('nodemailer-sendgrid-transport');
+var emailExistence = require('email-existence');
 
 module.exports = function (router) {
+
+    // sending mails
+    var options = {
+        auth: {
+            api_user: 'prabodha',
+            api_key: 'prabodha@1994'
+        }
+    }
+
+
 
     //user registration
     //localhost/3000/users
@@ -16,7 +28,7 @@ module.exports = function (router) {
         user.username = req.body.username;
         user.password = req.body.password;
         user.email = req.body.email;
-        user.userType = "admin";
+        user.userType = "student";
 
         if (user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '' || user.name == null || user.name == '') {
             // res.send('fields cannot be null');
@@ -56,6 +68,97 @@ module.exports = function (router) {
             });
         }
     });
+
+    //adding an intsrucor to the system
+    router.post('/createInstructor', function (req, res) {
+
+        //password generate function
+        var randomString = function (length) {
+            var text = "";
+            var possible = "@!#$%^&*()_+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < length; i++) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+        }
+        var password = randomString(10);
+
+        var user = new User();
+        user.name = req.body.name;
+        user.username = req.body.username;
+        user.password = password;
+        user.email = req.body.email;
+        user.userType = "instructor";
+
+        console.log(user.email);
+        if (user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '' || user.name == null || user.name == '') {
+            // res.send('fields cannot be null');
+            res.json({ success: false, message: 'Fields cannot be empty' });
+        } else {
+            console.log(user.email);
+            emailExistence.check(user.email, function (err, response) {
+                console.log(response);
+                console.log(err);
+                if (response) {
+                    console.log(response);
+                    user.save(function (err) {
+                        if (err) {
+                            // res.send('user did not save');
+                            if (err.errors != null) {
+                                if (err.errors.name) {
+                                    res.json({ success: false, message: err.errors.name.message });
+                                } else if (err.errors.email) {
+                                    res.json({ success: false, message: err.errors.email.message });
+                                } else if (err.errors.username) {
+                                    res.json({ success: false, message: err.errors.username.message });
+                                } else {
+                                    res.json({ success: false, message: err });
+                                }
+
+                            } else if (err) {
+                                if (err.code == 11000) {
+                                    if (err.errmsg[61] == "u") {
+                                        res.json({ success: false, message: 'Username already exists ' });
+                                    } else if (err.errmsg[61] == "e") {
+                                        res.json({ success: false, message: 'Email already exists ' });
+                                    } else {
+                                        res.json({ success: false, message: err });
+                                    }
+                                }
+                            }
+
+                        } else {
+                            var client = nodemailer.createTransport(sgTransport(options));
+                            var email = {
+                                from: 'Localhost staff, staff@localhost.com',
+                                to: user.email,
+                                subject: 'Addition of Instructor',
+                                text: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system. Username :' + user.username + 'Password : ' + password + 'You can activate your account using this link : http://localhost:3000/login. Thank You!!!',
+                                html: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system.<br><br><b>Username : </b>' + user.username + '<br><b>Password : </b>' + password + '<br><br><br>You can activate your account using this link : <a href="http://localhost:3000/login">http://localhost:3000/login.</a><br><br><br>Thank You!!!'
+
+                            };
+
+                            client.sendMail(email, function (err, info) {
+                                if (err) {
+                                    console.log(error);
+                                }
+                                else {
+
+                                    console.log('Message sent: ' + info);
+                                }
+                            });
+                            res.json({ success: true, message: 'Instructor has been created successfully' });
+                        }
+                    });
+                } else {
+                    //sending non exixtance of the mail box
+                    res.json({ success: false, message: "Mailbox does not exist for the given email address" });
+
+                }
+            });
+        }
+    });
+
 
     //user login
     //localhost/3000/authenticate
@@ -140,6 +243,18 @@ module.exports = function (router) {
 
     router.post('/me', function (req, res) {
         res.send(req.decoded);
+    });
+
+    router.post('/renewToken/:username', function (req, res) {
+        User.findOne({ username: req.params.username }).select().exec(function (err, user) {
+            if (err) throw err;
+            if (!user) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                var token = jwt.sign({ name: user.name, username: user.username, userType: user.userType, email: user.email }, secret, { expiresIn: '5s' });
+                res.json({ success: true, message: 'login successful', token: token });
+            }
+        });
     });
     return router;
 }

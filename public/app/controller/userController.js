@@ -13,7 +13,7 @@ angular.module('userController', ['userServices'])
         var app = this;
 
 
-
+        // register student
         this.regUser = function (regData, valid) {
             app.errorMsg = false;
             // app.successMsg = false;
@@ -39,6 +39,37 @@ angular.module('userController', ['userServices'])
             } else {
                 app.loading = false;
                 app.errormsg = "Please ensure that the form is filled properly";
+            }
+        };
+
+        // registering instructor
+        this.regInstructor = function (regData, valid) {
+            app.errorMsg = false;
+            // app.successMsg = false;
+            app.loading = true;
+            console.log('Instructor register form submitted');
+            //console.log(this.regData);
+            if (valid) {
+                User.createInstructor(app.regData).then(function (data) {
+                    if (data.data.success) {
+                        console.log(data.data.success);
+                        app.loading = false;
+                        app.insSuccessMsg = data.data.message;
+                        console.log(app.insSuccessMsg);
+                        $timeout(function () {
+                            $location.path('/addInstructor');
+                        }, 2000);
+
+                    } else {
+                        app.loading = false;
+                        console.log(data.data.success);
+                        console.log(data.data.message);
+                        app.insErrorMsg = data.data.message;
+                    }
+                });
+            } else {
+                app.loading = false;
+                app.insErrormsg = "Please ensure that the form is filled properly";
             }
         };
 

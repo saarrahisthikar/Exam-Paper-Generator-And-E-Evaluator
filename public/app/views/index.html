@@ -249,8 +249,6 @@
 									</a>
 								</li>
 
-
-
 								<!--enrolled courses-->
 
 								<li class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
@@ -259,21 +257,9 @@
 										<span>Enrolled Courses</span>
 									</a>
 									<ul class="nav nav-children">
-										<li>
-											<a href="#">
-													 CS 3013
-												</a>
-										</li>
-										<li>
-											<a href="#">
-													CS 2031
-												</a>
-										</li>
-										<li>
-											<a href="#">
-													MA 2398
-												</a>
-										</li>
+										<li><a href="#">CS 3013</a></li>
+										<li><a href="#">CS 2031</a></li>
+										<li><a href="#">MA 2398</a></li>
 								</li>
 								</ul>
 						</nav>
@@ -284,14 +270,11 @@
 							if (localStorage.getItem('sidebar-left-position') !== null) {
 								var initialPosition = localStorage.getItem('sidebar-left-position'),
 									sidebarLeft = document.querySelector('#sidebar-left .nano-content');
-
 								sidebarLeft.scrollTop = initialPosition;
 							}
 						}
 					</script>
-
 				</div>
-
 			</aside>
 			<!-- end: sidebar -->
 			<section role="main" class="content-body">
@@ -301,6 +284,42 @@
 				<!-- start: page -->
 
 				<div ng-view></div>
+
+				<!-- BootstrapJS Modal -->
+				<div class="modal fade" id="myModal" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button ng-hide="main.hideButton" type="button" ng-click="main.endSession();" class="close" data-dismiss="modal">&times;</button>
+								<!-- Modal Header -->
+								<h4 class="modal-title">{{ main.modalHeader }}</h4>
+							</div>
+							<!-- Modal Body -->
+							<div class="modal-body">
+								<p>{{ main.modalBody }}</p>
+								<div ng-show="main.hideButton" class='container'>
+									<div class='loader'>
+										<div class='loader--dot'></div>
+										<div class='loader--dot'></div>
+										<div class='loader--dot'></div>
+										<div class='loader--dot'></div>
+										<div class='loader--dot'></div>
+										<div class='loader--dot'></div>
+										<div class='loader--text'></div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<!-- Modal 'Yes' & 'No' Buttons -->
+								<button type="btn btn-primary" ng-hide="main.hideButton" ng-click="main.renewSession();" class="btn btn-primary" data-dismiss="modal">Yes</button>
+								<button type="btn btn-primary" ng-hide="main.hideButton" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<!-- Vendor -->
 				<script src="assets/vendor/jquery/jquery.js"></script>
 				<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>

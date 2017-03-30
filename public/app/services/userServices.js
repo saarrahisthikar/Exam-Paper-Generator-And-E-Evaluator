@@ -13,6 +13,11 @@ angular.module('userServices', [])
             return $http.post('/api/users', regData);
         }
 
+        //regData.createInstructor()
+        userFactory.createInstructor = function (regData) {
+            return $http.post('/api/createInstructor', regData);
+        }
+
         //User.checkUsername(regData);
         userFactory.checkUsername = function (regData) {
             return $http.post('/api/checkUsername', regData);
@@ -21,6 +26,12 @@ angular.module('userServices', [])
         //User.checkEmail(regData);
         userFactory.checkEmail = function (regData) {
             return $http.post('/api/checkEmail', regData);
-        }
+        };
+
+        // User.renewSession(username)
+        userFactory.renewSession = function (username) {
+            return $http.post('/api/renewToken/' + username);
+        };
+
         return userFactory;
     });
