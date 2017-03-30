@@ -1,5 +1,6 @@
 
 var User = require('../models/user');
+var Course = require('../models/course');
 var jwt = require('jsonwebtoken');
 // secret for the token
 var secret = 'secret';
@@ -158,6 +159,56 @@ module.exports = function (router) {
             });
         }
     });
+
+    // create course route
+
+    router.post('/createCourse', function (req, res) {
+
+        var course = new Course();
+        course.courseTitle = req.body.courseTitle;
+        course.moduleCode = req.body.moduleCode;
+        course.description = req.body.description;
+        // course.instructor = $window.localStorage.getItem('token').then(function (data) {
+        //     return data.data.userType;
+        // });
+
+        console.log(course.courseTitle);
+        console.log(course.moduleCode);
+        console.log(course.description);
+
+
+        if (course.courseTitle == null || course.courseTitle == '' || course.moduleCode == null || course.moduleCode == '' || course.description == null || course.description == '') {
+            // res.send('fields cannot be null');
+            res.json({ success: false, message: 'Fields cannot be empty' });
+            console.log.apply("empty fields");
+        } else {
+            course.save(function (err) {
+                if (err) {
+                    // res.send('user did not save');
+                    if (err.errors != null) {
+                        if (err.errors.courseTitle) {
+                            res.json({ success: false, message: err.errors.courseTitle.message });
+                        } else if (err.errors.moduleCode) {
+                            res.json({ success: false, message: err.errors.moduleCode.message });
+                        } else if (err.errors.description) {
+                            res.json({ success: false, message: err.errors.description.message });
+                        } else {
+                            res.json({ success: false, message: err });
+                        }
+                        console.log("error inside err")
+                    } else if (err) {
+                        res.jason({ success: false, message: "module code already exists" });
+                        console.log("module code already exists");
+                    }
+
+                } else {
+                    res.json({ success: true, message: 'Course saved' });
+                    console.log("course saved");
+                }
+            });
+        }
+    });
+
 
 
     //user login

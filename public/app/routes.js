@@ -19,7 +19,7 @@ app.config(function ($routeProvider, $locationProvider) {
 
         // accessing the register page
         .when('/register', {
-            templateUrl: 'app/views/pages/users/testRegister.html',
+            templateUrl: 'app/views/pages/users/register.html',
             controller: 'registerController',
             controllerAs: 'register',
             authenticated: false
@@ -74,6 +74,8 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/addCourses', {
             templateUrl: 'app/views/pages/instructor/addCourses.html',
             authenticated: true,
+            controller: 'instructorController',
+            controllerAs: 'instructor',
             permission: 'instructor'
         })
 
