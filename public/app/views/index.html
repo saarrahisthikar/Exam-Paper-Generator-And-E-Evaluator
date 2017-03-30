@@ -70,7 +70,7 @@
 
 </head>
 
-<body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
+<body ng-app="userApp" ng-controller="mainController as main" ng-show="main.loadme" ng-cloak>
 	<section class="body">
 
 		<!-- start: header -->
@@ -96,25 +96,21 @@
 					</div>
 				</form>
 
-				<span class="separator"></span>
-
-				<!--<div id="signup" >
-					<li><a href="/register">Sign Up</a></li>
-					<!--<a href="/" ng-show="!main.loggedIn"><i class="fa fa-user"></i>Sign up</a>-->
-				<!--</div>-->
+				<span class="separator" ng-show="!main.loggedIn"></span>
 
 				<!--user signup-->
-				<div id="signup" class="userbox">
+				<div id="signup" class="userbox" ng-show="!main.loggedIn">
 					<a href="/register"><i class="fa fa-user"></i>Sign up</a>
 				</div>
 
-				<span class="separator"></span>
+				<span class="separator" ng-show="!main.loggedIn"></span>
 				<!--user sign in-->
-				<div id="signin" class="userbox">
+				<div id="signin" class="userbox" ng-show="!main.loggedIn">
 					<a href="/login"><i class="fa fa-user"></i>Sign in</a>
 				</div>
 
 				<span class="separator"></span>
+				<!--displaying the login and signout-->
 				<div id="userbox" class="userbox" ng-show="main.loggedIn">
 					<a href="#" data-toggle="dropdown">
 						<figure class="profile-picture">
@@ -133,6 +129,7 @@
 						<ul class="list-unstyled">
 							<li class="divider"></li>
 							<li>
+								<!--displaying the profile-->
 								<a role="menuitem" tabindex="-1" href="/profile"><i class="fa fa-user"></i> My Profile</a>
 							</li>
 							<li>
@@ -163,12 +160,7 @@
 					<div class="nano-content">
 						<nav id="menu" class="nav-main" role="navigation">
 							<ul class="nav nav-main">
-								<!--home page-->
-								<!--<li class="nav-active">-->
 								<li>
-									<!--direct to home page-->
-									<!--<i class="fa fa-home" aria-hidden="true"></i>-->
-									<!--<span>Dashboard</span>-->
 									<a href="/">Dashboard
 									</a>
 								</li>
@@ -217,7 +209,7 @@
 								<!--generate paper-->
 
 								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
-									<a href="#">
+									<a href="/viewCourses">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
 										<span>Courses</span>

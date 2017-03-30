@@ -1,3 +1,5 @@
+<!--adding courses-->
+
 <div class="page-header">
     <h1>Add Course</h1>
 </div>
@@ -13,30 +15,54 @@
             <h2 class="panel-title">Add Course</h2>
         </header>
         <div class="panel-body">
-            <form class="form-horizontal form-bordered" ng-submit="instructor.addCourse(courseForm.courseData,courseForm.$valid);" name="courseForm" novalidate>
+            <form class="form-horizontal form-bordered" ng-submit="instructor.addCourse(courseForm.courseData,courseForm.$valid);" name="courseForm"
+                novalidate>
+                <!--course title-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="inputDefault">Course Title</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" ng-model="courseForm.courseData.courseTitle" placeholder="Course Title" id="courseTitle" required>
+                        <input type="text" class="form-control" ng-model="courseForm.courseData.courseTitle" placeholder="Course Title" id="courseTitle"
+                            required>
                     </div>
                 </div>
-
+                <!--module code-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="inputDefault">Module Code</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" ng-model="courseForm.courseData.moduleCode" placeholder="Module Code" id="moduleCode" required>
+                        <input type="text" class="form-control" ng-model="courseForm.courseData.moduleCode" placeholder="Module Code" id="moduleCode"
+                            required>
                     </div>
                 </div>
-
+                <!--description-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="textareaAutosize">Description</label>
                     <div class="col-md-6">
-                        <textarea class="form-control" rows="3" id="description" data-plugin-textarea-autosize="" ng-model="courseForm.courseData.description"  style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;" required></textarea>
+                        <textarea class="form-control" rows="3" id="description" data-plugin-textarea-autosize="" ng-model="courseForm.courseData.description"
+                            style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;" required></textarea>
                     </div>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Add Course</button>
-            </form>
+                </form>
         </div>
     </section>
+</div>
+
+<br>
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<br>
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="instructor.successMsg">
+    <div class="alert alert-success">{{instructor.successMsg}}</div>
+    <p>Loading.....</p>
+</div>
+
+<br>
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="instructor.errorMsg">
+    <div class="alert alert-danger">{{instructor.errorMsg}}</div>
 </div>

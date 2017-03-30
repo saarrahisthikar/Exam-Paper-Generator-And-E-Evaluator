@@ -2,7 +2,7 @@
 
 angular.module('mainController', ['authServices','userServices'])
 
-    .controller('mainCtrl', function ($http, $location, $timeout, Auth, $rootScope, $interval, $window, User, AuthToken) {
+    .controller('mainController', function ($http, $location, $timeout, Auth, $rootScope, $interval, $window, User, AuthToken) {
         // console.log('This is the main controller');
         var app = this;
         var loadme = false;
@@ -159,13 +159,13 @@ angular.module('mainController', ['authServices','userServices'])
                 //console.log(data);
                 if (data.data.success) {// Checks whether the login is a success
                     app.loading = false;
-                    app.successMsg = data.data.message;
+                    app.loginSuccessMsg = data.data.message;
 
                     // redirects to the home page after 2s
                     $timeout(function () {
                         $location.path('/');
                         app.loginData = null;
-                        app.successMsg = false;//checking whether the user is logged in
+                        app.loginSuccessMsg = false;//checking whether the user is logged in
                         app.checkSession();
                     }, 2000);
 

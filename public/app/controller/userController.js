@@ -27,6 +27,7 @@ angular.module('userController', ['userServices'])
                         app.loading = false;
                         app.successMsg = data.data.message;
                         $timeout(function () {
+                            app.regData = null;
                             $location.path('/');
                         }, 2000);
 
@@ -43,8 +44,9 @@ angular.module('userController', ['userServices'])
         };
 
         // registering instructor
+        app.insErrorMsg = false;
         this.regInstructor = function (regData, valid) {
-            app.errorMsg = false;
+
             // app.successMsg = false;
             app.loading = true;
             console.log('Instructor register form submitted');
@@ -73,6 +75,7 @@ angular.module('userController', ['userServices'])
             }
         };
 
+        //checkUsernmae
         this.checkUsernmae = function (regData) {
 
             var userInvalid = false;
@@ -90,6 +93,7 @@ angular.module('userController', ['userServices'])
             );
         }
 
+        // check Email
         this.checkEmail = function (regData) {
 
             var emailInvalid = false;

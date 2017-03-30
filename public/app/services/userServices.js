@@ -8,12 +8,12 @@ angular.module('userServices', [])
     .factory('User', function ($http) {
 
         userFactory = {};
-
+        // User.create()
         userFactory.create = function (regData) {
             return $http.post('/api/users', regData);
         }
 
-        //regData.createInstructor()
+        //User.createInstructor()
         userFactory.createInstructor = function (regData) {
             return $http.post('/api/createInstructor', regData);
         }

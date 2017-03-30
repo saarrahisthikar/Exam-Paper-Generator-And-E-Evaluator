@@ -16,16 +16,16 @@
         <div class="panel-body">
 
             <form class="form-horizontal form-bordered" method="get">
-
-
-
+                <!--adding the question type-->
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Question Type <span class="required" aria-required="true">*</span></label>
                     <div class="col-sm-9">
+                        <!--type-mcq-->
                         <div class="radio-custom radio-primary">
                             <input id="mcq" name="porto_is" type="radio" value="mcq" required="" aria-required="true">
                             <label for="mcq">MCQ</label>
                         </div>
+                        <!--type-structured-->
                         <div class="radio-custom radio-primary">
                             <input id="structured" name="porto_is" type="radio" value="structured">
                             <label for="structured">Structured</label>
@@ -33,18 +33,21 @@
                         <label class="error" for="porto_is"></label>
                     </div>
                 </div>
-
+                <!--adding the Difficulty Level-->
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Difficulty Level <span class="required" aria-required="true">*</span></label>
                     <div class="col-sm-9">
+                        <!--easy-->
                         <div class="radio-custom radio-primary">
                             <input id="easy" name="porto_is" type="radio" value="easy" required="" aria-required="true">
                             <label for="easy">Easy</label>
                         </div>
+                        <!--mderate-->
                         <div class="radio-custom radio-primary">
                             <input id="moderate" name="porto_is" type="radio" value="moderate">
                             <label for="moderate">Moderate</label>
                         </div>
+                        <!--difficult-->
                         <div class="radio-custom radio-primary">
                             <input id="difficult" name="porto_is" type="radio" value="difficult">
                             <label for="difficult">Difficult</label>
@@ -52,7 +55,7 @@
                         <label class="error" for="porto_is"></label>
                     </div>
                 </div>
-
+                <!--Numberof Questions-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="noQues">Number of Question</label>
                     <div class="col-md-6">
@@ -60,7 +63,7 @@
                     </div>
                 </div>
                 <br>
-                <button class="btn btn-primary">Add Course</button>
+                <button class="btn btn-primary">Generate</button>
             </form>
         </div>
     </section>

@@ -123,7 +123,7 @@ module.exports = function (router) {
                                     } else if (err.errmsg[61] == "e") {
                                         res.json({ success: false, message: 'Email already exists ' });
                                     } else {
-                                        res.json({ success: false, message: err });
+                                        res.json({ success: false, message: "Username or Email already exists" });
                                     }
                                 }
                             }

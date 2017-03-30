@@ -27,7 +27,7 @@ app.config(function ($routeProvider, $locationProvider) {
 
         // accessing the login page
         .when('/login', {
-            templateUrl: 'app/views/pages/users/testlogin.html',
+            templateUrl: 'app/views/pages/users/login.html',
             authenticated: false
         })
 
