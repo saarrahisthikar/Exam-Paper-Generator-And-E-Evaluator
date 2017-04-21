@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 var validate = require('mongoose-validator');
 var titlize = require('mongoose-title-case');
+var course = require('./course');
 
 // validating the name
 var nameValidator = [
@@ -34,20 +35,6 @@ var usernameValidator = [
     })
 ];
 
-// validating the password
-// var passwordValidator = [
-//     validate({
-//         validator: 'matches',
-//         arguments: /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,100}$/,
-//         message: 'Password should contain at least one lowerase letter, one uppercase letter, a special character and a number'
-//     }),
-//     validate({
-//         validator: 'isLength',
-//         arguments: [8, 100],
-//         message: 'username should be between {ARGS[0]} and {ARGS[1]} characters'
-//     })
-// ];
-
 // validating the email
 var emailValidator = [
     validate({
@@ -61,21 +48,21 @@ var emailValidator = [
     })
 ];
 
-
-var UserSchema = new Schema({
+//creating the instructor schema
+var InstructorSchema = new Schema({
     name: { type: String, require: true, validate: nameValidator },
     username: { type: String, lowercase: true, require: true, unique: true, validate: usernameValidator },
     password: { type: String, require: true },
     email: { type: String, lowercase: true, require: true, unique: true, validate: emailValidator },
-    userType: { type: String, require: true }
+    courses: [{ type: Schema.Types.ObjectId, ref: course }]
 });
 
-UserSchema.plugin(titlize, {
+InstructorSchema.plugin(titlize, {
     paths: ['name']// Array of paths 
 });
 
 //encrypting password
-UserSchema.pre('save', function (next) {
+InstructorSchema.pre('save', function (next) {
     var user = this;
     bcrypt.hash(user.password, null, null, function (err, hash) {
         if (err) return next(err);
@@ -85,8 +72,4 @@ UserSchema.pre('save', function (next) {
 });
 
 
-UserSchema.methods.comparePassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
-};
-
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Instructor', InstructorSchema);

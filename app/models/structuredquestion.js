@@ -1,13 +1,13 @@
 
-// question schema
+// structured question schema
 
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var titlize = require('mongoose-title-case');
 
-//question schema
-var QuestionSchema = new Schema({
+// structured question schema
+var StructuredQuestionSchema = new Schema({
     moduleCode: { type: String, require: true, unique: true },
     question: { type: String, require: true },
     difficultyLevel: { type: String, require: true },
@@ -19,4 +19,4 @@ var QuestionSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('Question', QuestionSchema);
+module.exports = mongoose.model('StructuredQuestion', StructuredQuestionSchema);

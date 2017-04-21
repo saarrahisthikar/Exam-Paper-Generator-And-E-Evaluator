@@ -1,5 +1,7 @@
 
 var User = require('../models/user');
+var Instructor = require('../models/instructor');
+var Student = require('../models/student');
 var Course = require('../models/course');
 var jwt = require('jsonwebtoken');
 // secret for the token
@@ -30,6 +32,8 @@ module.exports = function (router) {
         user.password = req.body.password;
         user.email = req.body.email;
         user.userType = "student";
+
+        var flag = false;
 
         if (user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '' || user.name == null || user.name == '') {
             // res.send('fields cannot be null');
@@ -62,8 +66,22 @@ module.exports = function (router) {
                             }
                         }
                     }
-
                 } else {
+                    //creating student
+                    var student = new Student();
+                    student.name = req.body.name;
+                    student.username = req.body.username;
+                    student.password = req.body.password;
+                    student.email = req.body.email;
+
+                    // saving student
+                    student.save(function (err) {
+                        if (err) {
+                            console.log("student did not save correctly");
+                        } else {
+                            console.log("Student saved successfully");
+                        }
+                    });
                     res.json({ success: true, message: 'User saved' });
                 }
             });
@@ -148,6 +166,23 @@ module.exports = function (router) {
                                     console.log('Message sent: ' + info);
                                 }
                             });
+
+                            // creating instructor 
+                            var instructor = new Instructor();
+                            instructor.name = req.body.name;
+                            instructor.username = req.body.username;
+                            instructor.password = req.body.password;
+                            instructor.email = req.body.email;
+
+                            //saving instructor
+                            instructor.save(function (err) {
+                                if (err) {
+                                    console.log("Instructor did not save correctly");
+                                } else {
+                                    console.log("Instructor saved successfully");
+                                }
+                            });
+
                             res.json({ success: true, message: 'Instructor has been created successfully' });
                         }
                     });
@@ -225,7 +260,7 @@ module.exports = function (router) {
 
             if (!user) {
                 res.json({ success: false, message: 'user not found' });
-                console.log('user ot found - inside authenticate');
+                console.log('user not found - inside authenticate');
             } else if (user) {
                 if (req.body.password) {
                     var validPassword = user.comparePassword(req.body.password);
