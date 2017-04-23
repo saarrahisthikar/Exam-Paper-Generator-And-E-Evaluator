@@ -1,120 +1,145 @@
+<!--adding courses-->
+
 <div class="page-header">
     <h1>Add Question</h1>
 </div>
 
 <div class="panel panel-sign">
-
     <section class="panel">
         <header class="panel-heading">
-            <div class="panel-actions">
-                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle=""></a>
-                <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss=""></a>
-            </div>
-
             <h2 class="panel-title">Add Question</h2>
         </header>
         <div class="panel-body">
             <form class="form-horizontal form-bordered" ng-submit="instructor.addQuestion(AddQuestionForm.questionData,AddQuestionForm.$valid);"
                 name="AddQuestionForm" novalidate>
 
+                <!--username-->
+                <input type="hidden" ng-model="AddQuestionForm.questionData.username" value="{{main.username}}" ng-init="AddQuestionForm.questionData.username=main.username"
+                />
+
+                <!--question-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="textareaAutosize">Question</label>
                     <div class="col-md-6">
-                        <textarea class="form-control" ng-model="AddQuestionForm.questionData." id="textareaAutosize" data-plugin-textarea-autosize="" style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;"></textarea>
+                        <textarea class="form-control" rows="3" id="question" data-plugin-textarea-autosize="" ng-model="AddQuestionForm.questionData.question"
+                            style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;" required></textarea>
                     </div>
                 </div>
-                <br>
+                
                 <!--question type-->
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Question Type <span class="required" aria-required="true">*</span></label>
-                    <div class="col-sm-9">
-                        <div class="radio-custom radio-primary">
-                            <input id="mcq" name="porto_is" type="radio" value="mcq" required="" aria-required="true">
-                            <label for="mcq">MCQ</label>
+                    <label class="col-md-3 control-label" for="inputDefault">Question Type</label>
+                    <div class="col-md-6">
+                        <div class="radio">
+                            <label>
+							<input type="radio" name="questionType" id="mcq" value="mcq" ng-model="AddQuestionForm.questionData.questionType">
+							MCQ
+							</label>
                         </div>
-                        <div class="radio-custom radio-primary">
-                            <input id="structured" name="porto_is" type="radio" value="structured">
-                            <label for="structured">Structured</label>
+                        <div class="radio">
+                            <label>
+							<input type="radio" name="questionType" id="structured" value="structured" ng-model="AddQuestionForm.questionData.questionType">
+							structured
+							</label>
                         </div>
-                        <label class="error" for="porto_is"></label>
                     </div>
                 </div>
+
                 <!--difficulty level-->
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Difficulty Level <span class="required" aria-required="true">*</span></label>
-                    <div class="col-sm-9">
-                        <div class="radio-custom radio-primary">
-                            <input id="easy" name="porto_is" type="radio" value="easy" required="" aria-required="true">
-                            <label for="easy">Easy</label>
+                    <label class="col-md-3 control-label" for="inputDefault">Difficulty Level</label>
+                    <div class="col-md-6">
+                        <div class="radio">
+                            <label>
+							<input type="radio" name="difficultyLevel" id="easy" value="easy" ng-model="AddQuestionForm.questionData.difficultyLevel">
+							Easy
+							</label>
                         </div>
-                        <div class="radio-custom radio-primary">
-                            <input id="moderate" name="porto_is" type="radio" value="moderate">
-                            <label for="moderate">Moderate</label>
+                        <div class="radio">
+                            <label>
+							<input type="radio" name="difficultyLevel" id="medium" value="medium" ng-model="AddQuestionForm.questionData.difficultyLevel">
+							Medium
+							</label>
                         </div>
-                        <div class="radio-custom radio-primary">
-                            <input id="difficult" name="porto_is" type="radio" value="difficult">
-                            <label for="difficult">Difficult</label>
+                        <div class="radio">
+                            <label>
+							<input type="radio" name="difficultyLevel" id="difficult" value="difficult" ng-model="AddQuestionForm.questionData.difficultyLevel">
+							Difficult
+							</label>
                         </div>
-                        <label class="error" for="porto_is"></label>
                     </div>
                 </div>
-                <!--Answers for MCQ questions-->
-                <div>
-                    <section class="panel">
-                        <header class="panel-heading">
 
-                            <h2 class="panel-title">MCQ Questions</h2>
-                        </header>
-                        <div class="panel-body">
-                            <form class="form-horizontal form-bordered" method="get">
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="correctAns">Correct Answer</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Course Title" id="correctAns">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="wrongAns">Wrong Answers</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Wrong Answer 1" id="wrongAns1">
-                                        <input type="text" class="form-control" placeholder="Wrong Answer 2" id="wrongAns2">
-                                        <input type="text" class="form-control" placeholder="Wrong Answer 3" id="wrongAns3">
-                                        <input type="text" class="form-control" placeholder="Wrong Answer 4" id="wrongAns4">
-                                    </div>
-                                </div>
-                            </form>
+                <!--mcq question-->
+                <div ng-show="AddQuestionForm.questionData.questionType=='mcq'">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">MCQ Question</h2>
+                    </header>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Correct Answer</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="corrrectAns" ng-model="AddQuestionForm.questionData.correctAns">
                         </div>
-                    </section>
-                </div>
-                <!--structure for structured questions-->
-
-                <div>
-                    <section class="panel">
-                        <header class="panel-heading">
-
-                            <h2 class="panel-title">Structured Questions</h2>
-                        </header>
-                        <div class="panel-body">
-                            <form class="form-horizontal form-bordered" method="get">
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="keyWords">Key Words</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Key Word 1" id="keyWord1">
-                                        <input type="text" class="form-control" placeholder="Key Word 2" id="keyWord2">
-                                        <input type="text" class="form-control" placeholder="Key Word 3" id="keyWord3">
-                                        <input type="text" class="form-control" placeholder="Key Word 4" id="keyWord4">
-                                    </div>
-                                </div>
-                            </form>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Wrong Answer 1</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="wrongAns1" ng-model="AddQuestionForm.questionData.wrongAns1">
                         </div>
-                    </section>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Wrong Answer 2</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="wrongAns2" ng-model="AddQuestionForm.questionData.wrongAns2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Wrong Answer 3</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="wrongAns3" ng-model="AddQuestionForm.questionData.wrongAns3">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Wrong Answer 4</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="wrongAns4" ng-model="AddQuestionForm.questionData.wrongAns4">
+                        </div>
+                    </div>
                 </div>
 
-
-
-                <button class="btn btn-primary">Add Course</button>
+                <!--structured question-->
+                <div class="form-group" ng-show="AddQuestionForm.questionData.questionType=='structured'">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Structured Question</h2>
+                    </header>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Key word 1</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="keyWord1" ng-model="AddQuestionForm.questionData.keyWord1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Key word 2</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="keyWord2" ng-model="AddQuestionForm.questionData.keyWord2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Key word 3</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="keyWord3" ng-model="AddQuestionForm.questionData.keyWord3">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Key word 4</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="keyWord4" ng-model="AddQuestionForm.questionData.keyWord4">
+                        </div>
+                    </div>
+                </div>
+                <!---->
+                <br>
+                <button type="submit" class="btn btn-primary">Add Question</button>
                 </form>
         </div>
     </section>

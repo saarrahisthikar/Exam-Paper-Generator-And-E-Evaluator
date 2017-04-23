@@ -83,6 +83,8 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/addQuestion', {
             templateUrl: 'app/views/pages/instructor/addQuestion.html',
             authenticated: true,
+            controller: 'instructorController',
+            controllerAs: 'instructor',
             permission: 'instructor'
         })
 

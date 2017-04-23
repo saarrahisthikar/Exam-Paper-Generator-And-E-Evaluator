@@ -3,6 +3,8 @@ var User = require('../models/user');
 var Instructor = require('../models/instructor');
 var Student = require('../models/student');
 var Course = require('../models/course');
+var MCQQuestion = require('../models/mcqquestion');
+var StructredQuestion = require('../models/structuredquestion');
 var jwt = require('jsonwebtoken');
 // secret for the token
 var secret = 'secret';
@@ -19,9 +21,6 @@ module.exports = function (router) {
             api_key: 'prabodha@1994'
         }
     }
-
-
-
     //user registration
     //localhost/3000/users
     router.post('/users', function (req, res) {
@@ -244,7 +243,114 @@ module.exports = function (router) {
         }
     });
 
+    //Add Structred Question route
+    router.post('/addStructuredQuestion', function (req, res) {
 
+        var question = new StructuredQuestion();
+        question.question = req.body.question;
+        question.difficultyLevel = req.body.difficultyLevel;
+        question.keyWord1 = req.body.keyWord1;
+        question.keyWord2 = req.body.keyWord2;
+        question.keyWord3 = req.body.keyWord3;
+        question.keyWord4 = req.body.keyWord4;
+        question.instructor = "prabodhanh";
+
+
+
+
+        // course.instructor = $window.localStorage.getItem('token').then(function (data) {
+        //     return data.data.userType;
+        // });
+
+        console.log(question.question);
+        console.log(question.difficultyLevel);
+
+
+
+        if (question.question == null || question.question == '' || question.difficultyLevel == null || question.difficultyLevel == '') {
+            // res.send('fields cannot be null');
+            res.json({ success: false, message: 'Fields cannot be empty' });
+            console.log.apply("empty fields");
+        } else {
+            question.save(function (err) {
+                if (err) {
+                    // res.send('user did not save');
+                    if (err.errors != null) {
+                        if (err.errors.question) {
+                            res.json({ success: false, message: err.errors.question.message });
+                        } else if (err.errors.difficultyLevel) {
+                            res.json({ success: false, message: err.errors.difficultyLevel.message });
+                        } else if (err.errors.keyWord1) {
+                            res.json({ success: false, message: err.errors.keyWord1.message });
+                        } else {
+                            res.json({ success: false, message: err });
+                        }
+                        console.log("error inside err")
+                    } else if (err) {
+                        res.jason({ success: false, message: "module code already exists" });
+                        console.log("module code already exists");
+                    }
+
+                } else {
+                    res.json({ success: true, message: 'Question saved' });
+                    console.log("Question saved");
+                }
+            });
+        }
+    });
+
+    //Add MCQ Question route
+    router.post('/addMCQQuestion', function (req, res) {
+
+        var question = new MCQQuestion();
+        question.question = req.body.question;
+        question.difficultyLevel = req.body.difficultyLevel;
+        question.correctAns = req.body.correctAns;
+        question.wrongAns1 = req.body.wrongAns1;
+        question.wrongAns2 = req.body.wrongAns2;
+        question.wrongAns3 = req.body.wrongAns3;
+        question.wrongAns4 = req.body.wrongAns4;
+        question.instructor ="prabodhanh";
+
+        // course.instructor = $window.localStorage.getItem('token').then(function (data) {
+        //     return data.data.userType;
+        // });
+        console.log(question.instructor);
+        console.log(question.question);
+        console.log(question.difficultyLevel);
+
+        if (question.question == null || question.question == '' || question.difficultyLevel == null || question.difficultyLevel == '') {
+            // res.send('fields cannot be null');
+            res.json({ success: false, message: 'Fields cannot be empty' });
+            console.log.apply("empty fields");
+        } else {
+            question.save(function (err) {
+                if (err) {
+                    // res.send('user did not save');
+                    if (err.errors != null) {
+                        if (err.errors.question) {
+                            res.json({ success: false, message: err.errors.question.message });
+                        } else if (err.errors.difficultyLevel) {
+                            res.json({ success: false, message: err.errors.difficultyLevel.message });
+                        } else if (err.errors.keyWord1) {
+                            res.json({ success: false, message: err.errors.keyWord1.message });
+                        } else {
+                            res.json({ success: false, message: err });
+                        }
+                        console.log("error inside err")
+                    } else if (err) {
+                        res.json({ success: false, message: "module code already exists" });
+                        console.log("module code already exists");
+                        console.log(err);
+                    }
+
+                } else {
+                    res.json({ success: true, message: 'Question saved' });
+                    console.log("Question saved");
+                }
+            });
+        }
+    });
 
     //user login
     //localhost/3000/authenticate
@@ -278,8 +384,6 @@ module.exports = function (router) {
 
         });
     });
-
-
 
     // checking the availability of the username
     router.post('/checkUsername', function (req, res) {

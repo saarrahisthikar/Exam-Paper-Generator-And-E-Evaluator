@@ -8,7 +8,6 @@ var titlize = require('mongoose-title-case');
 
 // mcq question schema
 var MCQQuestionSchema = new Schema({
-    moduleCode: { type: String, require: true, unique: true },
     question: { type: String, require: true },
     difficultyLevel: { type: String, require: true },
     corresctAns: { type: String, require: true },

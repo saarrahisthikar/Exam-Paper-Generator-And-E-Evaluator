@@ -54,9 +54,8 @@ var StudentSchema = new Schema({
     username: { type: String, lowercase: true, require: true, unique: true, validate: usernameValidator },
     password: { type: String, require: true },
     email: { type: String, lowercase: true, require: true, unique: true, validate: emailValidator },
-    userId: { type: Schema.Types.ObjectId, ref: user },
     courses: [{ type: Schema.Types.ObjectId, ref: course }],
-    marks: [{type: String}]
+    marks: [{ type: String }]
 });
 
 StudentSchema.plugin(titlize, {

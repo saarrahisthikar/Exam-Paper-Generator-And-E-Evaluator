@@ -9,4 +9,21 @@ angular.module('instructorServices', [])
 
         return courseFactory;
 
+    })
+    .factory('Question', function ($http) {
+        questionFactory = {};
+
+        // creating mcq questions
+        questionFactory.addMCQ = function (questionData) {
+            return $http.post('/api/addMCQQuestion', questionData);
+        };
+
+        //creating structured questions
+        questionFactory.addStructured = function (questionData) {
+            return $http.post('/api/addStructuredQuestion', questionData);
+        };
+
+        return questionFactory;
+
     });
+

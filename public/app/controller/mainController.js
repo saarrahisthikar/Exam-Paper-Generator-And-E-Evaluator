@@ -64,6 +64,7 @@ angular.module('mainController', ['authServices','userServices'])
 
                     app.name = data.data.name;
                     app.userType = data.data.userType;
+                    app.username=data.data.username;
                     // checking the role
                     if (app.userType == "admin") {
                         app.isAdmin = true;
