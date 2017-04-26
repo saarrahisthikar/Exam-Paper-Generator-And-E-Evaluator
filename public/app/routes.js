@@ -92,6 +92,8 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/createPaper', {
             templateUrl: 'app/views/pages/instructor/createPaper.html',
             authenticated: true,
+            controller: 'instructorController',
+            controllerAs: 'instructor',
             permission: 'instructor'
         })
 

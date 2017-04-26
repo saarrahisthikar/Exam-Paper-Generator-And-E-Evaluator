@@ -7,9 +7,8 @@ var titlize = require('mongoose-title-case');
 var mcqQuestion = require('./mcqquestion')
 
 // course schema
-var PaperSchema = new Schema({
+var MCQPaperSchema = new Schema({
     difficultyLevel: { type: String, require: true },
-    paperType: { type: String, require: true },
     public: { type: String, default: false },
     moduleCode: { type: String, require: true, unique: true },
     instructor: { type: String },
@@ -18,4 +17,4 @@ var PaperSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('Paper', PaperSchema);
+module.exports = mongoose.model('MCQPaper', MCQPaperSchema);

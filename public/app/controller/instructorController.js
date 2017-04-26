@@ -1,6 +1,6 @@
 angular.module('instructorController', ['instructorServices', 'authServices', 'courseServices'])
 
-    .controller('instructorController', function (Course, $timeout, $location, Question, Auth, CourseDetails) {
+    .controller('instructorController', function (Course, $timeout, $location, Question, Auth, CourseDetails, Paper) {
         var app = this;
         app.errorMsg = false;
         // addCourse
@@ -36,16 +36,38 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
             }
         };
 
-        app.courseDetails = [];
-         CourseDetails.getCourseDetails().then(function (data) {
-                console.log("inside get Course");
-                var i = 0;
-                while (data.data.courseDetails[i]) {
-                    console.log(data.data.courseDetails[i]);
-                    app.courseDetails.push(data.data.courseDetails[i]);
-                    i = i + 1;
-                }
-         });
+
+        app.generatePaper = function (paperData, valid) {
+
+            app.loading = true;
+            console.log('paper data is submitted');
+            console.log(paperData);
+
+
+            if (valid) {
+                console.log('inside valid');
+                Paper.generate(paperData).then(function (data) {
+                    console.log(data + "inside mcq");
+                    if (data.data.success) {
+                        console.log(data.data.success);
+                        app.loading = false;
+                        app.successMsg = data.data.message;
+                        $timeout(function () {
+                            questionData = null;
+                            $location.path('/');
+                        }, 2000);
+
+                    } else {
+                        // functionalities when an error occurs
+                        app.loading = false;
+                        console.log(data.data.success);
+                        app.errorMsg = data.data.message;
+                    }
+                });
+                //adding structured question 
+            }
+
+        };
 
         app.addQuestion = function (questionData, valid) {
 
@@ -106,4 +128,15 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                 console.log('invalid');
             }
         };
+
+        app.courseDetails = [];
+        CourseDetails.getCourseDetails().then(function (data) {
+            console.log("inside get Course");
+            var i = 0;
+            while (data.data.courseDetails[i]) {
+                console.log(data.data.courseDetails[i]);
+                app.courseDetails.push(data.data.courseDetails[i]);
+                i = i + 1;
+            }
+        });
     });

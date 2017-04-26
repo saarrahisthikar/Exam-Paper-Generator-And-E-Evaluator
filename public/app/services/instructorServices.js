@@ -25,5 +25,18 @@ angular.module('instructorServices', [])
 
         return questionFactory;
 
+    })
+
+    .factory('Paper', function ($http) {
+
+        paperFactory = {};
+
+        // generate paper
+        paperFactory.generate = function (paperData) {
+            return $http.post('/api/generatePaper', paperData);
+        };
+
+        return paperFactory;
+
     });
 

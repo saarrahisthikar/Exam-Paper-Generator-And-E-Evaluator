@@ -5,6 +5,9 @@ var Student = require('../models/student');
 var Course = require('../models/course');
 var MCQQuestion = require('../models/mcqquestion');
 var StructredQuestion = require('../models/structuredquestion');
+var Paper = require('../models/paper');
+var MCQPaper = require('../models/mcqpaper');
+var StructuredPaper = require('../models/structuredpaper');
 var jwt = require('jsonwebtoken');
 // secret for the token
 var secret = 'secret';
@@ -346,7 +349,154 @@ module.exports = function (router) {
             });
         }
     });
+    //generate paper
+    router.post('/generatePaper', function (req, res) {
+        console.log('inside generate paper route');
 
+        var flag = true;
+
+        console.log(req.body.moduleCode);
+        console.log(req.body.username);
+        console.log(req.body.totalQuestions);
+
+        if (req.body.paperType == null || req.body.paperType == '' || req.body.difficultyLevel == null || req.body.difficultyLevel == '') {
+            // res.send('fields cannot be null');
+            res.json({ success: false, message: 'Fields cannot be empty' });
+            console.log.apply("empty fields");
+            flag = false
+        }
+
+        if (flag) {
+            if (req.body.paperType == "mcq") {
+                var paper = new MCQPaper();
+                paper.difficultyLevel = req.body.difficultyLevel;
+                paper.totalQuestions = req.body.totalQuestions;
+                paper.instructor = req.body.username;
+                paper.moduleCode = req.body.moduleCode;
+                paper.question = [];
+
+                MCQQuestion.find({ instructor: req.body.username, moduleCode: req.body.moduleCode }).select('_id').exec(function (err, questionID) {
+
+                    if (err) res.send(err);
+                    if (questionID) {
+                        console.log(questionID);
+                        if (questionID.length > req.body.totalQuestions - 1) {
+
+                            console.log(flag);
+                            for (var i = 0; i < req.body.totalQuestions; i++) {
+                                console.log(i);
+                                paper.question.push(questionID[i]);
+                                console.log(paper.question[i]);
+                            }
+                            console.log(paper.question);
+
+
+                            paper.save(function (err) {
+                                if (err) {
+                                    // res.send('user did not save');
+                                    if (err.errors != null) {
+                                        if (err.errors.question) {
+                                            res.json({ success: false, message: err.errors.question.message });
+                                        } else if (err.errors.difficultyLevel) {
+                                            res.json({ success: false, message: err.errors.difficultyLevel.message });
+                                        } else {
+                                            res.json({ success: false, message: err });
+                                        }
+                                        console.log("error inside err")
+                                    } else if (err) {
+                                        res.json({ success: false, message: "paper code already exists" });
+                                        console.log("paper code already exists");
+                                        console.log(err);
+                                    }
+
+                                } else {
+                                    res.json({ success: true, message: 'Paper saved' });
+                                    console.log("Paper saved");
+                                }
+                            });
+
+                        }
+                        else {
+                            res.json({ success: false, message: 'enough questions are not there , add questions to the question bank' });
+                            console.log('enough questions are not there , add questions to the question bank');
+
+                        }
+                    } else {
+                        res.json({ success: false, message: 'questions not found' });
+                        console.log('no qestions');
+                    }
+
+                });
+                console.log(flag);
+
+            } else if (req.body.paperType == "structured") {
+                console.log("inside Structred");
+                var paper = new StructredPaper();
+                paper.difficultyLevel = req.body.difficultyLevel;
+                paper.totalQuestions = req.body.totalQuestions;
+                paper.instructor = req.body.username;
+                paper.moduleCode = req.body.moduleCode;
+                paper.question = [];
+
+                StructredQuestion.find({ difficultyLevel: req.body.difficultyLevel, moduleCode: req.body.moduleCode, instructor: req.body.username }).select('_id').exec(function (err, questionID) {
+
+
+                    if (err) res.send(err);
+                    if (questionID) {
+                        console.log(questionID);
+                        console.log(flag);
+                        if (questionID.length > req.body.totalQuestions - 1) {
+
+                            console.log(flag);
+                            for (var i = 0; i < req.body.totalQuestions; i++) {
+                                console.log(i);
+                                paper.question.push(questionID[i]);
+                                console.log(paper.question[i]);
+                            }
+                            console.log(paper.question);
+
+                            paper.save(function (err) {
+                                if (err) {
+                                    // res.send('user did not save');
+                                    if (err.errors != null) {
+                                        if (err.errors.question) {
+                                            res.json({ success: false, message: err.errors.question.message });
+                                        } else if (err.errors.difficultyLevel) {
+                                            res.json({ success: false, message: err.errors.difficultyLevel.message });
+                                        } else {
+                                            res.json({ success: false, message: err });
+                                        }
+                                        console.log("error inside err")
+                                    } else if (err) {
+                                        res.json({ success: false, message: "paper code already exists" });
+                                        console.log("paper code already exists");
+                                        console.log(err);
+                                    }
+
+                                } else {
+                                    res.json({ success: true, message: 'Paper saved' });
+                                    console.log("Paper saved");
+                                }
+                            });
+
+                        }
+                        else {
+                            res.json({ success: false, message: 'enough questions are not there , add questions to the question bank' });
+                            console.log('enough questions are not there , add questions to the question bank');
+
+                        }
+                    } else {
+                        res.json({ success: false, message: 'questions not found' });
+                        console.log('no qestions');
+                    }
+
+                });
+
+            }
+        }
+
+
+    });
     //user login
     //localhost/3000/authenticate
     router.post('/authenticate', function (req, res) {

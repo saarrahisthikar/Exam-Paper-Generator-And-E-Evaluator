@@ -4,18 +4,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var titlize = require('mongoose-title-case');
-var mcqQuestion = require('./mcqquestion')
+var structuredQuestion = require('./structuredquestion')
 
-// course schema
-var PaperSchema = new Schema({
+// structured paper schema
+var StructuredPaperSchema = new Schema({
     difficultyLevel: { type: String, require: true },
-    paperType: { type: String, require: true },
     public: { type: String, default: false },
     moduleCode: { type: String, require: true, unique: true },
     instructor: { type: String },
     totalQuestions: { type: Number },
-    question: [{ type: Schema.Types.ObjectId, ref: mcqQuestion }]
+    question: [{ type: Schema.Types.ObjectId, ref: structuredQuestion }]
 });
 
 
-module.exports = mongoose.model('Paper', PaperSchema);
+module.exports = mongoose.model('StructuredPaper', StructuredPaperSchema);
