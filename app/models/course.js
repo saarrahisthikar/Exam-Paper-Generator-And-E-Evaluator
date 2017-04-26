@@ -16,7 +16,7 @@ var CourseSchema = new Schema({
     description: { type: String, require: true },
     questions: [{ type: Schema.Types.ObjectId, ref: question }],
     questionPaper: [{ type: Schema.Types.ObjectId, ref: questionPaper }],
-    instructorUsername: { type: String },
+    instructor: { type: String },
     students: [{ type: Schema.Types.ObjectId, ref: student }]
 });
 

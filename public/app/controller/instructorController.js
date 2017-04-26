@@ -1,6 +1,6 @@
-angular.module('instructorController', ['instructorServices', 'authServices'])
+angular.module('instructorController', ['instructorServices', 'authServices', 'courseServices'])
 
-    .controller('instructorController', function (Course, $timeout, $location, Question, Auth) {
+    .controller('instructorController', function (Course, $timeout, $location, Question, Auth, CourseDetails) {
         var app = this;
         app.errorMsg = false;
         // addCourse
@@ -36,6 +36,17 @@ angular.module('instructorController', ['instructorServices', 'authServices'])
             }
         };
 
+        app.courseDetails = [];
+         CourseDetails.getCourseDetails().then(function (data) {
+                console.log("inside get Course");
+                var i = 0;
+                while (data.data.courseDetails[i]) {
+                    console.log(data.data.courseDetails[i]);
+                    app.courseDetails.push(data.data.courseDetails[i]);
+                    i = i + 1;
+                }
+         });
+
         app.addQuestion = function (questionData, valid) {
 
             // app.successMsg = false;
@@ -46,49 +57,49 @@ angular.module('instructorController', ['instructorServices', 'authServices'])
                 console.log('inside valid');
                 //adding mcq question 
 
-          
-                    if (questionData.questionType == 'mcq') {
 
-                         Question.addMCQ(questionData).then(function (data) {
-                            console.log(data + "inside mcq");
-                            if (data.data.success) {
-                                console.log(data.data.success);
-                                app.loading = false;
-                                app.successMsg = data.data.message;
-                                $timeout(function () {
-                                    questionData = null;
-                                    $location.path('/');
-                                }, 2000);
+                if (questionData.questionType == 'mcq') {
 
-                            } else {
-                                // functionalities when an error occurs
-                                app.loading = false;
-                                console.log(data.data.success);
-                                app.errorMsg = data.data.message;
-                            }
-                        });
-                        //adding structured question 
-                    } else if (questionData.questionType == 'structured') {
-                        Question.addStructured(questionData).then(function (data) {
-                            console.log(data);
-                            if (data.data.success) {
-                                console.log(data.data.success);
-                                app.loading = false;
-                                app.successMsg = data.data.message;
-                                $timeout(function () {
-                                    questionData = null;
-                                    $location.path('/');
-                                }, 2000);
+                    Question.addMCQ(questionData).then(function (data) {
+                        console.log(data + "inside mcq");
+                        if (data.data.success) {
+                            console.log(data.data.success);
+                            app.loading = false;
+                            app.successMsg = data.data.message;
+                            $timeout(function () {
+                                questionData = null;
+                                $location.path('/');
+                            }, 2000);
 
-                            } else {
-                                // functionalities when an error occurs
-                                app.loading = false;
-                                console.log(data.data.success);
-                                app.errorMsg = data.data.message;
-                            }
-                        });
-                    }
-             
+                        } else {
+                            // functionalities when an error occurs
+                            app.loading = false;
+                            console.log(data.data.success);
+                            app.errorMsg = data.data.message;
+                        }
+                    });
+                    //adding structured question 
+                } else if (questionData.questionType == 'structured') {
+                    Question.addStructured(questionData).then(function (data) {
+                        console.log(data);
+                        if (data.data.success) {
+                            console.log(data.data.success);
+                            app.loading = false;
+                            app.successMsg = data.data.message;
+                            $timeout(function () {
+                                questionData = null;
+                                $location.path('/');
+                            }, 2000);
+
+                        } else {
+                            // functionalities when an error occurs
+                            app.loading = false;
+                            console.log(data.data.success);
+                            app.errorMsg = data.data.message;
+                        }
+                    });
+                }
+
             } else {
                 app.loading = false;
                 app.errormsg = "Please ensure that the form is filled properly";

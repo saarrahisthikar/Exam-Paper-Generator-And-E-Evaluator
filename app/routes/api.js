@@ -202,9 +202,7 @@ module.exports = function (router) {
         course.courseTitle = req.body.courseTitle;
         course.moduleCode = req.body.moduleCode;
         course.description = req.body.description;
-        // course.instructor = $window.localStorage.getItem('token').then(function (data) {
-        //     return data.data.userType;
-        // });
+        course.instructor = req.body.username;
 
         console.log(course.courseTitle);
         console.log(course.moduleCode);
@@ -253,10 +251,8 @@ module.exports = function (router) {
         question.keyWord2 = req.body.keyWord2;
         question.keyWord3 = req.body.keyWord3;
         question.keyWord4 = req.body.keyWord4;
-        question.instructor = "prabodhanh";
-
-
-
+        question.instructor = req.body.username;
+        question.moduleCode = req.body.moduleCode;
 
         // course.instructor = $window.localStorage.getItem('token').then(function (data) {
         //     return data.data.userType;
@@ -264,8 +260,6 @@ module.exports = function (router) {
 
         console.log(question.question);
         console.log(question.difficultyLevel);
-
-
 
         if (question.question == null || question.question == '' || question.difficultyLevel == null || question.difficultyLevel == '') {
             // res.send('fields cannot be null');
@@ -310,7 +304,8 @@ module.exports = function (router) {
         question.wrongAns2 = req.body.wrongAns2;
         question.wrongAns3 = req.body.wrongAns3;
         question.wrongAns4 = req.body.wrongAns4;
-        question.instructor ="prabodhanh";
+        question.instructor = req.body.username;
+        question.moduleCode = req.body.moduleCode;
 
         // course.instructor = $window.localStorage.getItem('token').then(function (data) {
         //     return data.data.userType;
@@ -409,6 +404,14 @@ module.exports = function (router) {
                 res.json({ success: true, message: "valid email" });
             }
 
+        });
+    });
+
+    //get course details
+    router.get('/courseDetails', function (req, res) {
+        Course.find().select().exec(function (err, courses) {
+            if (err) res.send(err);
+            res.json({ courseDetails: courses });
         });
     });
 
