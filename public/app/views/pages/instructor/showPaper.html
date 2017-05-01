@@ -1,0 +1,44 @@
+<!--adding courses-->
+
+<div class="page-header">
+    <h1>Question PapersCourse</h1>
+</div>
+
+<div class="panel panel-sign">
+    <section class="panel">
+        <header class="panel-heading">
+            <h2 class="panel-title">Courses</h2>
+        </header>
+        <div class="panel-body">
+
+            <section class="panel panel-featured panel-featured-dark" ng-repeat="course in instructor.courseDetails">
+                <header class="panel-heading">
+                    <a href="/showCoursePapers">
+                        <i class="el el-address-book"></i>
+                        <h2 class="panel-title">{{course.moduleCode}}-{{course.courseTitle}}</h2>
+                    </a>
+                </header>
+            </section>
+
+        </div>
+    </section>
+</div>
+
+<br>
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<br>
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="instructor.successMsg">
+    <div class="alert alert-success">{{instructor.successMsg}}</div>
+    <p>Loading.....</p>
+</div>
+
+<br>
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="instructor.errorMsg">
+    <div class="alert alert-danger">{{instructor.errorMsg}}</div>
+</div>
