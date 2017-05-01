@@ -42,7 +42,14 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
             app.loading = true;
             console.log('paper data is submitted');
             console.log(paperData);
+            app.paperMCQ = false;
+            app.paperStructured = false;
 
+            if (paperData.paperType == 'mcq') {
+                app.paperMCQ = true;
+            } else if (paperData.paperType == 'structured') {
+                app.paperStructured = true;
+            }
 
             if (valid) {
                 console.log('inside valid');
@@ -52,9 +59,12 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                         console.log(data.data.success);
                         app.loading = false;
                         app.successMsg = data.data.message;
+
                         $timeout(function () {
-                            questionData = null;
-                            $location.path('/');
+                            app.paper = data.data.paper.question;
+                         //   app.paper.question=app.shuffle(app.paper.question);
+                            paperData = null;
+                            $location.path('/showGeneratedPaper');
                         }, 2000);
 
                     } else {
@@ -127,6 +137,18 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                 app.errormsg = "Please ensure that the form is filled properly";
                 console.log('invalid');
             }
+        };
+
+        app.shuffle = function (array) {
+
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+
         };
 
         app.courseDetails = [];

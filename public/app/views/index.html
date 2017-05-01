@@ -242,6 +242,15 @@
 									</a>
 								</li>
 
+								<!--add course-->
+								<li class="nav-active" ng-show="main.isStudent || main.isInstructor">
+									<a href="/showPapers">
+										<!--direct to add instructort-->
+										<i class="el el-address-book"></i>
+										<span>Show Question Papers</span>
+									</a>
+								</li>
+
 								<!--enrolled courses-->
 
 								<li class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">

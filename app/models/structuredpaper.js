@@ -10,6 +10,7 @@ var structuredQuestion = require('./structuredquestion')
 var StructuredPaperSchema = new Schema({
     difficultyLevel: { type: String, require: true },
     public: { type: String, default: false },
+    paperNo: { type: String },
     moduleCode: { type: String, require: true, unique: true },
     instructor: { type: String },
     totalQuestions: { type: Number },

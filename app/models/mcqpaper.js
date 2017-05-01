@@ -9,6 +9,7 @@ var mcqQuestion = require('./mcqquestion')
 // course schema
 var MCQPaperSchema = new Schema({
     difficultyLevel: { type: String, require: true },
+    paperNo: { type: String },
     public: { type: String, default: false },
     moduleCode: { type: String, require: true, unique: true },
     instructor: { type: String },

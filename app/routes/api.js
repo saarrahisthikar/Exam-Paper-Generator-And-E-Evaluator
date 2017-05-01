@@ -374,8 +374,16 @@ module.exports = function (router) {
                 paper.instructor = req.body.username;
                 paper.moduleCode = req.body.moduleCode;
                 paper.question = [];
+                paper.paperNo=""
 
-                MCQQuestion.find({ instructor: req.body.username, moduleCode: req.body.moduleCode }).select('_id').exec(function (err, questionID) {
+               MCQPaper.count({}, function (err, count) {
+                    console.log("Number of docs: " + count+1);
+                    paper.paperNo=(count+1);
+                });
+
+
+               
+                MCQQuestion.find({ instructor: req.body.username, moduleCode: req.body.moduleCode }).select('_id question corresctAns wrongAns1 wrongAns2 wrongAns3 wrongAns4').exec(function (err, questionID) {
 
                     if (err) res.send(err);
                     if (questionID) {
@@ -410,7 +418,7 @@ module.exports = function (router) {
                                     }
 
                                 } else {
-                                    res.json({ success: true, message: 'Paper saved' });
+                                    res.json({ success: true, message: 'Paper saved', paper: paper });
                                     console.log("Paper saved");
                                 }
                             });
@@ -437,7 +445,9 @@ module.exports = function (router) {
                 paper.instructor = req.body.username;
                 paper.moduleCode = req.body.moduleCode;
                 paper.question = [];
+                paper.paperNo = "Structred paper No: " + StructuredPaper.count();
 
+                console.log('Structred Paper count ' + StructuredPaper.count());
                 StructredQuestion.find({ difficultyLevel: req.body.difficultyLevel, moduleCode: req.body.moduleCode, instructor: req.body.username }).select('_id').exec(function (err, questionID) {
 
 
@@ -474,7 +484,7 @@ module.exports = function (router) {
                                     }
 
                                 } else {
-                                    res.json({ success: true, message: 'Paper saved' });
+                                    res.json({ success: true, message: 'Paper saved', paper: paper });
                                     console.log("Paper saved");
                                 }
                             });
@@ -494,9 +504,8 @@ module.exports = function (router) {
 
             }
         }
-
-
     });
+
     //user login
     //localhost/3000/authenticate
     router.post('/authenticate', function (req, res) {
