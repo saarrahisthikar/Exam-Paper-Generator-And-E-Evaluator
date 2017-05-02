@@ -106,6 +106,15 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'instructor'
         })
 
+         // show all the papers
+        .when('/showCoursePapers/:courseID', {
+            templateUrl: 'app/views/pages/instructor/showCoursePapers.html',
+            authenticated: true,
+            controller: 'instructorController',
+            controllerAs: 'instructor',
+            permission: 'instructor'
+        })
+
         // show the generated papers
         .when('/showGeneratedPaper', {
             templateUrl: 'app/views/pages/instructor/showGeneratedPaper.html',
