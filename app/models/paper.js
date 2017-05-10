@@ -11,7 +11,7 @@ var PaperSchema = new Schema({
     difficultyLevel: { type: String, require: true },
     paperType: { type: String, require: true },
     public: { type: String, default: false },
-    moduleCode: { type: String, require: true, unique: true },
+    moduleCode: { type: String, require: true},
     instructor: { type: String },
     totalQuestions: { type: Number },
     question: [{ type: Schema.Types.ObjectId, ref: mcqQuestion }]

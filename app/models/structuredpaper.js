@@ -11,7 +11,7 @@ var StructuredPaperSchema = new Schema({
     difficultyLevel: { type: String, require: true },
     public: { type: String, default: false },
     paperNo: { type: String },
-    moduleCode: { type: String, require: true, unique: true },
+    moduleCode: { type: String, require: true},
     instructor: { type: String },
     totalQuestions: { type: Number },
     question: [{ type: Schema.Types.ObjectId, ref: structuredQuestion }]

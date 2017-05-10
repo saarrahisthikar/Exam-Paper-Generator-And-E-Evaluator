@@ -14,7 +14,7 @@
             <form class="form-horizontal form-bordered" ng-submit="instructor.generatePaper(GeneratePaperForm.paperData,GeneratePaperForm.$valid);"
                 name="GeneratePaperForm" novalidate>
                 <!--username-->
-                <input type="hidden" ng-model="AddQuestionForm.questionData.username" value="{{main.username}}" ng-init="GeneratePaperForm.paperData.username=main.username">
+                <input type="hidden" ng-model="GeneratePaperForm.paperData.username" value="{{main.username}}" ng-init="GeneratePaperForm.paperData.username=main.username">
 
                 <!--module code-->
                 <div class="form-group">

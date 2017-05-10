@@ -3,8 +3,9 @@ var User = require('../models/user');
 var Instructor = require('../models/instructor');
 var Student = require('../models/student');
 var Course = require('../models/course');
+var Question = require('../models/question');
 var MCQQuestion = require('../models/mcqquestion');
-var StructredQuestion = require('../models/structuredquestion');
+var StructuredQuestion = require('../models/structuredquestion');
 var Paper = require('../models/paper');
 var MCQPaper = require('../models/mcqpaper');
 var StructuredPaper = require('../models/structuredpaper');
@@ -260,9 +261,15 @@ module.exports = function (router) {
         // course.instructor = $window.localStorage.getItem('token').then(function (data) {
         //     return data.data.userType;
         // });
-
+      
+        console.log(question.instructor);
         console.log(question.question);
         console.log(question.difficultyLevel);
+        console.log(question.keyWord1);
+        console.log(question.keyWord2);
+        console.log(question.keyWord3);
+        console.log(question.keyWord4);
+        console.log(question.moduleCode);
 
         if (question.question == null || question.question == '' || question.difficultyLevel == null || question.difficultyLevel == '') {
             // res.send('fields cannot be null');
@@ -282,13 +289,23 @@ module.exports = function (router) {
                         } else {
                             res.json({ success: false, message: err });
                         }
-                        console.log("error inside err")
+                        console.log("error inside err ");
                     } else if (err) {
-                        res.jason({ success: false, message: "module code already exists" });
+                        res.json({ success: false, message: "module code already exists" });
                         console.log("module code already exists");
+                        console.log(err);
                     }
 
                 } else {
+                    var genQuestion = new Question();
+
+                    genQuestion.difficultyLevel = req.body.difficultyLevel;
+                    genQuestion.questionType = req.body.questionType;
+                    genQuestion.instructor = req.body.username;
+                    genQuestion.question = req.body.question;
+
+                    genQuestion.save();
+
                     res.json({ success: true, message: 'Question saved' });
                     console.log("Question saved");
                 }
@@ -313,9 +330,15 @@ module.exports = function (router) {
         // course.instructor = $window.localStorage.getItem('token').then(function (data) {
         //     return data.data.userType;
         // });
+        console.log("correctAns " + req.body.correctAns);
         console.log(question.instructor);
         console.log(question.question);
         console.log(question.difficultyLevel);
+        console.log(question.wrongAns1);
+        console.log(question.wrongAns2);
+        console.log(question.wrongAns3);
+        console.log(question.wrongAns4);
+        console.log(question.moduleCode);
 
         if (question.question == null || question.question == '' || question.difficultyLevel == null || question.difficultyLevel == '') {
             // res.send('fields cannot be null');
@@ -335,7 +358,7 @@ module.exports = function (router) {
                         } else {
                             res.json({ success: false, message: err });
                         }
-                        console.log("error inside err")
+                        console.log("error inside err ");
                     } else if (err) {
                         res.json({ success: false, message: "module code already exists" });
                         console.log("module code already exists");
@@ -343,6 +366,14 @@ module.exports = function (router) {
                     }
 
                 } else {
+                    var genQuestion = new Question();
+
+                    genQuestion.difficultyLevel = req.body.difficultyLevel;
+                    genQuestion.questionType = req.body.questionType;
+                    genQuestion.instructor = req.body.username;
+
+                    genQuestion.save();
+
                     res.json({ success: true, message: 'Question saved' });
                     console.log("Question saved");
                 }
@@ -393,7 +424,7 @@ module.exports = function (router) {
                             console.log(flag);
                             for (var i = 0; i < req.body.totalQuestions; i++) {
                                 console.log(i);
-                                paper.question.push(questionID[i]);
+                                paper.question.push(questionID);
                                 console.log(paper.question[i]);
                             }
                             console.log(paper.question);
@@ -578,7 +609,7 @@ module.exports = function (router) {
     router.get('/getPaperDetails/:courseID', function (req, res) {
         console.log('inside paper details router');
         console.log(req.params.courseID);
-             MCQPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
+        MCQPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
             if (err) res.send(err);
             res.json({ paperDetails: paper });
         });

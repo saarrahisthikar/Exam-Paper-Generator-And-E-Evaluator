@@ -11,10 +11,10 @@ var MCQPaperSchema = new Schema({
     difficultyLevel: { type: String, require: true },
     paperNo: { type: String },
     public: { type: String, default: false },
-    moduleCode: { type: String, require: true, unique: true },
+    moduleCode: { type: String, require: true },
     instructor: { type: String },
     totalQuestions: { type: Number },
-    question: [{ type: Schema.Types.ObjectId, ref: mcqQuestion }]
+    question: [{ type: Schema.Types.Object, ref: mcqQuestion }]
 });
 
 
