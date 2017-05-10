@@ -374,15 +374,15 @@ module.exports = function (router) {
                 paper.instructor = req.body.username;
                 paper.moduleCode = req.body.moduleCode;
                 paper.question = [];
-                paper.paperNo=""
+                paper.paperNo = ""
 
-               MCQPaper.count({}, function (err, count) {
-                    console.log("Number of docs: " + count+1);
-                    paper.paperNo=(count+1);
+                MCQPaper.count({}, function (err, count) {
+                    console.log("Number of docs: " + count + 1);
+                    paper.paperNo = (count + 1);
                 });
 
 
-               
+
                 MCQQuestion.find({ instructor: req.body.username, moduleCode: req.body.moduleCode }).select('_id question corresctAns wrongAns1 wrongAns2 wrongAns3 wrongAns4').exec(function (err, questionID) {
 
                     if (err) res.send(err);
@@ -571,6 +571,16 @@ module.exports = function (router) {
         Course.find().select().exec(function (err, courses) {
             if (err) res.send(err);
             res.json({ courseDetails: courses });
+        });
+    });
+
+    //get paperdetails
+    router.get('/getPaperDetails/:courseID', function (req, res) {
+        console.log('inside paper details router');
+        console.log(req.params.courseID);
+             MCQPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
+            if (err) res.send(err);
+            res.json({ paperDetails: paper });
         });
     });
 

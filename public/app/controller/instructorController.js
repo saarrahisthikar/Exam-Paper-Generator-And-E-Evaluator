@@ -1,6 +1,6 @@
-angular.module('instructorController', ['instructorServices', 'authServices', 'courseServices'])
+angular.module('instructorController', ['instructorServices', 'authServices', 'courseServices', 'paperServices'])
 
-    .controller('instructorController', function (Course, $timeout, $location, Question, Auth, CourseDetails, Paper) {
+    .controller('instructorController', function (Course, $timeout, $location, Question, Auth, CourseDetails, Paper, $routeParams, PaperDetails) {
         var app = this;
         app.errorMsg = false;
         // addCourse
@@ -37,6 +37,11 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
         };
 
 
+        app.getRouterParams = function () {
+            return $routeParams.courseID;
+        };
+
+
         app.generatePaper = function (paperData, valid) {
 
             app.loading = true;
@@ -62,7 +67,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
                         $timeout(function () {
                             app.paper = data.data.paper.question;
-                         //   app.paper.question=app.shuffle(app.paper.question);
+                            //   app.paper.question=app.shuffle(app.paper.question);
                             paperData = null;
                             $location.path('/showGeneratedPaper');
                         }, 2000);
@@ -151,6 +156,22 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
         };
 
+        app.getPaperDetails = function (courseID) {
+            app.paperDetails = [];
+            console.log(courseID);
+            PaperDetails.getPaperDetails(courseID).then(function (data) {
+                console.log("inside paper details");
+                var i = 0;
+                while (data.data.paperDetails[i]) {
+                    console.log(data.data.paperDetails[i]);
+                    app.paperDetails.push(data.data.paperDetails[i]);
+                    i = i + 1;
+                }
+
+            });
+            return app.paperDetails;
+        };
+
         app.courseDetails = [];
         CourseDetails.getCourseDetails().then(function (data) {
             console.log("inside get Course");
@@ -161,4 +182,6 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                 i = i + 1;
             }
         });
+
+
     });
