@@ -14,7 +14,7 @@ var StructuredPaperSchema = new Schema({
     moduleCode: { type: String, require: true},
     instructor: { type: String },
     totalQuestions: { type: Number },
-    question: [{ type: Schema.Types.ObjectId, ref: structuredQuestion }]
+    question: [{ type: Schema.Types.Object, ref: structuredQuestion }]
 });
 
 

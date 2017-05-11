@@ -405,7 +405,7 @@ module.exports = function (router) {
                 paper.instructor = req.body.username;
                 paper.moduleCode = req.body.moduleCode;
                 paper.question = [];
-                paper.paperNo = ""
+                paper.paperNo = "";
 
                 MCQPaper.count({}, function (err, count) {
                     console.log("Number of docs: " + count + 1);
@@ -424,7 +424,7 @@ module.exports = function (router) {
                             console.log(flag);
                             for (var i = 0; i < req.body.totalQuestions; i++) {
                                 console.log(i);
-                                paper.question.push(questionID);
+                                paper.question.push(questionID[i]);
                                 console.log(paper.question[i]);
                             }
                             console.log(paper.question);
@@ -478,16 +478,23 @@ module.exports = function (router) {
 
             } else if (req.body.paperType == "structured") {
                 console.log("inside Structred");
-                var paper = new StructredPaper();
+                var paper = new StructuredPaper();
                 paper.difficultyLevel = req.body.difficultyLevel;
                 paper.totalQuestions = req.body.totalQuestions;
                 paper.instructor = req.body.username;
                 paper.moduleCode = req.body.moduleCode;
                 paper.question = [];
-                paper.paperNo = "Structred paper No: " + StructuredPaper.count();
+                paper.paperNo = "";
 
-                console.log('Structred Paper count ' + StructuredPaper.count());
-                StructredQuestion.find({ difficultyLevel: req.body.difficultyLevel, moduleCode: req.body.moduleCode, instructor: req.body.username }).select('_id').exec(function (err, questionID) {
+               
+               
+               StructuredPaper.count({}, function (err, count) {
+                    console.log("Number of docs: " + count + 1);
+                    paper.paperNo = (count + 1);
+                });
+
+                console.log('SStructured Paper count ' + StructuredPaper.count());
+                StructuredQuestion.find({ difficultyLevel: req.body.difficultyLevel, moduleCode: req.body.moduleCode, instructor: req.body.username }).select('_id question keyWord1 keyWord2 keyWord3 keyWord4').exec(function (err, questionID) {
 
 
                     if (err) res.send(err);
