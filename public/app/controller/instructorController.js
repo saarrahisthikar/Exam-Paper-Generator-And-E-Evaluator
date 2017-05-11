@@ -176,7 +176,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
         app.questionPaper = []
         app.getRouterParamsPaper = function () {
             console.log($routeParams.questionType);
-             console.log($routeParams.paperNo);
+            console.log($routeParams.paperNo);
             app.questionPaper.push($routeParams.questionType);
             app.questionPaper.push($routeParams.paperNo);
             console.log(app.questionPaper);
@@ -193,10 +193,33 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                 while (data.data.paperQuestions.question[i]) {
                     console.log(data.data.paperQuestions.question[i]);
                     app.questionPaperInfo.push(data.data.paperQuestions.question[i]);
-                    i=i+1;
+                    i = i + 1;
                 }
             });
             return app.questionPaperInfo;
+        };
+
+        app.makePublic = function (data) {
+            app.loading = true;
+            console.log('inside make public' + data.paperNo);
+            console.log('inside make public' + data.paperType);
+            PaperDetails.makePublic(data).then(function (data) {
+                console.log(data);
+                if (data.data.success) {
+                    console.log(data.data.success);
+                    app.loading = false;
+                    app.successMsg = data.data.message;
+                    $timeout(function () {
+                        $location.path('/');
+                    }, 2000);
+
+                } else {
+                    // functionalities when an error occurs
+                    app.loading = false;
+                    console.log(data.data.success);
+                    app.errorMsg = data.data.message;
+                }
+            })
         };
 
         app.courseDetails = [];

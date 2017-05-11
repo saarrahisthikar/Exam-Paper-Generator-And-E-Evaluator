@@ -493,7 +493,7 @@ module.exports = function (router) {
                     paper.paperNo = (count + 1);
                 });
 
-                console.log('SStructured Paper count ' + StructuredPaper.count());
+                console.log('Structured Paper count ' + StructuredPaper.count());
                 StructuredQuestion.find({ difficultyLevel: req.body.difficultyLevel, moduleCode: req.body.moduleCode, instructor: req.body.username }).select('_id question keyWord1 keyWord2 keyWord3 keyWord4').exec(function (err, questionID) {
 
 
@@ -592,6 +592,30 @@ module.exports = function (router) {
                     console.log('no qestions');
                 }
 
+            });
+        }
+    });
+
+    router.post('/makePublic', function (req, res) {
+        if (req.body.paperType == 'mcq') {
+            MCQPaper.update({ paperNo: req.body.paperNo }, {
+                public: 'true',
+            }, function (err, affected, resp) {
+                if (err) {
+                    res.json({ success: false, message: 'An error occured' });
+                } else {
+                    res.json({ success: true, message: 'successfully made public' })
+                }
+            });
+        } else if (req.body.paperType == 'structured') {
+            StructuredPaper.update({ paperNo: req.body.paperNo }, {
+                public: 'true',
+            }, function (err, affected, resp) {
+                if (err) {
+                    res.json({ success: false, message: 'An error occured' });
+                } else {
+                    res.json({ success: true, message: 'successfully made public' })
+                }
             });
         }
     });

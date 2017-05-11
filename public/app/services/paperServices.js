@@ -11,6 +11,10 @@ angular.module('paperServices', [])
             return $http.get('/api/getPaper/'+questionPaperDetails[0]+'/'+questionPaperDetails[1]);
         };
 
+         paperDetailFactory.makePublic =function(data){
+            return $http.post('/api/makePublic',data);
+        };
+
         return paperDetailFactory;
 
     });
