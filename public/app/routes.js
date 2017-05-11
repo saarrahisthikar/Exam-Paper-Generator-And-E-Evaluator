@@ -123,6 +123,13 @@ app.config(function ($routeProvider, $locationProvider) {
             controllerAs: 'instructor',
             permission: 'instructor'
         })
+
+        .when('/viewPaper/:paperNo', {
+            templateUrl: 'app/views/pages/instructor/viewPaper.html',
+            authenticated: true,
+            controller: ['instructorController','studentController'],           
+            permission: 'instructor'
+        })
         //student
         // accessing the viewCourses page
         .when('/viewCourses', {

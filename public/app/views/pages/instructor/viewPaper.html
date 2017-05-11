@@ -1,0 +1,82 @@
+<div class="page-header">
+    <h1>Generate Question Paper</h1>
+</div>
+
+<div class="panel panel-sign">
+    <section class="panel">
+
+        <header class="panel-heading">
+            <h2 class="panel-title">Generate Question Paper</h2>
+        </header>
+
+        <div class="panel-body">
+
+            <form class="form-horizontal form-bordered" ng-submit="instructor.generatePaper(GeneratePaperForm.paperData,GeneratePaperForm.$valid);"
+                name="GeneratePaperForm" novalidate>
+                <!--username-->
+                <input type="hidden" ng-model="GeneratePaperForm.paperData.username" value="{{main.username}}" ng-init="GeneratePaperForm.paperData.username=main.username">
+
+                <!--module code-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="textareaAutosize">Module Code</label>
+                    <div class="col-md-6">
+                        <select name="course" class="form-control mb-md" ng-model="GeneratePaperForm.paperData.moduleCode">
+								<option ng-repeat="course in instructor.courseDetails" value="{{course.moduleCode}}">{{course.moduleCode}}-{{course.courseTitle}}</option>								
+						</select>
+                    </div>
+                </div>
+                <!--adding the question type-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Question Type <span class="required" aria-required="true">*</span></label>
+                    <div class="col-sm-9">
+                        <!--type-mcq-->
+                        <div class="radio-custom radio-primary">
+                            <input id="mcq" name="paperType" type="radio" value="mcq" ng-model="GeneratePaperForm.paperData.paperType" required="" aria-required="true">
+                            <label for="mcq">MCQ</label>
+                        </div>
+                        <!--type-structured-->
+                        <div class="radio-custom radio-primary">
+                            <input id="structured" name="paperType" type="radio" ng-model="GeneratePaperForm.paperData.paperType" value="structured">
+                            <label for="structured">Structured</label>
+                        </div>
+                        <label class="error" for="paperType"></label>
+                    </div>
+                </div>
+                <!--adding the Difficulty Level-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Difficulty Level <span class="required" aria-required="true">*</span></label>
+                    <div class="col-sm-9">
+                        <!--easy-->
+                        <div class="radio-custom radio-primary">
+                            <input id="easy" name="difficultyLevel" type="radio" ng-model="GeneratePaperForm.paperData.difficultyLevel" value="easy"
+                                required="" aria-required="true">
+                                <label for="easy">Easy</label>
+                        </div>
+                        <!--moderate-->
+                        <div class="radio-custom radio-primary">
+                            <input id="moderate" name="difficultyLevel" ng-model="GeneratePaperForm.paperData.difficultyLevel" type="radio" value="moderate">
+                            <label for="moderate">Moderate</label>
+                        </div>
+                        <!--difficult-->
+                        <div class="radio-custom radio-primary">
+                            <input id="difficult" name="difficultyLevel" type="radio" ng-model="GeneratePaperForm.paperData.difficultyLevel" value="difficult">
+                            <label for="difficult">Difficult</label>
+                        </div>
+                        <label class="error" for="difficultyLevel"></label>
+                    </div>
+                </div>
+                <!--Numberof Questions-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="noQues">Number of Question</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" ng-model="GeneratePaperForm.paperData.totalQuestions" placeholder="Number of Questions"
+                            id="noQues">
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-primary">Generate</button>
+                </form>
+        </div>
+    </section>
+</div>
+</div>

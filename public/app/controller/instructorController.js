@@ -156,10 +156,10 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
         };
 
-        app.getPaperDetails = function (courseID) {
+        app.getPaperDetails = function (paperInfo) {
             app.paperDetails = [];
-            console.log(courseID);
-            PaperDetails.getPaperDetails(courseID).then(function (data) {
+            console.log(paperInfo.questionType);
+            PaperDetails.getPaperDetails(paperInfo).then(function (data) {
                 console.log("inside paper details");
                 var i = 0;
                 while (data.data.paperDetails[i]) {

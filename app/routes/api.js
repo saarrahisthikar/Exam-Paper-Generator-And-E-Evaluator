@@ -261,7 +261,7 @@ module.exports = function (router) {
         // course.instructor = $window.localStorage.getItem('token').then(function (data) {
         //     return data.data.userType;
         // });
-      
+
         console.log(question.instructor);
         console.log(question.question);
         console.log(question.difficultyLevel);
@@ -449,6 +449,14 @@ module.exports = function (router) {
                                     }
 
                                 } else {
+                                    var genPaper = new Paper();
+                                    genPaper.difficultyLevel = req.body.difficultyLevel;
+                                    genPaper.totalQuestions = req.body.totalQuestions;
+                                    genPaper.instructor = req.body.username;
+                                    genPaper.moduleCode = req.body.moduleCode;
+                                    genPaper.question = [];
+                                    genPaper.paperNo = paper.paperNo;
+                                    genPaper.save();
                                     res.json({ success: true, message: 'Paper saved', paper: paper });
                                     console.log("Paper saved");
                                 }
@@ -515,6 +523,18 @@ module.exports = function (router) {
                                     }
 
                                 } else {
+
+                                    var genPaper = new Paper();
+
+
+                                    genPaper.difficultyLevel = paper.difficultyLevel;
+                                    genPaper.totalQuestions = paper.totalQuestions;
+                                    genPaper.instructor = paper.instructor;
+                                    genPaper.question = paper.question;
+                                    genPaper.paperNo = paper.paperNo;
+                                    genPaper.save();
+
+
                                     res.json({ success: true, message: 'Paper saved', paper: paper });
                                     console.log("Paper saved");
                                 }
@@ -606,13 +626,26 @@ module.exports = function (router) {
     });
 
     //get paperdetails
-    router.get('/getPaperDetails/:courseID', function (req, res) {
+    router.get('/getPaperDetails/:courseID/:questionType', function (req, res) {
         console.log('inside paper details router');
+        console.log(req.params.questionType);
         console.log(req.params.courseID);
-        MCQPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
-            if (err) res.send(err);
-            res.json({ paperDetails: paper });
-        });
+
+        //  console.log(req.params.paperInfo.data.courseID);
+        // console.log(req.query.paperInfo.questionType);
+        if (req.params.questionType == 'mcq') {
+            MCQPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
+                if (err) res.send(err);
+                res.json({ paperDetails: paper });
+            });
+        } else if (req.params.questionType == 'structured') {
+            StructuredPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
+                if (err) res.send(err);
+                res.json({ paperDetails: paper });
+            });
+        } else {
+            console.log('invalid entry');
+        }
     });
 
     //middleware
