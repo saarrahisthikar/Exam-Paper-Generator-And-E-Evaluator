@@ -106,7 +106,7 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'instructor'
         })
 
-         // show all the papers
+        // show all the papers
         .when('/showCoursePapers/:courseID', {
             templateUrl: 'app/views/pages/instructor/showCoursePapers.html',
             authenticated: true,
@@ -124,10 +124,12 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'instructor'
         })
 
-        .when('/viewPaper/:paperNo', {
+        //show selected paper
+        .when('/viewPaper/:questionType/:paperNo', {
             templateUrl: 'app/views/pages/instructor/viewPaper.html',
             authenticated: true,
-            controller: ['instructorController','studentController'],           
+            controller: 'instructorController',
+            controllerAs: 'instructor',
             permission: 'instructor'
         })
         //student

@@ -414,7 +414,7 @@ module.exports = function (router) {
 
 
 
-                MCQQuestion.find({ instructor: req.body.username, moduleCode: req.body.moduleCode }).select('_id question corresctAns wrongAns1 wrongAns2 wrongAns3 wrongAns4').exec(function (err, questionID) {
+                MCQQuestion.find({ instructor: req.body.username, moduleCode: req.body.moduleCode }).select('_id question correctAns wrongAns1 wrongAns2 wrongAns3 wrongAns4').exec(function (err, questionID) {
 
                     if (err) res.send(err);
                     if (questionID) {
@@ -486,9 +486,9 @@ module.exports = function (router) {
                 paper.question = [];
                 paper.paperNo = "";
 
-               
-               
-               StructuredPaper.count({}, function (err, count) {
+
+
+                StructuredPaper.count({}, function (err, count) {
                     console.log("Number of docs: " + count + 1);
                     paper.paperNo = (count + 1);
                 });
@@ -561,6 +561,38 @@ module.exports = function (router) {
                 });
 
             }
+        }
+    });
+
+    router.get('/getPaper/:questionType/:paperNo', function (req, res) {
+        if (req.params.questionType == 'mcq') {
+            console.log('inside getting mcq question paper');
+            MCQPaper.findOne({ paperNo: req.params.paperNo }).select('question').exec(function (err, questions) {
+
+                if (err) res.send(err);
+                if (questions) {
+                    console.log(questions);
+                    res.json({ paperQuestions: questions });
+                } else {
+                    res.json({ success: false, message: 'questions not found' });
+                    console.log('no qestions');
+                }
+
+            });
+        } else if (req.params.questionType == 'structured') {
+            console.log('inside getting mcq question paper');
+            StructuredPaper.findOne({ paperNo: req.params.paperNo }).select('question').exec(function (err, questions) {
+
+                if (err) res.send(err);
+                if (questions) {
+                    console.log(questions);
+                    res.json({ paperQuestions: questions });
+                } else {
+                    res.json({ success: false, message: 'questions not found' });
+                    console.log('no qestions');
+                }
+
+            });
         }
     });
 

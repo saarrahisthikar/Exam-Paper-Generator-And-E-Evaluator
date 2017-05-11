@@ -41,7 +41,7 @@
                             <div ng-init="paper=instructor.getPaperDetails(showCoursePapers.data);">
                                 <section class="panel panel-featured panel-featured-dark" ng-repeat="paper in paper">
                                     <header class="panel-heading">
-                                        <a href="/viewPaper/{{paper.paperNo}}">
+                                        <a href="/viewPaper/{{showCoursePapers.data.questionType}}/{{paper.paperNo}}">
                                             <i class="el el-address-book"></i>
                                             <h2 class="panel-title">{{paper.paperNo}} - Paper</h2>
                                         </a>
@@ -60,7 +60,7 @@
                             <div ng-init="paper=instructor.getPaperDetails(showCoursePapers.data);">
                                 <section class="panel panel-featured panel-featured-dark" ng-repeat="paper in paper">
                                     <header class="panel-heading">
-                                        <a href="/viewPaper/{{paper.paperNo}}">
+                                        <a href="/viewPaper/{{showCoursePapers.data.questionType}}/{{paper.paperNo}}">
                                             <i class="el el-address-book"></i>
                                             <h2 class="panel-title">{{paper.paperNo}} - Paper</h2>
                                         </a>

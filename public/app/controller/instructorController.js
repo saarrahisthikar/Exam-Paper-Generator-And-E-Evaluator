@@ -172,6 +172,33 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
             return app.paperDetails;
         };
 
+
+        app.questionPaper = []
+        app.getRouterParamsPaper = function () {
+            console.log($routeParams.questionType);
+             console.log($routeParams.paperNo);
+            app.questionPaper.push($routeParams.questionType);
+            app.questionPaper.push($routeParams.paperNo);
+            console.log(app.questionPaper);
+            return app.questionPaper;
+        };
+
+        app.getPaper = function (questionPaperDetails) {
+            console.log('inside questionPaperDetails' + questionPaperDetails);
+            app.questionPaperInfo = [];
+            PaperDetails.getPaper(questionPaperDetails).then(function (data) {
+                console.log('inside getPaper');
+                console.log(data.data.paperQuestions.question[0]);
+                var i = 0;
+                while (data.data.paperQuestions.question[i]) {
+                    console.log(data.data.paperQuestions.question[i]);
+                    app.questionPaperInfo.push(data.data.paperQuestions.question[i]);
+                    i=i+1;
+                }
+            });
+            return app.questionPaperInfo;
+        };
+
         app.courseDetails = [];
         CourseDetails.getCourseDetails().then(function (data) {
             console.log("inside get Course");
