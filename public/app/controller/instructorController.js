@@ -222,16 +222,19 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
             })
         };
 
-        app.courseDetails = [];
-        CourseDetails.getCourseDetails().then(function (data) {
-            console.log("inside get Course");
-            var i = 0;
-            while (data.data.courseDetails[i]) {
-                console.log(data.data.courseDetails[i]);
-                app.courseDetails.push(data.data.courseDetails[i]);
-                i = i + 1;
-            }
-        });
+        app.getCourseDetails = function (username) {
+            app.courseDetails = [];
+            CourseDetails.getCourseDetails(username).then(function (data) {
+                console.log("inside get Course");
+                var i = 0;
+                while (data.data.courseDetails[i]) {
+                    console.log(data.data.courseDetails[i]);
+                    app.courseDetails.push(data.data.courseDetails[i]);
+                    i = i + 1;
+                }
+            });
+            return app.courseDetails;
+        };
 
 
     });

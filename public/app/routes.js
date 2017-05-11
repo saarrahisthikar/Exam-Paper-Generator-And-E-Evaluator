@@ -132,12 +132,24 @@ app.config(function ($routeProvider, $locationProvider) {
             controllerAs: 'instructor',
             permission: 'instructor'
         })
+
+        .when('/viewCoursesInstructor', {
+            templateUrl: 'app/views/pages/instructor/viewCoursesInstructor.html',
+            authenticated: true,
+            controller: 'instructorController',
+            controllerAs: 'instructor',
+            permission: 'instructor'
+        })
+
         //student
         // accessing the viewCourses page
+        // can be accessed by anyone
         .when('/viewCourses', {
-            templateUrl: 'app/views/pages/student/viewCourses.html',
-            authenticated: true,
-            permission: 'student'
+            templateUrl: 'app/views/pages/shared/viewCourses.html',
+            authenticated: false,
+            controller: 'sharedController',
+            controllerAs: 'shared',
+            
         })
 
         .otherwise({ redirectTo: 'app/views/pages/home.html' });

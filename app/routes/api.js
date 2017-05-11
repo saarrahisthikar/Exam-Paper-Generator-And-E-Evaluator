@@ -681,8 +681,8 @@ module.exports = function (router) {
     });
 
     //get course details
-    router.get('/courseDetails', function (req, res) {
-        Course.find().select().exec(function (err, courses) {
+    router.get('/courseDetails/:username', function (req, res) {
+        Course.find({ instructor: req.params.username }).select().exec(function (err, courses) {
             if (err) res.send(err);
             res.json({ courseDetails: courses });
         });
@@ -709,6 +709,14 @@ module.exports = function (router) {
         } else {
             console.log('invalid entry');
         }
+    });
+
+    // get all course details
+    router.get('/courseDetails', function (req, res) {
+        Course.find().select().exec(function (err, courses) {
+            if (err) res.send(err);
+            res.json({ courseDetails: courses });
+        });
     });
 
     //middleware

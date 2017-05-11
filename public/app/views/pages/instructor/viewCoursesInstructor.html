@@ -1,0 +1,15 @@
+<div class="page-header">
+    <h1>View Courses</h1>
+</div>
+<div class="panel panel-sign">
+    <div ng-init="courseDetails=instructor.getCourseDetails(main.username)">
+        <section class="panel panel-featured panel-featured-dark" ng-repeat="course in courseDetails">
+            <header class="panel-heading">
+                <h2 class="panel-title">{{course.moduleCode}} - {{course.courseTitle}}</h2>
+            </header>
+            <div class="panel-body">
+                <code>{{course.description}}</code>
+            </div>
+        </section>
+    </div>
+</div>

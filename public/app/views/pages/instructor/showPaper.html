@@ -11,14 +11,16 @@
         </header>
         <div class="panel-body">
 
-            <section class="panel panel-featured panel-featured-dark" ng-repeat="course in instructor.courseDetails">
-                <header class="panel-heading">
-                    <a href="/showCoursePapers/{{course.moduleCode}}">
-                        <i class="el el-address-book"></i>
-                        <h2 class="panel-title">{{course.moduleCode}}-{{course.courseTitle}}</h2>
-                    </a>
-                </header>
-            </section>
+            <div ng-init="courseDetails=instructor.getCourseDetails(main.username)">
+                <section class="panel panel-featured panel-featured-dark" ng-repeat="course in courseDetails">
+                    <header class="panel-heading">
+                        <a href="/showCoursePapers/{{course.moduleCode}}">
+                            <i class="el el-address-book"></i>
+                            <h2 class="panel-title">{{course.moduleCode}}-{{course.courseTitle}}</h2>
+                        </a>
+                    </header>
+                </section>
+            </div>
 
         </div>
     </section>

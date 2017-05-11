@@ -19,10 +19,12 @@
                 <!--module code-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="textareaAutosize">Module Code</label>
-                    <div class="col-md-6">
-                        <select name="course" class="form-control mb-md" ng-model="GeneratePaperForm.paperData.moduleCode">
-								<option ng-repeat="course in instructor.courseDetails" value="{{course.moduleCode}}">{{course.moduleCode}}-{{course.courseTitle}}</option>								
+                    <div ng-init="courseDetails=instructor.getCourseDetails(main.username)">
+                        <div class="col-md-6">
+                            <select name="course" class="form-control mb-md" ng-model="GeneratePaperForm.paperData.moduleCode">
+								<option ng-repeat="course in courseDetails" value="{{course.moduleCode}}">{{course.moduleCode}}-{{course.courseTitle}}</option>								
 						</select>
+                        </div>
                     </div>
                 </div>
                 <!--adding the question type-->

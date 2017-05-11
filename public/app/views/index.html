@@ -32,6 +32,7 @@
 	<script src="app/controller/studentController.js"></script>
 	<script src="app/controller/adminController.js"></script>
 	<script src="app/controller/instructorController.js"></script>
+	<script src="app/controller/sharedController.js"></script>
 
 	<!--anguler services-->
 	<script src="app/services/userServices.js"></script>
@@ -41,7 +42,7 @@
 	<script src="app/services/instructorServices.js"></script>
 	<script src="app/services/courseServices.js"></script>
 	<script src="app/services/paperServices.js"></script>
-	
+
 
 	<!-- Web Fonts  -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
@@ -197,7 +198,7 @@
 								</li>
 								<!--view courses student-->
 
-								<li class="nav-active" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
+								<li class="nav-active">
 									<a href="/viewCourses">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
@@ -212,7 +213,7 @@
 								<!--generate paper-->
 
 								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
-									<a href="/viewCourses">
+									<a href="/viewCoursesInstructor">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
 										<span>Courses</span>
@@ -265,6 +266,16 @@
 										<li><a href="#">CS 2031</a></li>
 										<li><a href="#">MA 2398</a></li>
 								</li>
+
+								<!--view courses by anyone-->
+								<li class="nav-active">
+									<a href="/viewCourses">
+										<!--direct to add instructort-->
+										<i class="el el-address-book"></i>
+										<span>All Courses</span>
+									</a>
+								</li>
+
 								</ul>
 						</nav>
 					</div>
