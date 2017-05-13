@@ -2,17 +2,25 @@
     <h1>View Courses</h1>
 </div>
 <div class="panel panel-sign">
-    <div ng-init="courseDetails=shared.courseDetails">
+    <div ng-init=" courseDetails=shared.getAllCourses(); ">
         <section class="panel panel-featured panel-featured-dark" ng-repeat="course in courseDetails">
+            <!--<div ng-init="student.checkStudentEnrolment(course.moduleCode, main.username)">-->
+
+            <!--<div ng-show="!temp">-->
+            <!--<form class="form-horizontal form-bordered"  name="EnrollForm" novalidate>-->
             <header class="panel-heading">
-                 <h2 class="panel-title">{{course.moduleCode}} - {{course.courseTitle}}</h2>
+                <h2 class="panel-title">{{course.moduleCode}} - {{course.courseTitle}}</h2>
                 <p class="panel-subtitle">Instructor - {{course.instructor}}</p>
             </header>
             <div class="panel-body">
                 <code>This helps to improve the mathematical thinking ability</code>
                 <br>
-                <button ng-show="main.isStudent" class="btn btn-primary">Enroll</button>
+                <button ng-click="student.enroll(course.moduleCode, main.username)" class="btn btn-primary" ng-show="main.isStudent">Enroll</button>
+                <!--</div>-->
+                <!--</form>-->
+                <!--</div>-->
             </div>
         </section>
     </div>
+</div>
 </div>

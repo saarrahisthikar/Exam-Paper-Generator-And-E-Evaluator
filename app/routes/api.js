@@ -620,6 +620,48 @@ module.exports = function (router) {
         }
     });
 
+    //student
+    // enroll courses
+    router.post('/enroll', function (req, res) {
+        console.log('courseId ' + req.body[0]);
+        console.log('courseId ' + req.body[1]);
+        Student.update({ username: req.body[1] }, { $push: { courses: req.body[0] } }, function (err, affected, resp) {
+            if (err) {
+                console.log(err);
+                res.json({ success: false, message: 'An error occured' });
+            } else {
+                res.json({ success: true, message: 'successfully made public' })
+            }
+        });
+
+    });
+
+    //checking whether enrolled
+    router.get('/isEnrolled/:moduleCode/:username', function (req, res) {
+        Student.findOne({ username: req.params.username, courses: req.params.moduleCode }).select().exec(function (err, data) {
+            console.log("backend " + data);
+            if (err) {
+                res.json({ success: false, message: 'not enrolled' });
+            } else if (data == null) {
+                res.json({ success: false, message: 'enrolled' });
+            } else {
+                res.json({ success: true, message: 'enrolled' });
+            }
+        });
+
+    });
+
+    router.get('/enrolledCourses/:username', function (req, res) {
+        Student.findOne({ username: req.params.username }).select('courses').exec(function (err, data) {
+            if (err) {
+                res.json({ courses : {} });
+            } else {
+                console.log("RIMAZzzZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ "+data);
+                res.json({ courses: data });
+            }
+        });
+    });
+
     //user login
     //localhost/3000/authenticate
     router.post('/authenticate', function (req, res) {

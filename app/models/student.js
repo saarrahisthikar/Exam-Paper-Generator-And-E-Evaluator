@@ -54,7 +54,7 @@ var StudentSchema = new Schema({
     username: { type: String, lowercase: true, require: true, unique: true, validate: usernameValidator },
     password: { type: String, require: true },
     email: { type: String, lowercase: true, require: true, unique: true, validate: emailValidator },
-    courses: [{ type: Schema.Types.ObjectId, ref: course }],
+    courses: [{ type: String, ref: course }],
     marks: [{ type: String }]
 });
 
