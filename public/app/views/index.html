@@ -197,14 +197,25 @@
 									</a>
 								</li>
 								<!--view courses student-->
-
+<!--
 								<li class="nav-active">
 									<a href="/viewCourses">
+										<!--direct to add instructort-->
+										<!--<i class="el el-address-book"></i>
+										<span>All Courses</span>
+									</a>
+								</li>-->
+
+
+								<!--view courses by anyone-->
+								<li class="nav-active">
+									<a href="/viewCourses/{{}}">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
 										<span>All Courses</span>
 									</a>
 								</li>
+
 
 								<!--instructor-->
 
@@ -256,27 +267,18 @@
 
 								<!--enrolled courses-->
 
-								<li class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
+								<li ng-controller="studentController as student" ng-init=" courses = student.getEnrolledCourses();" class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
 									<a>
 										<i class="fa fa-columns" aria-hidden="true"></i>
 										<span>Enrolled Courses</span>
 									</a>
-									<ul class="nav nav-children">
-										<li><a href="#">CS 3013</a></li>
-										<li><a href="#">CS 2031</a></li>
-										<li><a href="#">MA 2398</a></li>
+									<ul class="nav nav-children" ng-repeat="course in courses">
+										<li><a href="#">{{course}}</a></li>
+										</ul>
 								</li>
 
-								<!--view courses by anyone-->
-								<li class="nav-active">
-									<a href="/viewCourses">
-										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
-										<span>All Courses</span>
-									</a>
-								</li>
-
-								</ul>
+								
+								
 						</nav>
 					</div>
 					<script>

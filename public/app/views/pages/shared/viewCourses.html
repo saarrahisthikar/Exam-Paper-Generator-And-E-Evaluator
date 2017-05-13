@@ -1,7 +1,7 @@
 <div class="page-header">
     <h1>View Courses</h1>
 </div>
-<div class="panel panel-sign">
+<div ng-controller ="studentController as student"class="panel panel-sign">
     <div ng-init=" courseDetails=shared.getAllCourses(); ">
         <section class="panel panel-featured panel-featured-dark" ng-repeat="course in courseDetails">
             <!--<div ng-init="student.checkStudentEnrolment(course.moduleCode, main.username)">-->

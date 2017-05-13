@@ -653,6 +653,7 @@ module.exports = function (router) {
 
     router.get('/enrolledCourses/:username', function (req, res) {
         Student.findOne({ username: req.params.username }).select('courses').exec(function (err, data) {
+            console.log("backend username :"+req.params.username);
             if (err) {
                 res.json({ courses : {} });
             } else {

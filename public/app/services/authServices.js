@@ -1,7 +1,7 @@
 angular.module('authServices', [])
 
 // Factor: Auth handles all login/logout functions	
-.factory('Auth', function($http, AuthToken) {
+.factory('Auth', function($q, $http, AuthToken) {
     var authFactory = {}; // Create the factory object
 
     // Function to log the user in
