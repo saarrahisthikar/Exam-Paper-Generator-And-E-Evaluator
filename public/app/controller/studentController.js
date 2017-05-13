@@ -61,7 +61,7 @@ angular.module('studentController', ['studentServices', 'authServices', 'courseS
                     app.loading = false;
                     app.successMsg = data.data.message;
                     $timeout(function () {
-                        $location.path('/viewCourses');
+                        $location.path('/');
                     }, 2000);
                 } else {
                     // functionalities when an error occurs
