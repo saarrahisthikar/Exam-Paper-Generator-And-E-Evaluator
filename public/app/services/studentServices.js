@@ -7,11 +7,11 @@ angular.module('studentServices', [])
             return $http.post('/api/enroll', [moduleCode, username]);
         };
 
-        studentCourseFactory.isEnrolled = function (moduleCode, username) {
-            return $http.get('api/isEnrolled/' + moduleCode + '/' + username);
-        };
-        studentCourseFactory.getCourses=function(username){
-            return $http.get('api/enrolledCourses/'+username);
+        // studentCourseFactory.isEnrolled = function (moduleCode, username) {
+        //     return $http.get('api/isEnrolled/' + moduleCode + '/' + username);
+        // };
+        studentCourseFactory.getCourses = function (username) {
+            return $http.get('api/enrolledCourses/' + username);
         };
 
         return studentCourseFactory;

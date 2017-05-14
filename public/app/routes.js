@@ -149,8 +149,27 @@ app.config(function ($routeProvider, $locationProvider) {
             authenticated: false,
             controller: 'sharedController',
             controllerAs: 'shared',
-            
+
         })
+
+        //show question type and papers
+        .when('/stuShowCoursePapers/:courseID', {
+            templateUrl: 'app/views/pages/student/paperView/stuShowCoursePapers.html',
+            authenticated: true,
+            controller: 'studentController',
+            controllerAs: 'student',
+            permission: 'student'
+        })
+
+        //try selected paper
+        .when('/viewTryPaper/:questionType/:paperNo', {
+            templateUrl: 'app/views/pages/student/paperView/stuViewTryPaper.html',
+            authenticated: true,
+            controller: 'studentController',
+            controllerAs: 'student',
+            permission: 'student'
+        })
+
 
         .otherwise({ redirectTo: 'app/views/pages/home.html' });
 

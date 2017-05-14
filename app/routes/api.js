@@ -630,34 +630,34 @@ module.exports = function (router) {
                 console.log(err);
                 res.json({ success: false, message: 'An error occured' });
             } else {
-                res.json({ success: true, message: 'successfully made public' })
+                res.json({ success: true, message: 'successfully made enrolled' })
             }
         });
 
     });
 
     //checking whether enrolled
-    router.get('/isEnrolled/:moduleCode/:username', function (req, res) {
-        Student.findOne({ username: req.params.username, courses: req.params.moduleCode }).select().exec(function (err, data) {
-            console.log("backend " + data);
-            if (err) {
-                res.json({ success: false, message: 'not enrolled' });
-            } else if (data == null) {
-                res.json({ success: false, message: 'enrolled' });
-            } else {
-                res.json({ success: true, message: 'enrolled' });
-            }
-        });
+    // router.get('/isEnrolled/:moduleCode/:username', function (req, res) {
+    //     Student.findOne({ username: req.params.username, courses: [req.params.moduleCode] }).select().exec(function (err, data) {
+    //         console.log("backend " + data);
+    //         if (err) {
+    //             res.json({ success: false, message: 'not enrolled' });
+    //         } else if (data == null) {
+    //             res.json({ success: false, message: 'enrolled' });
+    //         } else {
+    //             res.json({ success: true, message: 'enrolled' });
+    //         }
+    //     });
 
-    });
+    // });
 
     router.get('/enrolledCourses/:username', function (req, res) {
         Student.findOne({ username: req.params.username }).select('courses').exec(function (err, data) {
-            console.log("backend username :"+req.params.username);
+            console.log("backend username :" + req.params.username);
             if (err) {
-                res.json({ courses : {} });
+                res.json({ courses: {} });
             } else {
-                console.log("RIMAZzzZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ "+data);
+                console.log("RIMAZzzZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ " + data);
                 res.json({ courses: data });
             }
         });
@@ -746,6 +746,31 @@ module.exports = function (router) {
             });
         } else if (req.params.questionType == 'structured') {
             StructuredPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
+                if (err) res.send(err);
+                res.json({ paperDetails: paper });
+            });
+        } else {
+            console.log('invalid entry');
+        }
+    });
+
+    //get public paperdetails
+    router.get('/getPublicPaperDetails/:courseID/:questionType', function (req, res) {
+        console.log('inside paper details router');
+        console.log(req.params.questionType);
+        console.log(req.params.courseID);
+
+        //  console.log(req.params.paperInfo.data.courseID);
+        // console.log(req.query.paperInfo.questionType);
+        if (req.params.questionType == 'mcq') {
+            MCQPaper.find({ moduleCode: req.params.courseID, public: true }).select().exec(function (err, paper) {
+                console.log("paaaaaaaaaaaaaaaaaaaaaaaapeeeeeeeeeeeeeeeeeeeeeeer " + paper);
+                if (err) res.send(err);
+                res.json({ paperDetails: paper });
+            });
+        } else if (req.params.questionType == 'structured') {
+            StructuredPaper.find({ moduleCode: req.params.courseID, public: true }).select().exec(function (err, paper) {
+                console.log("paaaaaaaaaaaaaaaaaaaaaaaapeeeeeeeeeeeeeeeeeeeeeeer " + paper);
                 if (err) res.send(err);
                 res.json({ paperDetails: paper });
             });

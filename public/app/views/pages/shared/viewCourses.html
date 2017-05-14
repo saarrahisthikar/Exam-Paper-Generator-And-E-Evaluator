@@ -5,19 +5,18 @@
     <!--if a student-->
     <div ng-if="main.isStudent" ng-init=" courseDetails=shared.getAllCourses(); enrolledCourses = student.getEnrolledCourses();">
         <div ng-repeat="course in courseDetails">
-           
-                <section class="panel panel-featured panel-featured-dark">
-                    <header class="panel-heading">
-                        <h2 class="panel-title">{{course.moduleCode}} - {{course.courseTitle}}</h2>
-                        <p class="panel-subtitle">Instructor - {{course.instructor}}</p>
-                    </header>
-                    <div class="panel-body">
-                        <code>This helps to improve the mathematical thinking ability</code>
-                        <br>
-                        <button  ng-if="enrolledCourses.indexOf(course.moduleCode)== -1" ng-click="student.enroll(course.moduleCode, main.username)" class="btn btn-primary">Enroll</button>
-                </section>
-                </div>
-          
+            <section class="panel panel-featured panel-featured-dark">
+                <header class="panel-heading">
+                    <h2 class="panel-title">{{course.moduleCode}} - {{course.courseTitle}}</h2>
+                    <p class="panel-subtitle">Instructor - {{course.instructor}}</p>
+                </header>
+                <div class="panel-body">
+                    <code>This helps to improve the mathematical thinking ability</code>
+                    <br>
+                    <button ng-if="enrolledCourses.indexOf(course.moduleCode)== -1" ng-click="student.enroll(course.moduleCode, main.username)"
+                        class="btn btn-primary">Enroll</button>
+            </section>
+            </div>
         </div>
         <!--if not a student-->
         <div ng-if="!main.isStudent" ng-init=" courseDetails=shared.getAllCourses();">

@@ -1,0 +1,92 @@
+<div class="page-header">
+    <h1>Question Paper</h1>
+</div>
+
+<div class="panel panel-sign">
+    <section class="panel">
+        <header class="panel-heading">
+            <h2 class="panel-title">Question Paper</h2>
+        </header>
+        <div class="panel-body">
+            <form class="form-horizontal form-bordered" ng-submit="student.submitAnswer(PaperForm.data)" name="PaperForm" novalidate>
+                <div ng-init="paperInfo=student.getRouterParamsPaper();">
+                    <input type="hidden" ng-model="PaperForm.data.paperType" value="paperInfo[0]" ng-init="PaperForm.data.paperType =paperInfo[0]">
+                    <input type="hidden" ng-model="PaperForm.data.paperNo" value="paperInfo[1]" ng-init="PaperForm.data.paperNo =paperInfo[1]">
+                    <div ng-int="PaperFor.data.Ans[0]=1; PaperFor.data.Ans[1]=2; "></div>
+                </div>
+                <div ng-init="questions = student.getPaper(paperInfo)"> </div>
+                <!--mcq question-->
+                <div class="form-group" ng-show="PaperForm.data.paperType=='mcq'">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">MCQ Question Paper - {{PaperForm.data.paperNo}}-</h2>
+                    </header>
+                    <div class="form-group">
+                        <!--<div ng-model="PaperForm.data.Ans = "checking Ans""></div>-->
+                        <section class="panel panel-featured panel-featured-dark" ng-repeat="question in questions">
+                            <label class="col-md-3 control-label" for="inputDefault">Course Title</label> {{$index}}
+                            <br>
+                            <label class="col-md-12" for="question">{{question.question}}</label>
+                            <br>
+                            <div class="col-md-6">
+                                <div class="radio">
+                                    <label>
+							            <input type="radio" ng- model="PaperForm.data.Ans[{{$index}}]"name="{{question.question}}"  value="{{question.correctAns}}" >
+							            {{question.correctAns}}
+							            </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns1}}">
+							            {{question.wrongAns1}}
+							            </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns2}}" >
+							            {{question.wrongAns2}}
+							            </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns3}}"}} >
+								        {{question.wrongAns3}}
+						                </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns4}}" >
+						                {{question.wrongAns4}}
+							            </label>
+                                </div>
+                            </div>
+                            <br>
+                        </section>
+                    </div>
+                </div>
+
+                <!--structured question-->
+                <div class="form-group" ng-show="PaperForm.data.paperType=='structured'">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Structured Question Paper - {{PaperForm.data.paperNo}}</h2>
+                    </header>
+                    <section class="panel panel-featured panel-featured-dark" ng-repeat="question in questions">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="question">{{question.question}}</label>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="ans">Answer</label>
+                            <div class="col-md-6">
+                                <textarea ng- model="PaperForm.data.Ans[{{$index}}]" class="form-control" rows="3" data-plugin-textarea-autosize="" style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;"></textarea>
+                            </div>
+                        </div>
+                    </section>
+                    <!---->
+                    <br>
+                </div>
+                {{PaperForm.data.Ans}}
+                <button type="submit" class="btn btn-primary">Submit Answers</button>
+            </form>
+        </div>
+    </section>
+</div>
