@@ -793,6 +793,16 @@ module.exports = function (router) {
 
                 var percentage = (count / tot) * 100;
                 console.log("percentage : " + percentage);
+                console.log("username" + req.body.username);
+
+                Student.update({ username: req.body.username }, { $push: { marks: percentage } }, function (err, affected, resp) {
+                    if (err) {
+                        console.log(err);
+                        // res.json({ success: false, message: 'An error occured' });
+                    } else {
+                        // res.json({ success: true, message: 'successfully made enrolled' })
+                    }
+                });
 
                 res.json({ message: "successfully submitted", data: percentage });
 
@@ -801,10 +811,12 @@ module.exports = function (router) {
             });
 
         } else if (req.body.paperType == 'structured') {
+
             console.log("inside structured");
             StructuredPaper.findOne({ paperNo: req.body.paperNo }).select().exec(function (err, data) {
 
                 console.log("from front :" + data.question.length);
+                check = check + 10;
 
                 var count = 0;
                 var tot = 0;
@@ -831,12 +843,11 @@ module.exports = function (router) {
                 console.log("count : " + count);
                 var percentage = (count / tot) * 100;
                 console.log("percentage : " + percentage);
+                Student.update({ username: req.body.username }, { $push: { marks: percentage } });
                 res.json({ message: "successfully submitted", data: percentage });
 
             });
         }
-
-
     });
 
     // get all course details

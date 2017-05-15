@@ -10,6 +10,9 @@
         <div class="panel-body">
             <form class="form-horizontal form-bordered" ng-submit="student.submitAnswer(PaperForm.data)" name="PaperForm" novalidate>
                 <div ng-init="paperInfo=student.getRouterParamsPaper();">
+                    <!--username-->
+                    <input type="hidden" ng-model="PaperForm.data.username" value="{{main.username}}" ng-init="PaperForm.data.username=main.username">
+
                     <input type="hidden" ng-model="PaperForm.data.paperType" value="paperInfo[0]" ng-init="PaperForm.data.paperType =paperInfo[0]">
                     <input type="hidden" ng-model="PaperForm.data.paperNo" value="paperInfo[1]" ng-init="PaperForm.data.paperNo =paperInfo[1]">
                     <div ng-int="PaperFor.data.Ans[0]=1; PaperFor.data.Ans[1]=2; "></div>
