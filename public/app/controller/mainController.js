@@ -1,6 +1,6 @@
 //console.log('This is the main Controller');
 
-angular.module('mainController', ['authServices','userServices'])
+angular.module('mainController', ['authServices', 'userServices'])
 
     .controller('mainController', function ($http, $location, $timeout, Auth, $rootScope, $interval, $window, User, AuthToken) {
         // console.log('This is the main controller');
@@ -64,7 +64,7 @@ angular.module('mainController', ['authServices','userServices'])
 
                     app.name = data.data.name;
                     app.userType = data.data.userType;
-                    app.username=data.data.username;
+                    app.username = data.data.username;
                     // checking the role
                     if (app.userType == "admin") {
                         app.isAdmin = true;
@@ -151,7 +151,7 @@ angular.module('mainController', ['authServices','userServices'])
         // main.login(loginData);
         this.doLogin = function (loginData) {
 
-            app.errMsg = false;
+            app.errorMsg = false;
             app.loading = false;
 
             //console.log('login check');
@@ -160,13 +160,13 @@ angular.module('mainController', ['authServices','userServices'])
                 //console.log(data);
                 if (data.data.success) {// Checks whether the login is a success
                     app.loading = false;
-                    app.loginSuccessMsg = data.data.message;
+                    app.successMsg = data.data.message;
 
                     // redirects to the home page after 2s
                     $timeout(function () {
                         $location.path('/');
                         app.loginData = null;
-                        app.loginSuccessMsg = false;//checking whether the user is logged in
+                        app.successMsg = false;//checking whether the user is logged in
                         app.checkSession();
                     }, 2000);
 
@@ -187,7 +187,7 @@ angular.module('mainController', ['authServices','userServices'])
             // }, 2000);
 
             showModal(2); // Activate modal that logs out user
-  
+
         }
 
     });

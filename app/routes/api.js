@@ -55,7 +55,7 @@ module.exports = function (router) {
                         } else if (err.errors.username) {
                             res.json({ success: false, message: "invalid username" });
                         } else {
-                            res.json({ success: false, message: "invalid entries.. check again" });
+                            res.json({ success: false, message: err });
                         }
 
                     } else if (err) {
@@ -65,7 +65,7 @@ module.exports = function (router) {
                             } else if (err.errmsg[61] == "e") {
                                 res.json({ success: false, message: 'Email already exists ' });
                             } else {
-                                res.json({ success: false, message: "Username or Email already exists" });
+                                res.json({ success: false, message: err });
                             }
                         }
                     }
@@ -662,7 +662,7 @@ module.exports = function (router) {
             console.log("no error in user retrieval");
 
             if (!user) {
-                res.json({ success: false, message: 'user not found' });
+                res.json({ success: false, message: 'Invalid login - check username and password' });
                 console.log('user not found - inside authenticate');
             } else if (user) {
                 if (req.body.password) {
@@ -675,7 +675,7 @@ module.exports = function (router) {
                     var token = jwt.sign({ name: user.name, username: user.username, userType: user.userType, email: user.email }, secret, { expiresIn: '24h' });
                     res.json({ success: true, message: 'login successful', token: token });
                 } else {
-                    res.json({ success: false, message: 'password not authenticated' });
+                    res.json({ success: false, message: 'Invalid login - check username and password' });
                 }
             }
 
