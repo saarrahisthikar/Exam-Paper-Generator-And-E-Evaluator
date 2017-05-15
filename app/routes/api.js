@@ -788,17 +788,66 @@ module.exports = function (router) {
             console.log("inside mcq");
             MCQPaper.findOne({ paperNo: req.body.paperNo }).select().exec(function (err, data) {
 
+                var count = 0;
+                var tot = 0;
                 for (var i = 0; i < data.question.length; i++) {
-                    console.log(data.question.length);
-                    console.log(JSON.stringify(data.question[i].correctAns));
 
+                    console.log("from front :" + data.question.length);
+                    if (req.body.answers[i] == data.question[i].correctAns) {
+                        count = count + 1;
+                        console.log(req.body.answers[i]);
+                        console.log(JSON.stringify(data.question[i].correctAns));
+                    }
+                    tot = tot + 1;
                     // console.log(data.question[i]).correctAns;
                 }
+                console.log("total : " + tot);
+                console.log("count : " + count);
+
+
+                var percentage = (count / tot) * 100;
+                console.log("percentage : " + percentage);
+
+                res.json({ message: "successfully submitted", data: percentage });
+
+                // res.json({})
 
             });
 
         } else if (req.body.paperType == 'structured') {
+            console.log("inside structured");
+            StructuredPaper.findOne({ paperNo: req.body.paperNo }).select().exec(function (err, data) {
 
+                console.log("from front :" + data.question.length);
+
+                var count = 0;
+                var tot = 0;
+                for (var i = 0; i < data.question.length; i++) {
+                    if (req.body.answers[i].toLocaleLowerCase().includes(data.question[i].keyWord1.toLocaleLowerCase())) {
+                        count = count + 1;
+                    }
+                    if (req.body.answers[i].toLocaleLowerCase().includes(data.question[i].keyWord2.toLocaleLowerCase())) {
+                        count = count + 1;
+                    }
+                    if (req.body.answers[i].toLocaleLowerCase().includes(data.question[i].keyWord3.toLocaleLowerCase())) {
+                        count = count + 1;
+                    }
+                    if (req.body.answers[i].toLocaleLowerCase().includes(data.question[i].keyWord4.toLocaleLowerCase())) {
+                        count = count + 1;
+                    }
+
+
+                    tot = tot + 1;
+
+                    // console.log(data.question[i]).correctAns;
+                }
+                console.log("total : " + tot);
+                console.log("count : " + count);
+                var percentage = (count / tot) * 100;
+                console.log("percentage : " + percentage);
+                res.json({ message: "successfully submitted", data: percentage });
+
+            });
         }
 
 

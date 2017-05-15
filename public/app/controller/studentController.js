@@ -124,7 +124,7 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
         app.submitAnswer = function (paperAns) {
 
             CheckPaper.getMarks(paperAns).then(function (data) {
-                console.log("inside get paper :" + data)
+                console.log("inside get paper percentage :" +JSON.stringify(data.data.data));
             });
             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + JSON.stringify(paperAns));
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperType);

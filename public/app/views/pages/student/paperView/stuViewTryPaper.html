@@ -30,6 +30,7 @@
                             <div class="col-md-6">
                                 <div class="radio">
                                     <label>
+                                        <!--answers[$index] instead use answers[question_id]  -- u can set the question_id from be -->
 							            <input type="radio" ng-model="PaperForm.data.answers[$index]"name="{{question.question}}"  value="{{question.correctAns}}" >
 							            {{question.correctAns}}
 							            </label>
