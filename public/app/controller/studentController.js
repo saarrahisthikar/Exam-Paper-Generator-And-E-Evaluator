@@ -125,6 +125,6 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + JSON.stringify(paperAns));
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperType);
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperNo);
-            console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.Ans);
+            console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + JSON.stringify(paperAns.answers));
         }
     });

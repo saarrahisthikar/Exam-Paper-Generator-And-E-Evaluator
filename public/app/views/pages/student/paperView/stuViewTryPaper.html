@@ -16,7 +16,7 @@
                 </div>
                 <div ng-init="questions = student.getPaper(paperInfo)"> </div>
                 <!--mcq question-->
-                <div class="form-group" ng-show="PaperForm.data.paperType=='mcq'">
+                <div class="form-group" ng-if="PaperForm.data.paperType=='mcq'" ng-show="PaperForm.data.paperType=='mcq'">
                     <header class="panel-heading">
                         <h2 class="panel-title">MCQ Question Paper - {{PaperForm.data.paperNo}}-</h2>
                     </header>
@@ -30,42 +30,43 @@
                             <div class="col-md-6">
                                 <div class="radio">
                                     <label>
-							            <input type="radio" ng- model="PaperForm.data.Ans[{{$index}}]"name="{{question.question}}"  value="{{question.correctAns}}" >
+							            <input type="radio" ng-model="PaperForm.data.answers[$index]"name="{{question.question}}"  value="{{question.correctAns}}" >
 							            {{question.correctAns}}
 							            </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns1}}">
+							            <input type="radio"  ng-model="PaperForm.data.answers[$index]" name="{{question.question}}" value="{{question.wrongAns1}}">
 							            {{question.wrongAns1}}
 							            </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns2}}" >
+							            <input type="radio"  ng-model="PaperForm.data.answers[$index]" name="{{question.question}}" value="{{question.wrongAns2}}" >
 							            {{question.wrongAns2}}
 							            </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns3}}"}} >
+							            <input type="radio"  ng-model="PaperForm.data.answers[$index]" name="{{question.question}}" value="{{question.wrongAns3}}"}} >
 								        {{question.wrongAns3}}
 						                </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-							            <input type="radio"  ng- model="PaperForm.data.Ans[{{$index}}]" name="{{question.question}}" value="{{question.wrongAns4}}" >
+							            <input type="radio"  ng-model="PaperForm.data.answers[$index]" name="{{question.question}}" value="{{question.wrongAns4}}" >
 						                {{question.wrongAns4}}
 							            </label>
                                 </div>
                             </div>
+
                             <br>
                         </section>
                     </div>
                 </div>
 
                 <!--structured question-->
-                <div class="form-group" ng-show="PaperForm.data.paperType=='structured'">
+                <div class="form-group" ng-if="PaperForm.data.paperType=='structured'" ng-show="PaperForm.data.paperType=='structured'">
                     <header class="panel-heading">
                         <h2 class="panel-title">Structured Question Paper - {{PaperForm.data.paperNo}}</h2>
                     </header>
@@ -75,9 +76,9 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" for="ans">Answer</label>
+                            <label class="col-md-3 control-label" for="inputDefault">Course Title</label>
                             <div class="col-md-6">
-                                <textarea ng- model="PaperForm.data.Ans[{{$index}}]" class="form-control" rows="3" data-plugin-textarea-autosize="" style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;"></textarea>
+                                <input type="text" class="form-control" ng-model="PaperForm.data.answers[$index]" placeholder="Answer" id="{{question.question}}">
                             </div>
                         </div>
                     </section>
