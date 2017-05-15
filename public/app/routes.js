@@ -58,12 +58,16 @@ app.config(function ($routeProvider, $locationProvider) {
         // accessing the viewInstructors page
         .when('/viewInstructors', {
             templateUrl: 'app/views/pages/admin/viewInstructors.html',
+            controller: 'adminController',
+            controllerAs: 'admin',
             authenticated: true,
             permission: 'admin'
         })
         // accessing the viewStudents page
         .when('/viewStudents', {
             templateUrl: 'app/views/pages/admin/viewStudents.html',
+            controller: 'adminController',
+            controllerAs: 'admin',
             authenticated: true,
             permission: 'admin'
         })

@@ -636,21 +636,7 @@ module.exports = function (router) {
 
     });
 
-    //checking whether enrolled
-    // router.get('/isEnrolled/:moduleCode/:username', function (req, res) {
-    //     Student.findOne({ username: req.params.username, courses: [req.params.moduleCode] }).select().exec(function (err, data) {
-    //         console.log("backend " + data);
-    //         if (err) {
-    //             res.json({ success: false, message: 'not enrolled' });
-    //         } else if (data == null) {
-    //             res.json({ success: false, message: 'enrolled' });
-    //         } else {
-    //             res.json({ success: true, message: 'enrolled' });
-    //         }
-    //     });
-
-    // });
-
+    // get enrolled coourses by a particular student
     router.get('/enrolledCourses/:username', function (req, res) {
         Student.findOne({ username: req.params.username }).select('courses').exec(function (err, data) {
             console.log("backend username :" + req.params.username);
@@ -859,6 +845,33 @@ module.exports = function (router) {
             if (err) res.send(err);
             res.json({ courseDetails: courses });
         });
+    });
+
+    //admin
+    //get instructor info
+    router.get('/instructorInfo', function (req, res) {
+        Instructor.find().select().exec(function (err, instructor) {
+
+            if (err) res.send(err);
+            if (instructor) {
+                res.json({ message: "instructor", instructor: instructor });
+            }
+
+        });
+
+    });
+
+    //get student info
+    router.get('/studentInfo', function (req, res) {
+        Student.find().select().exec(function (err, student) {
+
+            if (err) res.send(err);
+            if (student) {
+                res.json({ message: "student", student: student });
+            }
+
+        });
+
     });
 
     //middleware
