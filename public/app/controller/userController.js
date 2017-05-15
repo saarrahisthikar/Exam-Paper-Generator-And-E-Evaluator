@@ -28,7 +28,7 @@ angular.module('userController', ['userServices'])
                         app.successMsg = data.data.message;
                         $timeout(function () {
                             app.regData = null;
-                            $location.path('/');
+                            $location.path('/login');
                         }, 2000);
 
                     } else {

@@ -47,15 +47,15 @@ module.exports = function (router) {
                     // res.send('user did not save');
                     if (err.errors != null) {
                         if (err.errors.name) {
-                            res.json({ success: false, message: err.errors.name.message });
+                            res.json({ success: false, message: "invalid name" });
                         } else if (err.errors.email) {
-                            res.json({ success: false, message: err.errors.email.message });
+                            res.json({ success: false, message: "invalid email" });
                         } else if (err.errors.password) {
-                            res.json({ success: false, message: err.errors.password.message });
+                            res.json({ success: false, message:"invalid password" });
                         } else if (err.errors.username) {
-                            res.json({ success: false, message: err.errors.username.message });
+                            res.json({ success: false, message: "invalid username" });
                         } else {
-                            res.json({ success: false, message: err });
+                            res.json({ success: false, message: "invalid entries.. check again" });
                         }
 
                     } else if (err) {
@@ -65,7 +65,7 @@ module.exports = function (router) {
                             } else if (err.errmsg[61] == "e") {
                                 res.json({ success: false, message: 'Email already exists ' });
                             } else {
-                                res.json({ success: false, message: err });
+                                res.json({ success: false, message: "Username or Email already exists" });
                             }
                         }
                     }
