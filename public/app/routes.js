@@ -152,8 +152,7 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/views/pages/shared/viewCourses.html',
             authenticated: false,
             controller: 'sharedController',
-            controllerAs: 'shared',
-
+            controllerAs: 'shared'
         })
 
         //show question type and papers
@@ -174,6 +173,13 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'student'
         })
 
+        .when('/viewMarks/:marks', {
+            templateUrl: 'app/views/pages/student/viewMarks.html',
+            authenticated: true,
+            controller: 'studentController',
+            controllerAs: 'student',
+            permission: 'student'
+        })
 
         .otherwise({ redirectTo: 'app/views/pages/home.html' });
 

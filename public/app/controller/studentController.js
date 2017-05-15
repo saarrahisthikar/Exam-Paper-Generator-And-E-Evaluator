@@ -4,9 +4,8 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
     .controller('studentController', function ($q, CheckPaper, $routeParams, PaperDetails, $scope, Auth, CourseDetails, StudentCourse, $timeout, $location) {
 
         var app = this;
-        app.errorMsg = false;
         app.loading = false;
-        app.successMsg = false;
+
 
         app.getEnrolledCourses = function () {
             app.enrollDetails = [];
@@ -65,6 +64,7 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
 
             console.log('inside enroll ' + moduleCode + " " + username);
             app.loading = true;
+            app.errorMsg = false;
 
             StudentCourse.enroll(moduleCode, username).then(function (data) {
                 if (data.data.success) {
@@ -72,7 +72,7 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
                     app.loading = false;
                     app.successMsg = data.data.message;
                     $timeout(function () {
-                        $location.path('/');
+                        $location.path('/viewCourses');
                     }, 2000);
                 } else {
                     // functionalities when an error occurs
@@ -124,11 +124,32 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
         app.submitAnswer = function (paperAns) {
 
             CheckPaper.getMarks(paperAns).then(function (data) {
-                console.log("inside get paper percentage :" +JSON.stringify(data.data.data));
+                app.errorMsg = false;
+                console.log("Data : "+JSON.stringify(data.data));
+                if (data.data.success) {
+                    console.log(data.data.success);
+                    app.successMsg = data.data.message;
+                    $timeout(function () {
+                        app.successMsg = false;
+                        $location.path('/viewMarks/'+data.data.data);
+                    }, 2000);
+
+                } else {
+                    console.log(data.data.success);
+                    app.errorMsg = data.data.message;
+                }
+
+
+                console.log("inside get paper percentage :" + JSON.stringify(data.data.data));
             });
             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + JSON.stringify(paperAns));
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperType);
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperNo);
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + JSON.stringify(paperAns.answers));
+        }
+
+
+        app.getRouterParamsMarks = function () {
+            return $routeParams.marks;
         }
     });

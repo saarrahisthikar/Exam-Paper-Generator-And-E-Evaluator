@@ -7954,12 +7954,12 @@ html.dark .ui-slider.ui-widget-content {
 }
 
 .ui-pnotify .notification .ui-pnotify-title {
-	font-size: 14px;
+	font-size: 24px;
 	letter-spacing: 0;
 }
 
 .ui-pnotify .notification .ui-pnotify-text {
-	font-size: 12px;
+	font-size: 20px;
 	line-height: 1.3em;
 }
 
