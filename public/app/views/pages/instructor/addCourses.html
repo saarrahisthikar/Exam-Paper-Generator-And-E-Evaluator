@@ -8,7 +8,6 @@
 <!--displaying the success message-->
 <div class="row show-hide-message" ng-show="instructor.successMsg">
     <div class="alert alert-success">{{instructor.successMsg}}</div>
-    <p>Loading.....</p>
 </div>
 
 <!--displaying the error message-->
@@ -38,6 +37,7 @@
                             <p ng-show="(!courseForm.courseTitle.$pristine && courseForm.courseTitle.$error.required)|| (courseForm.$submitted && courseForm.courseTitle.$error.required)">*required</p>
                     </div>
                 </div>
+
                 <!--module code-->
                 <div class="form-group" ng-class="{'has-success':(courseForm.moduleCode.$valid && !courseForm.moduleCode.$pristine), 'has-error':(!courseForm.moduleCode.$valid && !courseForm.moduleCode.$pristine) ||(courseForm.$submitted && !courseForm.moduleCode.$valid)}">
                     <label class="col-md-3 control-label" for="inputDefault2">Module Code</label>
@@ -48,6 +48,7 @@
                             <p ng-show="(!courseForm.moduleCode.$pristine && courseForm.moduleCode.$error.pattern)">Module Code should be in the form 'MN2098'</p>
                     </div>
                 </div>
+
                 <!--description-->
                 <div class="form-group" ng-class="{'has-success':(courseForm.description.$valid && !courseForm.description.$pristine), 'has-error':(!courseForm.description.$valid && !courseForm.description.$pristine) ||(courseForm.$submitted && !courseForm.description.$valid)}">
                     <label class="col-md-3 control-label" for="textareaAutosize">Description</label>
@@ -55,9 +56,9 @@
                         <textarea class="form-control" name="description" rows="3" id="description" data-plugin-textarea-autosize="" ng-model="courseForm.courseData.description"
                             style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;" required></textarea>
                             <p ng-show="(!courseForm.description.$pristine && courseForm.description.$error.required)|| (courseForm.$submitted && courseForm.description.$error.required)">*required</p>
-
                     </div>
                 </div>
+
                 <br>
                 <button ng-disabled="courseForm.$invalid" type="submit" class="btn btn-primary">Add Course</button>
                 </form>

@@ -9,6 +9,7 @@
   "author": "Saarrah Isthikar",
   "license": "ISC",
   "dependencies": {
+    "angular-chart.js": "^1.1.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",

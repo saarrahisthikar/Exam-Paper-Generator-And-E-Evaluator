@@ -1,7 +1,7 @@
-angular.module('studentController', ['studentServices', 'paperServices', 'authServices', 'courseServices'])
+angular.module('studentController', ['studentServices', 'paperServices', 'authServices', 'courseServices', 'chart.js'])
     // console.log('inside student controller');
 
-    .controller('studentController', function ($q, CheckPaper, $routeParams, PaperDetails, $scope, Auth, CourseDetails, StudentCourse, $timeout, $location) {
+    .controller('studentController', function ($q, StudentMarks, CheckPaper, $routeParams, PaperDetails, $scope, Auth, CourseDetails, StudentCourse, $timeout, $location) {
 
         var app = this;
         app.loading = false;
@@ -125,13 +125,13 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
 
             CheckPaper.getMarks(paperAns).then(function (data) {
                 app.errorMsg = false;
-                console.log("Data : "+JSON.stringify(data.data));
+                console.log("Data : " + JSON.stringify(data.data));
                 if (data.data.success) {
                     console.log(data.data.success);
                     app.successMsg = data.data.message;
                     $timeout(function () {
                         app.successMsg = false;
-                        $location.path('/viewMarks/'+data.data.data);
+                        $location.path('/viewMarks/' + data.data.data);
                     }, 2000);
 
                 } else {
@@ -152,4 +152,60 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
         app.getRouterParamsMarks = function () {
             return $routeParams.marks;
         }
+
+        app.genProgressChart = function (username) {
+            console.log("generating graph for : " + username);
+            StudentMarks.getProgress(username).then(function (data) {
+
+                if (data.data.success) {
+
+                    console.log("marks : " + JSON.stringify(data.data.marks['marks']));
+
+                    $scope.labels = [];
+                    $scope.series = ['Series A'];
+                    $scope.data = data.data.marks[0].marks;
+
+                    var i = 0;
+                    while (data.data.marks[0].marks[i]) {
+                        $scope.labels.push('Attempt ' + i);
+                        i = i + 1;
+                    }
+
+
+                    // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+                    // $scope.series = ['Series A'];
+                    // $scope.data = [
+                    //     [65, 59, 80, 81, 56, 55, 40]
+                    // ];
+
+                    // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+                    // $scope.series = ['Series A', 'Series B'];
+                    // $scope.data = [
+                    //     [65, 59, 80, 81, 56, 55, 40],
+                    //     [28, 48, 40, 19, 86, 27, 90]
+                    // ];
+                    $scope.onClick = function (points, evt) {
+                        console.log(points, evt);
+                    };
+                    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+                    $scope.options = {
+                        scales: {
+                            yAxes: [
+                                {
+                                    id: 'y-axis-1',
+                                    type: 'linear',
+                                    display: true,
+                                    position: 'left'
+                                }
+                            ]
+                        }
+                    };
+
+                } else {
+                    console.log("no marks to generate");
+                }
+            });
+
+        }
+
     });

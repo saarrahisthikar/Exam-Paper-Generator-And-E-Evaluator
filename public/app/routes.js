@@ -181,6 +181,14 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'student'
         })
 
+         .when('/viewProgress', {
+            templateUrl: 'app/views/pages/student/viewProgress.html',
+            authenticated: true,
+            controller: 'studentController',
+            controllerAs: 'student',
+            permission: 'student'
+        })
+
         .otherwise({ redirectTo: 'app/views/pages/home.html' });
 
     $locationProvider.html5Mode({

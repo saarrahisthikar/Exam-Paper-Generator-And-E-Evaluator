@@ -20,29 +20,31 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="textareaAutosize">Module Code</label>
                     <div ng-init="courseDetails=instructor.getCourseDetails(main.username)">
-                        <div class="col-md-6">
-                            <select name="course" class="form-control mb-md" ng-model="AddQuestionForm.questionData.moduleCode">
+                        <div class="col-md-6" ng-class="{'has-success':(AddQuestionForm.course.$valid && !AddQuestionForm.course.$pristine), 'has-error':(!AddQuestionForm.course.$valid && !AddQuestionForm.course.$pristine) ||(AddQuestionForm.$submitted && !AddQuestionForm.course.$valid)}">
+                            <select name="course" class="form-control mb-md" ng-model="AddQuestionForm.questionData.moduleCode" required>
 								<option ng-repeat="course in courseDetails" value="{{course.moduleCode}}">{{course.moduleCode}}-{{course.courseTitle}}</option>								
 						</select>
+                            <p ng-show="(!AddQuestionForm.course.$pristine && AddQuestionForm.course.$error.required)|| (AddQuestionForm.$submitted && AddQuestionForm.course.$error.required)">*required</p>
                         </div>
                     </div>
                 </div>
                 <!--question-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="textareaAutosize">Question</label>
-                    <div class="col-md-6">
-                        <textarea class="form-control" rows="3" id="question" data-plugin-textarea-autosize="" ng-model="AddQuestionForm.questionData.question"
+                    <div class="col-md-6" ng-class="{'has-success':(AddQuestionForm.question.$valid && !AddQuestionForm.question.$pristine), 'has-error':(!AddQuestionForm.question.$valid && !AddQuestionForm.question.$pristine) ||(AddQuestionForm.$submitted && !AddQuestionForm.question.$valid)}">
+                        <textarea name="question" class="form-control" rows="3" id="question" data-plugin-textarea-autosize="" ng-model="AddQuestionForm.questionData.question"
                             style="overflow: hidden; word-wrap: break-word; resize: none; height: 74px;" required></textarea>
+                            <p ng-show="(!AddQuestionForm.question.$pristine && AddQuestionForm.question.$error.required)|| (AddQuestionForm.$submitted && AddQuestionForm.question.$error.required)">*required</p>
                     </div>
                 </div>
 
                 <!--question type-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="inputDefault">Question Type</label>
-                    <div class="col-md-6">
+                    <div class="col-md-6" ng-class="{'has-success':(AddQuestionForm.questionType.$valid && !AddQuestionForm.questionType.$pristine), 'has-error':(!AddQuestionForm.questionType.$valid && !AddQuestionForm.questionType.$pristine) ||(AddQuestionForm.$submitted && !AddQuestionForm.questionType.$valid)}">
                         <div class="radio">
                             <label>
-							<input type="radio" name="questionType" id="mcq" value="mcq" ng-model="AddQuestionForm.questionData.questionType">
+							<input type="radio" name="questionType" id="mcq" value="mcq" ng-model="AddQuestionForm.questionData.questionType" required>
 							MCQ
 							</label>
                         </div>
@@ -52,13 +54,14 @@
 							Structured
 							</label>
                         </div>
+                        <p ng-show="(!AddQuestionForm.questionType.$pristine && AddQuestionForm.questionType.$error.required)|| (AddQuestionForm.$submitted && AddQuestionForm.questionType.$error.required)">*required</p>
                     </div>
                 </div>
 
                 <!--difficulty level-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="inputDefault">Difficulty Level</label>
-                    <div class="col-md-6">
+                    <div class="col-md-6" ng-class="{'has-success':(AddQuestionForm.difficultyLevel.$valid && !AddQuestionForm.difficultyLevel.$pristine), 'has-error':(!AddQuestionForm.difficultyLevel.$valid && !AddQuestionForm.difficultyLevel.$pristine) ||(AddQuestionForm.$submitted && !AddQuestionForm.difficultyLevel.$valid)}">
                         <div class="radio">
                             <label>
 							<input type="radio" name="difficultyLevel" id="easy" value="easy" ng-model="AddQuestionForm.questionData.difficultyLevel">
@@ -77,6 +80,7 @@
 							Difficult
 							</label>
                         </div>
+                        <p ng-show="(!AddQuestionForm.difficultyLevel.$pristine && AddQuestionForm.difficultyLevel.$error.required)|| (AddQuestionForm.$submitted && AddQuestionForm.difficultyLevel.$error.required)">*required</p>
                     </div>
                 </div>
 
@@ -122,6 +126,7 @@
                     <header class="panel-heading">
                         <h2 class="panel-title">Structured Question</h2>
                     </header>
+                    <br>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="inputDefault">Key word 1</label>
                         <div class="col-md-6">

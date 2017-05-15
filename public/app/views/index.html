@@ -72,6 +72,12 @@
 	<!-- Head Libs -->
 	<script src="assets/vendor/modernizr/modernizr.js"></script>
 
+	<!-- chart generation scrpts-->
+	<script src="assets/js/Chart.min.js"></script>
+	<script src="assets/js/angular-chart.min.js"></script> 
+	
+
+
 </head>
 
 <body ng-app="userApp" ng-controller="mainController as main" ng-show="main.loadme" ng-cloak>
@@ -258,10 +264,10 @@
 
 								<!--add course-->
 								<li class="nav-active" ng-show="main.isStudent || main.isInstructor">
-									<a href="/showPapers">
+									<a href="/viewProgress">
 										<!--direct to add instructort-->
 										<i class="el el-address-book"></i>
-										<span>Show Question Papers</span>
+										<span>View Progress</span>
 									</a>
 								</li>
 

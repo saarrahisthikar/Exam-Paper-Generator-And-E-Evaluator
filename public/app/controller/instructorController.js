@@ -6,8 +6,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
         // addCourse
         app.addCourse = function (courseData, valid) {
 
-            // app.successMsg = false;
-            app.loading = true;
+            app.errorMsg = false;
             console.log('course data is submitted');
             console.log(courseData);
             if (valid) {
@@ -19,19 +18,17 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                         app.loading = false;
                         app.successMsg = data.data.message;
                         $timeout(function () {
-                            courseData = null;
+                            app.courseData = null;
                             $location.path('/');
                         }, 2000);
 
                     } else {
                         // functionalities when an error occurs
-                        app.loading = false;
                         console.log(data.data.success);
                         app.errorMsg = data.data.message;
                     }
                 });
             } else {
-                app.loading = false;
                 app.errormsg = "Please ensure that the form is filled properly";
             }
         };
@@ -85,17 +82,16 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
         };
 
         app.addQuestion = function (questionData, valid) {
-
-            // app.successMsg = false;
-            app.loading = true;
-            console.log('question data is submitted');
+      // app.successMsg = false;
+            app.errorMsg = false;
+            console.log('question data is submitted '+JSON.stringify(questionData.correctAns));
             console.log(questionData);
             if (valid) {
                 console.log('inside valid');
                 //adding mcq question 
 
 
-                if (questionData.questionType == 'mcq') {
+                if ((questionData.questionType) == 'mcq'&& !(questionData.correctAns==undefined||questionData.wrongAns1==undefined||questionData.wrongAns2==undefined||questionData.wrongAns3==undefined||questionData.wrongAns4==undefined)) {
 
                     Question.addMCQ(questionData).then(function (data) {
                         console.log(data + "inside mcq");
@@ -116,7 +112,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                         }
                     });
                     //adding structured question 
-                } else if (questionData.questionType == 'structured') {
+                } else if ((questionData.questionType == 'structured') && !(questionData.keyWord1==undefined||questionData.keyWord2==undefined||questionData.keyWord3==undefined||questionData.keyWord4==undefined)) {
                     Question.addStructured(questionData).then(function (data) {
                         console.log(data);
                         if (data.data.success) {
@@ -135,6 +131,8 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             app.errorMsg = data.data.message;
                         }
                     });
+                }else{
+                    app.errorMsg = "Feilds cannot be empty";
                 }
 
             } else {

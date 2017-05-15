@@ -7,12 +7,20 @@ angular.module('studentServices', [])
             return $http.post('/api/enroll', [moduleCode, username]);
         };
 
-        // studentCourseFactory.isEnrolled = function (moduleCode, username) {
-        //     return $http.get('api/isEnrolled/' + moduleCode + '/' + username);
-        // };
         studentCourseFactory.getCourses = function (username) {
             return $http.get('api/enrolledCourses/' + username);
         };
 
         return studentCourseFactory;
+    })
+
+
+    .factory('StudentMarks', function ($http) {
+        studentMarksFactory = {};
+        // student enrolling
+        studentMarksFactory.getProgress = function (username) {
+            return $http.get('/api/progress/'+username);
+        };
+
+        return studentMarksFactory;
     });

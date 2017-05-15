@@ -774,7 +774,7 @@ module.exports = function (router) {
             console.log("inside mcq");
             MCQPaper.findOne({ paperNo: req.body.paperNo }).select().exec(function (err, data) {
                 if (err) {
-                    res.json({ message: "No papers found", data: null , success:true});
+                    res.json({ message: "No papers found", data: null, success: true });
                 } else {
 
                     var count = 0;
@@ -806,7 +806,7 @@ module.exports = function (router) {
                             // res.json({ success: true, message: 'successfully made enrolled' })
                         }
                     });
-                    res.json({ message: "successfully submitted", data: percentage , success:true});
+                    res.json({ message: "successfully submitted", data: percentage, success: true });
                 }
             });
         } else if (req.body.paperType == 'structured') {
@@ -815,7 +815,7 @@ module.exports = function (router) {
             StructuredPaper.findOne({ paperNo: req.body.paperNo }).select().exec(function (err, data) {
 
                 if (err) {
-                    res.json({ message: "No papers found", data: null, success:false });
+                    res.json({ message: "No papers found", data: null, success: false });
                 } else {
                     console.log("from front :" + data.question.length);
                     var count = 0;
@@ -840,10 +840,26 @@ module.exports = function (router) {
                     var percentage = (count / tot) * 100;
                     console.log("percentage : " + percentage);
                     Student.update({ username: req.body.username }, { $push: { marks: percentage } });
-                    res.json({ message: "successfully submitted", data: percentage , success:true});
+                    res.json({ message: "successfully submitted", data: percentage, success: true });
                 }
             });
         }
+    });
+
+    //get progress report
+    router.get('/progress/:username', function (req, res) {
+        Student.find({ username: req.params.username }).select('marks').exec(function (err, marks) {
+            if (err) {
+                res.json({ success: false, message: "error when finding", marks:{} });
+            }
+            else if (marks == null) {
+                res.json({ success: false, message: "marks not found", marks:{} });
+            }
+            else {
+                res.json({ success: true, message: "marks found", marks: marks });
+            }
+        });
+
     });
 
     // get all course details
