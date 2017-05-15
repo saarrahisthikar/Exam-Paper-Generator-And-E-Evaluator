@@ -25,4 +25,16 @@ angular.module('paperServices', [])
 
         return paperDetailFactory;
 
+    })
+
+    .factory('CheckPaper', function ($http) {
+        checkPaperFactory = {};
+        // all paper details
+        checkPaperFactory.getMarks = function (answers) {
+            console.log("inside checkPaperFactory " + answers);
+            return $http.post('/api/getPaperMarks', answers);
+        };
+
+        return checkPaperFactory;
+
     });

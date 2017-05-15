@@ -1,7 +1,7 @@
 angular.module('studentController', ['studentServices', 'paperServices', 'authServices', 'courseServices'])
     // console.log('inside student controller');
 
-    .controller('studentController', function ($q, $routeParams, PaperDetails, $scope, Auth, CourseDetails, StudentCourse, $timeout, $location) {
+    .controller('studentController', function ($q, CheckPaper, $routeParams, PaperDetails, $scope, Auth, CourseDetails, StudentCourse, $timeout, $location) {
 
         var app = this;
         app.errorMsg = false;
@@ -120,8 +120,12 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
             });
             return app.questionPaperInfo;
         };
+
         app.submitAnswer = function (paperAns) {
 
+            CheckPaper.getMarks(paperAns).then(function (data) {
+                console.log("inside get paper :" + data)
+            });
             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + JSON.stringify(paperAns));
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperType);
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperNo);

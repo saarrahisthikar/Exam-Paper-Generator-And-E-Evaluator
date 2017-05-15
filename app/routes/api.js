@@ -779,6 +779,31 @@ module.exports = function (router) {
         }
     });
 
+    //get marks
+    router.post('/getPaperMarks', function (req, res) {
+        console.log("paper tyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyype" + JSON.stringify(req.body.answers));
+
+        console.log("paper type : " + req.body.paperType);
+        if (req.body.paperType == 'mcq') {
+            console.log("inside mcq");
+            MCQPaper.findOne({ paperNo: req.body.paperNo }).select().exec(function (err, data) {
+
+                for (var i = 0; i < data.question.length; i++) {
+                    console.log(data.question.length);
+                    console.log(JSON.stringify(data.question[i].correctAns));
+
+                    // console.log(data.question[i]).correctAns;
+                }
+
+            });
+
+        } else if (req.body.paperType == 'structured') {
+
+        }
+
+
+    });
+
     // get all course details
     router.get('/courseDetails', function (req, res) {
         Course.find().select().exec(function (err, courses) {
