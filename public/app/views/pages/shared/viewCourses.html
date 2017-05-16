@@ -1,9 +1,10 @@
-<div class="page-header">
-    <h1>View Courses</h1>
-</div>
-<div ng-controller="studentController as student" class="panel panel-sign">
+<header class="page-header">
+    <h2>View Courses</h2>
+</header>
+
+<div class="panel panel-sign">
     <!--if a student-->
-    <div ng-if="main.isStudent" ng-init=" courseDetails=shared.getAllCourses(); enrolledCourses = student.getEnrolledCourses();">
+    <div ng-if="main.isStudent" ng-controller="studentController as student" ng-init=" courseDetails=shared.getAllCourses(); enrolledCourses = student.getEnrolledCourses();">
         <div ng-repeat="course in courseDetails">
             <section class="panel panel-featured panel-featured-dark">
                 <header class="panel-heading">

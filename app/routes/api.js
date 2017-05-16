@@ -21,8 +21,10 @@ module.exports = function (router) {
     // sending mails
     var options = {
         auth: {
-            api_user: 'prabodha',
-            api_key: 'prabodha@1994'
+            // api_user: 'Ariyarathna',
+            // api_key: 'azone@2221421'
+            api_user: 'rimazlk',
+            api_key: 'saarrah@786'
         }
     }
     //user registration
@@ -257,10 +259,7 @@ module.exports = function (router) {
         question.keyWord4 = req.body.keyWord4;
         question.instructor = req.body.username;
         question.moduleCode = req.body.moduleCode;
-
-        // course.instructor = $window.localStorage.getItem('token').then(function (data) {
-        //     return data.data.userType;
-        // });
+        question.occurence = 0;
 
         console.log(question.instructor);
         console.log(question.question);
@@ -326,6 +325,7 @@ module.exports = function (router) {
         question.wrongAns4 = req.body.wrongAns4;
         question.instructor = req.body.username;
         question.moduleCode = req.body.moduleCode;
+        question.occurence = 0;
 
         // course.instructor = $window.localStorage.getItem('token').then(function (data) {
         //     return data.data.userType;
@@ -850,10 +850,10 @@ module.exports = function (router) {
     router.get('/progress/:username', function (req, res) {
         Student.find({ username: req.params.username }).select('marks').exec(function (err, marks) {
             if (err) {
-                res.json({ success: false, message: "error when finding", marks:{} });
+                res.json({ success: false, message: "error when finding", marks: {} });
             }
             else if (marks == null) {
-                res.json({ success: false, message: "marks not found", marks:{} });
+                res.json({ success: false, message: "marks not found", marks: {} });
             }
             else {
                 res.json({ success: true, message: "marks found", marks: marks });

@@ -1,12 +1,11 @@
-<div class="page-header">
-    <h1>User Registration</h1>
-</div>
+<header class="page-header">
+    <h2>User Registration</h2>
+</header>
 
 <div class="center-sign">
     <a href="/" class="logo pull-left">
         <img src="assets/images/logo.png" height="54" alt="Porto Admin">
     </a>
-
     <div class="panel panel-sign">
         <div class="panel-title-sign mt-xl text-right">
             <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Sign Up</h2>
@@ -27,7 +26,7 @@
                         </ul>
                 </div>
                 <!--The username of the user-->
-                <div class="form-group mb-lg" ng-class="{'has-success':(regForm.username.$valid && !regForm.username.$pristine), 'has-error':(!regForm.username.$valid && !regForm.username.$pristine) ||(regForm.$submitted && regForm.username.$valid)}">
+                <div class="form-group mb-lg" ng-class="{'has-success':(regForm.username.$valid && !regForm.username.$pristine), 'has-error':(!regForm.username.$valid && !regForm.username.$pristine) ||(regForm.$submitted && !regForm.username.$valid)}">
                     <label>Username</label>
                     <input name="username" type="text" class="form-control input-lg" ng-model="register.regData.username" ng-pattern="/^(?!.*?[\W])(?=.*?[a-zA-Z]|=.*?[A-Z]).{3,100}$/"
                         ng-maxlength="100" ng-minlength="3" required>
@@ -39,7 +38,7 @@
                         </ul>
                 </div>
                 <!--The email of the user-->
-                <div class="form-group mb-lg" ng-class="{'has-success':(regForm.email.$valid && !regForm.email.$pristine), 'has-error':(!regForm.email.$valid && !regForm.email.$pristine) ||(regForm.$submitted && regForm.email.$valid)}">
+                <div class="form-group mb-lg" ng-class="{'has-success':(regForm.email.$valid && !regForm.email.$pristine), 'has-error':(!regForm.email.$valid && !regForm.email.$pristine) ||(regForm.$submitted && !regForm.email.$valid)}">
                     <label>E-mail Address</label>
                     <input name="email" type="email" class="form-control input-lg" ng-model="register.regData.email" ng-model="register.regData.username"
                         ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/"
@@ -53,15 +52,13 @@
                 </div>
                 <!--submission of the form-->
                 <div class="row">
-                    <div class="col-sm-4 text-right">
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <div class="col-sm-3 text-left">
+                        <button ng-disabled="regForm.$invalid" type="submit" class="btn btn-primary">Sign Up</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
-
 </div>
 
 <!--<span>{{regForm}}</span>-->

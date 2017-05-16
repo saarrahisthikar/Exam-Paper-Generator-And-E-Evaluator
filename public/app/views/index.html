@@ -72,11 +72,9 @@
 	<!-- Head Libs -->
 	<script src="assets/vendor/modernizr/modernizr.js"></script>
 
-	<!-- chart generation scrpts-->
+	<!-- chart generation scripts-->
 	<script src="assets/js/Chart.min.js"></script>
-	<script src="assets/js/angular-chart.min.js"></script> 
-	
-
+	<script src="assets/js/angular-chart.min.js"></script>
 
 </head>
 
@@ -97,14 +95,14 @@
 			<!-- start: search & user box -->
 			<div class="header-right">
 
-				<form action="pages-search-results.html" class="search nav-form">
+				<!--<form action="pages-search-results.html" class="search nav-form">
 					<div class="input-group input-search">
 						<input type="text" class="form-control" name="q" placeholder="Search...">
 						<span class="input-group-btn">
 								<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
 							</span>
 					</div>
-				</form>
+				</form>-->
 
 				<span class="separator" ng-show="!main.loggedIn"></span>
 
@@ -159,7 +157,7 @@
 
 				<div class="sidebar-header">
 					<div class="sidebar-title">
-						Exam-Evaluator
+						<i class="fa fa-university"></i> Back to School
 					</div>
 					<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
 						<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -171,7 +169,9 @@
 						<nav id="menu" class="nav-main" role="navigation">
 							<ul class="nav nav-main">
 								<li>
-									<a href="/">Dashboard
+									<a href="/">
+										<i class="fa fa-home" aria-hidden="true"></i>
+										<span>Dashboard</span>
 									</a>
 								</li>
 								<!--admin-->
@@ -198,7 +198,7 @@
 								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
 									<a href="/addInstructor">
 										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
+										<i class="fa fa-user-plus"></i>
 										<span>Add Instructor</span>
 									</a>
 								</li>
@@ -215,9 +215,10 @@
 
 								<!--view courses by anyone-->
 								<li class="nav-active">
-									<a href="/viewCourses/{{}}">
+									<a href="/viewCourses">
 										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
+										<i class="glyphicon glyphicon-book"></i>
+
 										<span>All Courses</span>
 									</a>
 								</li>
@@ -232,8 +233,17 @@
 								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
 									<a href="/viewCoursesInstructor">
 										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
-										<span>Courses</span>
+										<i class="fa fa-user"></i>
+										<span>Instructor's Courses</span>
+									</a>
+								</li>
+
+								<!--show papers-->
+								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
+									<a href="/showPapers">
+										<!--direct to add instructort-->
+										<i class="fa fa-share-alt"></i>
+										<span>Show Paper - Make Public</span>
 									</a>
 								</li>
 
@@ -241,7 +251,7 @@
 								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
 									<a href="/addCourses">
 										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
+										<i class="glyphicon glyphicon-plus"></i>
 										<span>Add Course</span>
 									</a>
 								</li>
@@ -249,30 +259,30 @@
 								<li class="nav-active" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
 									<a href="/addQuestion">
 										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
-										<span>Add Question</span>
+										<i class="fa fa-upload"></i>
+										<span>Upload Question</span>
 									</a>
 								</li>
 
+								<!--Generate question paper-->
 								<li class="nav-active">
 									<a href="/createPaper" ng-show="!main.isAdmin && !main.isStudent && main.isInstructor">
 										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
+										<i class="glyphicon glyphicon-list-alt"></i>
 										<span>Generate Question Paper</span>
 									</a>
 								</li>
 
 								<!--add course-->
-								<li class="nav-active" ng-show="main.isStudent || main.isInstructor">
+								<li class="nav-active" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
 									<a href="/viewProgress">
 										<!--direct to add instructort-->
-										<i class="el el-address-book"></i>
+										<i class="fa fa-line-chart"></i>
 										<span>View Progress</span>
 									</a>
 								</li>
 
 								<!--enrolled courses-->
-
 								<li ng-controller="studentController as student" ng-init=" courses = student.getEnrolledCourses();" class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
 									<a>
 										<i class="fa fa-columns" aria-hidden="true"></i>
@@ -282,8 +292,6 @@
 										<li><a href="/stuShowCoursePapers/{{course}}">{{course}}</a></li>
 									</ul>
 								</li>
-
-
 
 						</nav>
 					</div>
@@ -302,7 +310,9 @@
 			<!-- end: sidebar -->
 			<section role="main" class="content-body">
 				<header class="page-header">
-					<h2>Dashboard</h2>
+
+					<h2>
+						</i>Dashboard</h2>
 				</header>
 				<!-- start: page -->
 
@@ -387,6 +397,11 @@
 
 				<!-- Theme Initialization Files -->
 				<script src="assets/javascripts/theme.init.js"></script>
+
+				<!--slider generation script-->
+				<script src="assets/slider/script.js"></script>
+				<link rel="stylesheet" href="assets/slider/style.css">
+
 
 				<!-- Examples -->
 				<!--<script src="assets/javascripts/dashboard/examples.dashboard.js"></script>-->

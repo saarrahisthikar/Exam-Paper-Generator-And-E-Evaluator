@@ -1,8 +1,30 @@
 <!--adding courses-->
 
-<div class="page-header">
-    <h1>Question PapersCourse</h1>
+<header class="page-header">
+    <h2>Question PapersCourse</h2>
+</header>
+
+<!--displaying error and success messages-->
+
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
 </div>
+
+<br>
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="instructor.successMsg">
+    <div class="alert alert-success">{{instructor.successMsg}}</div>
+</div>
+
+<br>
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="instructor.courseErrorMsg">
+    <div class="alert alert-danger">{{instructor.courseErrorMsg}}</div>
+</div>
+<!------------>
+
+
 <div class="panel panel-sign">
     <section class="panel">
         <header class="panel-heading">

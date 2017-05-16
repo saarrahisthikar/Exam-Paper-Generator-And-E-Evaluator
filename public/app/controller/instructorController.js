@@ -18,7 +18,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                         app.loading = false;
                         app.successMsg = data.data.message;
                         $timeout(function () {
-                            app.successMsg=false;
+                            app.successMsg = false;
                             app.courseData = null;
                             $location.path('/');
                         }, 2000);
@@ -42,11 +42,12 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
         app.generatePaper = function (paperData, valid) {
 
-            app.loading = true;
+
             console.log('paper data is submitted');
             console.log(paperData);
             app.paperMCQ = false;
             app.paperStructured = false;
+            app.errorMsg = false;
 
             if (paperData.paperType == 'mcq') {
                 app.paperMCQ = true;
@@ -60,20 +61,18 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                     console.log(data + "inside mcq");
                     if (data.data.success) {
                         console.log(data.data.success);
-                        app.loading = false;
                         app.successMsg = data.data.message;
 
                         $timeout(function () {
                             app.paper = data.data.paper.question;
                             //   app.paper.question=app.shuffle(app.paper.question);
                             paperData = null;
-                            app.successMsg=false;
+                            app.successMsg = false;
                             $location.path('/showGeneratedPaper');
                         }, 2000);
 
                     } else {
                         // functionalities when an error occurs
-                        app.loading = false;
                         console.log(data.data.success);
                         app.errorMsg = data.data.message;
                     }
@@ -102,7 +101,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             app.loading = false;
                             app.successMsg = data.data.message;
                             $timeout(function () {
-                                app.successMsg=false;
+                                app.successMsg = false;
                                 questionData = null;
                                 $location.path('/');
                             }, 2000);
@@ -123,7 +122,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             app.loading = false;
                             app.successMsg = data.data.message;
                             $timeout(function () {
-                                app.successMsg=false;
+                                app.successMsg = false;
                                 questionData = null;
                                 $location.path('/');
                             }, 2000);
@@ -213,7 +212,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                     app.loading = false;
                     app.successMsg = data.data.message;
                     $timeout(function () {
-                         app.successMsg=false;
+                        app.successMsg = false;
                         $location.path('/');
                     }, 2000);
 

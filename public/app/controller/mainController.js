@@ -2,7 +2,7 @@
 
 angular.module('mainController', ['authServices', 'userServices'])
 
-    .controller('mainController', function ($http, $location, $timeout, Auth, $rootScope, $interval, $window, User, AuthToken) {
+    .controller('mainController', function ($http, $location, $timeout, Auth, $route, $rootScope, $interval, $window, User, AuthToken) {
         // console.log('This is the main controller');
         var app = this;
         var loadme = false;
@@ -48,7 +48,10 @@ angular.module('mainController', ['authServices', 'userServices'])
             if (!app.checkingSession) {
                 app.checkSession();
             }
-
+            app.isAdmin = false;
+            app.isInstructor = false;
+            app.isStudent = false;
+            
             var loggedIn = false;
             if (Auth.isLoggedIn()) {
                 app.loggedIn = true;
@@ -58,9 +61,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                 Auth.getUser().then(function (data) {
                     console.log(data);
 
-                    app.isAdmin = false;
-                    app.isInstructor = false;
-                    app.isStudent = false;
+
 
                     app.name = data.data.name;
                     app.userType = data.data.userType;
@@ -113,7 +114,8 @@ angular.module('mainController', ['authServices', 'userServices'])
                     Auth.logout(); // Logout user
                     $location.path('/'); // Change route to clear user object
                     hideModal(); // Close modal
-                }, 2000);
+                }, 4000);
+
             }
         };
 
@@ -167,6 +169,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                         $location.path('/');
                         app.loginData = null;
                         app.successMsg = false;//checking whether the user is logged in
+                        $route.reload();
                         app.checkSession();
                     }, 2000);
 
@@ -185,6 +188,7 @@ angular.module('mainController', ['authServices', 'userServices'])
             // $timeout(function () {
             //     $location.path('/');
             // }, 2000);
+
 
             showModal(2); // Activate modal that logs out user
 
