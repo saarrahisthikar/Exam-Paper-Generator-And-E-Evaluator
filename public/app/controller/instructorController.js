@@ -18,6 +18,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                         app.loading = false;
                         app.successMsg = data.data.message;
                         $timeout(function () {
+                            app.successMsg=false;
                             app.courseData = null;
                             $location.path('/');
                         }, 2000);
@@ -29,7 +30,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                     }
                 });
             } else {
-                app.errormsg = "Please ensure that the form is filled properly";
+                app.errorMsg = "Please ensure that the form is filled properly";
             }
         };
 
@@ -66,6 +67,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             app.paper = data.data.paper.question;
                             //   app.paper.question=app.shuffle(app.paper.question);
                             paperData = null;
+                            app.successMsg=false;
                             $location.path('/showGeneratedPaper');
                         }, 2000);
 
@@ -82,16 +84,16 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
         };
 
         app.addQuestion = function (questionData, valid) {
-      // app.successMsg = false;
-            app.errorMsg = false;
-            console.log('question data is submitted '+JSON.stringify(questionData.correctAns));
+            // app.successMsg = false;
+            app.courseErrorMsg = false;
+            console.log('question data is submitted ' + JSON.stringify(questionData.correctAns));
             console.log(questionData);
             if (valid) {
                 console.log('inside valid');
                 //adding mcq question 
 
 
-                if ((questionData.questionType) == 'mcq'&& !(questionData.correctAns==undefined||questionData.wrongAns1==undefined||questionData.wrongAns2==undefined||questionData.wrongAns3==undefined||questionData.wrongAns4==undefined)) {
+                if ((questionData.questionType) == 'mcq' && !(questionData.correctAns == undefined || questionData.wrongAns1 == undefined || questionData.wrongAns2 == undefined || questionData.wrongAns3 == undefined || questionData.wrongAns4 == undefined)) {
 
                     Question.addMCQ(questionData).then(function (data) {
                         console.log(data + "inside mcq");
@@ -100,6 +102,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             app.loading = false;
                             app.successMsg = data.data.message;
                             $timeout(function () {
+                                app.successMsg=false;
                                 questionData = null;
                                 $location.path('/');
                             }, 2000);
@@ -108,11 +111,11 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             // functionalities when an error occurs
                             app.loading = false;
                             console.log(data.data.success);
-                            app.errorMsg = data.data.message;
+                            app.courseErrorMsg = data.data.message;
                         }
                     });
                     //adding structured question 
-                } else if ((questionData.questionType == 'structured') && !(questionData.keyWord1==undefined||questionData.keyWord2==undefined||questionData.keyWord3==undefined||questionData.keyWord4==undefined)) {
+                } else if ((questionData.questionType == 'structured') && !(questionData.keyWord1 == undefined || questionData.keyWord2 == undefined || questionData.keyWord3 == undefined || questionData.keyWord4 == undefined)) {
                     Question.addStructured(questionData).then(function (data) {
                         console.log(data);
                         if (data.data.success) {
@@ -120,6 +123,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             app.loading = false;
                             app.successMsg = data.data.message;
                             $timeout(function () {
+                                app.successMsg=false;
                                 questionData = null;
                                 $location.path('/');
                             }, 2000);
@@ -128,16 +132,17 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                             // functionalities when an error occurs
                             app.loading = false;
                             console.log(data.data.success);
-                            app.errorMsg = data.data.message;
+                            app.courseErrorMsg = data.data.message;
                         }
                     });
-                }else{
-                    app.errorMsg = "Feilds cannot be empty";
+                } else {
+                    app.courseErrorMsg = "Feilds cannot be empty";
+                    console.log("Feilds cannot be empty");
                 }
 
             } else {
-                app.loading = false;
-                app.errormsg = "Please ensure that the form is filled properly";
+                console.log("UNdefined ............");
+                app.courseErrorMsg = "Please ensure that the form is filled properly";
                 console.log('invalid');
             }
         };
@@ -208,6 +213,7 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                     app.loading = false;
                     app.successMsg = data.data.message;
                     $timeout(function () {
+                         app.successMsg=false;
                         $location.path('/');
                     }, 2000);
 

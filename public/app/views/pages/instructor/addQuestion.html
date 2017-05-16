@@ -4,6 +4,27 @@
     <h1>Add Question</h1>
 </div>
 
+<!--displaying error and success messages-->
+
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<br>
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="instructor.successMsg">
+    <div class="alert alert-success">{{instructor.successMsg}}</div>
+</div>
+
+<br>
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="instructor.courseErrorMsg">
+    <div class="alert alert-danger">{{instructor.courseErrorMsg}}</div>
+</div>
+<!------------>
+
+
 <div class="panel panel-sign">
     <section class="panel">
         <header class="panel-heading">
@@ -64,7 +85,7 @@
                     <div class="col-md-6" ng-class="{'has-success':(AddQuestionForm.difficultyLevel.$valid && !AddQuestionForm.difficultyLevel.$pristine), 'has-error':(!AddQuestionForm.difficultyLevel.$valid && !AddQuestionForm.difficultyLevel.$pristine) ||(AddQuestionForm.$submitted && !AddQuestionForm.difficultyLevel.$valid)}">
                         <div class="radio">
                             <label>
-							<input type="radio" name="difficultyLevel" id="easy" value="easy" ng-model="AddQuestionForm.questionData.difficultyLevel">
+							<input type="radio" name="difficultyLevel" id="easy" value="easy" ng-model="AddQuestionForm.questionData.difficultyLevel" required>
 							Easy
 							</label>
                         </div>
@@ -154,7 +175,7 @@
                 </div>
                 <!---->
                 <br>
-                <button type="submit" class="btn btn-primary">Add Question</button>
+                <button ng-disabled="AddQuestionForm.$invalid" type="submit" class="btn btn-primary">Add Question</button>
                 </form>
         </div>
     </section>
