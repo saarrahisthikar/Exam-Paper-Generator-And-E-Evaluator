@@ -16,8 +16,7 @@ var MCQQuestionSchema = new Schema({
     wrongAns2: { type: String, require: true },
     wrongAns3: { type: String, require: true },
     wrongAns4: { type: String, require: true },
-    instructor: { type: String },
-    occurence:{type:Number, require:true}
+    instructor: { type: String }
 });
 
 

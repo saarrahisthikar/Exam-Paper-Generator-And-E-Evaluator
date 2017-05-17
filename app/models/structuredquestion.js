@@ -16,8 +16,7 @@ var StructuredQuestionSchema = new Schema({
     keyWord2: { type: String, require: true },
     keyWord3: { type: String, require: true },
     keyWord4: { type: String, require: true },
-    instructor: { type: String },
-    occurence: { type: Number, require: true }
+    instructor: { type: String }
 });
 
 

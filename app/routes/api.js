@@ -21,8 +21,6 @@ module.exports = function (router) {
     // sending mails
     var options = {
         auth: {
-            // api_user: 'Ariyarathna',
-            // api_key: 'azone@2221421'
             api_user: 'rimazlk',
             api_key: 'saarrah@786'
         }
@@ -259,7 +257,6 @@ module.exports = function (router) {
         question.keyWord4 = req.body.keyWord4;
         question.instructor = req.body.username;
         question.moduleCode = req.body.moduleCode;
-        question.occurence = 0;
 
         console.log(question.instructor);
         console.log(question.question);
@@ -325,7 +322,6 @@ module.exports = function (router) {
         question.wrongAns4 = req.body.wrongAns4;
         question.instructor = req.body.username;
         question.moduleCode = req.body.moduleCode;
-        question.occurence = 0;
 
         // course.instructor = $window.localStorage.getItem('token').then(function (data) {
         //     return data.data.userType;
@@ -596,8 +592,10 @@ module.exports = function (router) {
         }
     });
 
+    // making the question paper public
     router.post('/makePublic', function (req, res) {
         if (req.body.paperType == 'mcq') {
+            // logic for mcq paper
             MCQPaper.update({ paperNo: req.body.paperNo }, {
                 public: 'true',
             }, function (err, affected, resp) {
@@ -607,6 +605,7 @@ module.exports = function (router) {
                     res.json({ success: true, message: 'successfully made public' })
                 }
             });
+            // logic for Structured Paper
         } else if (req.body.paperType == 'structured') {
             StructuredPaper.update({ paperNo: req.body.paperNo }, {
                 public: 'true',
@@ -643,7 +642,6 @@ module.exports = function (router) {
             if (err) {
                 res.json({ courses: {} });
             } else {
-                console.log("RIMAZzzZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ " + data);
                 res.json({ courses: data });
             }
         });
@@ -722,9 +720,7 @@ module.exports = function (router) {
         console.log('inside paper details router');
         console.log(req.params.questionType);
         console.log(req.params.courseID);
-
-        //  console.log(req.params.paperInfo.data.courseID);
-        // console.log(req.query.paperInfo.questionType);
+        
         if (req.params.questionType == 'mcq') {
             MCQPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
                 if (err) res.send(err);
