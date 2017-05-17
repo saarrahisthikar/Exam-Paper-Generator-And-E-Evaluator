@@ -42,7 +42,6 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
         app.generatePaper = function (paperData, valid) {
 
-
             console.log('paper data is submitted');
             console.log(paperData);
             app.paperMCQ = false;
@@ -82,16 +81,13 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
         };
 
+        // Add questions
         app.addQuestion = function (questionData, valid) {
-            // app.successMsg = false;
             app.courseErrorMsg = false;
-            console.log('question data is submitted ' + JSON.stringify(questionData.correctAns));
-            console.log(questionData);
+
             if (valid) {
-                console.log('inside valid');
+
                 //adding mcq question 
-
-
                 if ((questionData.questionType) == 'mcq' && !(questionData.correctAns == undefined || questionData.wrongAns1 == undefined || questionData.wrongAns2 == undefined || questionData.wrongAns3 == undefined || questionData.wrongAns4 == undefined)) {
 
                     Question.addMCQ(questionData).then(function (data) {

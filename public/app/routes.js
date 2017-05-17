@@ -164,6 +164,15 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'student'
         })
 
+         // can be accessed by anyone
+        .when('/stuViewCourses/:username', {
+            templateUrl: 'app/views/pages/student/viewCourses.html',
+            authenticated: true,
+            controller: 'studentController',
+            controllerAs: 'student',
+            permission: 'student'
+        })
+
         //try selected paper
         .when('/viewTryPaper/:questionType/:paperNo', {
             templateUrl: 'app/views/pages/student/paperView/stuViewTryPaper.html',

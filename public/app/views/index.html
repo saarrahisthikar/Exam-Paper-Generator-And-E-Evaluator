@@ -214,11 +214,19 @@
 
 
 								<!--view courses by anyone-->
-								<li class="nav-active">
+								<li ng-show="!main.isStudent" class="nav-active">
 									<a href="/viewCourses">
 										<!--direct to add instructort-->
 										<i class="glyphicon glyphicon-book"></i>
+										<span>All Courses</span>
+									</a>
+								</li>
 
+								<!--view courses by student-->
+								<li class="nav-active" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
+									<a href="/stuViewCourses/{{main.username}}">
+										<!--direct to add instructort-->
+										<i class="glyphicon glyphicon-book"></i>
 										<span>All Courses</span>
 									</a>
 								</li>
@@ -283,7 +291,8 @@
 								</li>
 
 								<!--enrolled courses-->
-								<li ng-controller="studentController as student" ng-init=" courses = student.getEnrolledCourses();" class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
+								<li class="nav-parent" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor" ng-controller="studentController as student"
+									ng-click="courses = student.getEnrolledCourses();">
 									<a>
 										<i class="fa fa-columns" aria-hidden="true"></i>
 										<span>Enrolled Courses</span>
@@ -291,7 +300,8 @@
 									<ul class="nav nav-children" ng-repeat="course in courses">
 										<li><a href="/stuShowCoursePapers/{{course}}">{{course}}</a></li>
 									</ul>
-								</li>
+									</li>
+
 
 						</nav>
 					</div>

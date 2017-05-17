@@ -16,10 +16,10 @@ angular.module('userController', ['userServices'])
         // register student
         this.regUser = function (regData, valid) {
             app.errorMsg = false;
-            // app.successMsg = false;
             app.loading = true;
             console.log('register form submitted');
-            //console.log(this.regData);
+
+            // checking whether the form is valid
             if (valid) {
                 User.create(app.regData).then(function (data) {
                     if (data.data.success) {
@@ -44,11 +44,10 @@ angular.module('userController', ['userServices'])
         };
 
         // registering instructor
-        app.insErrorMsg = false;
-        this.regInstructor = function (regData, valid) {
 
-            // app.successMsg = false;
-            app.loading = true;
+        this.regInstructor = function (regData, valid) {
+            app.errorMsg = false;
+                      app.loading = true;
             console.log('Instructor register form submitted');
             //console.log(this.regData);
             if (valid) {
@@ -56,9 +55,12 @@ angular.module('userController', ['userServices'])
                     if (data.data.success) {
                         console.log(data.data.success);
                         app.loading = false;
-                        app.insSuccessMsg = data.data.message;
-                        console.log(app.insSuccessMsg);
+                        app.successMsg = data.data.message;
+                        console.log(app.successMsg);
                         $timeout(function () {
+                            app.regData=null;
+                            app.loading=false;
+                            app.successMsg=false;
                             $location.path('/addInstructor');
                         }, 2000);
 
@@ -66,12 +68,13 @@ angular.module('userController', ['userServices'])
                         app.loading = false;
                         console.log(data.data.success);
                         console.log(data.data.message);
-                        app.insErrorMsg = data.data.message;
+                        app.errorMsg = data.data.message;
+                        
                     }
                 });
             } else {
                 app.loading = false;
-                app.insErrormsg = "Please ensure that the form is filled properly";
+                app.errormsg = "Please ensure that the form is filled properly";
             }
         };
 

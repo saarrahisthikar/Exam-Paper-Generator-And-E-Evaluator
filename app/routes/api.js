@@ -119,9 +119,9 @@ module.exports = function (router) {
         } else {
             console.log(user.email);
             emailExistence.check(user.email, function (err, response) {
-                console.log(response);
-                console.log(err);
-                if (response) {
+                if (err) {
+                    res.json({ success: false, message: "Email does not exists" });
+                } else if (response) {
                     console.log(response);
                     user.save(function (err) {
                         if (err) {
@@ -147,6 +147,7 @@ module.exports = function (router) {
                                         res.json({ success: false, message: "Username or Email already exists" });
                                     }
                                 }
+                                res.json({ success: false, message: "Username or Email already exists" });
                             }
 
                         } else {
@@ -157,15 +158,13 @@ module.exports = function (router) {
                                 subject: 'Addition of Instructor',
                                 text: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system. Username :' + user.username + 'Password : ' + password + 'You can activate your account using this link : http://localhost:3000/login. Thank You!!!',
                                 html: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system.<br><br><b>Username : </b>' + user.username + '<br><b>Password : </b>' + password + '<br><br><br>You can activate your account using this link : <a href="http://localhost:3000/login">http://localhost:3000/login.</a><br><br><br>Thank You!!!'
-
                             };
 
                             client.sendMail(email, function (err, info) {
                                 if (err) {
-                                    console.log(error);
+                                    res.json({ success: false, message: "Failure during mail sending" });
                                 }
                                 else {
-
                                     console.log('Message sent: ' + info);
                                 }
                             });
@@ -192,7 +191,6 @@ module.exports = function (router) {
                 } else {
                     //sending non exixtance of the mail box
                     res.json({ success: false, message: "Mailbox does not exist for the given email address" });
-
                 }
             });
         }
@@ -720,7 +718,7 @@ module.exports = function (router) {
         console.log('inside paper details router');
         console.log(req.params.questionType);
         console.log(req.params.courseID);
-        
+
         if (req.params.questionType == 'mcq') {
             MCQPaper.find({ moduleCode: req.params.courseID }).select().exec(function (err, paper) {
                 if (err) res.send(err);
@@ -913,6 +911,7 @@ module.exports = function (router) {
     });
 
     router.post('/me', function (req, res) {
+        console.log(req.decoded);
         res.send(req.decoded);
     });
 

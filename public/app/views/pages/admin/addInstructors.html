@@ -1,6 +1,24 @@
 <header class="page-header">
-    <h2>User Registration</h2>
+    <h2>Instructor Registration</h2>
 </header>
+
+<!--<span>{{regForm}}</span>-->
+
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="register.successMsg">
+    <div class="alert alert-success">{{register.successMsg}}</div>
+    <p>Loading.....</p>
+</div>
+
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="register.errorMsg">
+    <div class="alert alert-danger">{{register.errorMsg}}</div>
+</div>
 
 <div class="center-sign">
     <a href="/" class="logo pull-left">
@@ -59,24 +77,4 @@
             </form>
         </div>
     </div>
-</div>
-
-<!--<span>{{regForm}}</span>-->
-<br>
-<!--displaying the loading symbol-->
-<div class="jumbotron text-center" ng-show="register.loading">
-    <span class="glyphicon glyphicon-repeat spinner"></span>
-</div>
-
-<br>
-<!--displaying the success message-->
-<div class="row show-hide-message" ng-show="register.insSuccessMsg">
-    <div class="alert alert-success">{{register.insSuccessMsg}}</div>
-    <p>Loading.....</p>
-</div>
-
-<br>
-<!--displaying the error message-->
-<div class="row show-hide-message" ng-show="register.insErrorMsg">
-    <div class="alert alert-danger">{{register.insErrorMsg}}</div>
 </div>

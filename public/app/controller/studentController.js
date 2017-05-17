@@ -9,23 +9,22 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
 
         app.getEnrolledCourses = function () {
             app.enrollDetails = [];
-            Auth.getUser().then(function (data) {
-                console.log("front end username " + data.data.username);
-                StudentCourse.getCourses(data.data.username).then(function (data) {
-                    console.log("inside get Course ");
-                    console.log("course :" + data.data.courses.courses[0]);
-                    var i = 0;
-                    while (data.data.courses.courses[i]) {
-                        console.log(data.data.courses.courses[i]);
-                        app.enrollDetails.push(data.data.courses.courses[i]);
-                        i = i + 1;
-                    }
+            if (Auth.getUser() != undefined) {
+                Auth.getUser().then(function (data) {
+                    console.log("front end username " + data.data.username);
+                    StudentCourse.getCourses(data.data.username).then(function (data) {
+                        console.log("inside get Course ");
+                        console.log("course :" + data.data.courses.courses[0]);
+                        var i = 0;
+                        while (data.data.courses.courses[i]) {
+                            console.log(data.data.courses.courses[i]);
+                            app.enrollDetails.push(data.data.courses.courses[i]);
+                            i = i + 1;
+                        }
+                    });
                 });
-
-            });
-
+            }
             return app.enrollDetails;
-
         }
 
 
@@ -148,11 +147,12 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
             console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + JSON.stringify(paperAns.answers));
         }
 
-
+        // Get marks from the router
         app.getRouterParamsMarks = function () {
             return $routeParams.marks;
         }
 
+        // Generate progress report
         app.genProgressChart = function (username) {
             console.log("generating graph for : " + username);
             StudentMarks.getProgress(username).then(function (data) {
@@ -171,19 +171,6 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
                         i = i + 1;
                     }
 
-
-                    // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-                    // $scope.series = ['Series A'];
-                    // $scope.data = [
-                    //     [65, 59, 80, 81, 56, 55, 40]
-                    // ];
-
-                    // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-                    // $scope.series = ['Series A', 'Series B'];
-                    // $scope.data = [
-                    //     [65, 59, 80, 81, 56, 55, 40],
-                    //     [28, 48, 40, 19, 86, 27, 90]
-                    // ];
                     $scope.onClick = function (points, evt) {
                         console.log(points, evt);
                     };
@@ -202,7 +189,7 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
                     };
 
                 } else {
-                    console.log("no marks to generate");
+                    app.errorMsg = "No marks found ...try paper";
                 }
             });
 
