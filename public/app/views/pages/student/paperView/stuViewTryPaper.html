@@ -1,23 +1,8 @@
+<!--view papers-->
+
 <header class="page-header">
     <h2>Question Paper</h2>
 </header>
-<!--Displaying success and Error Messages-->
-
-<!--displaying the loading symbol-->
-<div class="jumbotron text-center" ng-show="main.loading">
-    <span class="glyphicon glyphicon-repeat spinner"></span>
-</div>
-<br>
-<!--displaying the success message-->
-<div class="row show-hide-message" ng-show="student.successMsg">
-    <div class="alert alert-success">{{student.successMsg}}</div>
-</div>
-<br>
-<!--displaying the error message-->
-<div class="row show-hide-message" ng-show="student.errorMsg">
-    <div class="alert alert-danger">{{student.errorMsg}}</div>
-</div>
-<!--end-->
 
 <div class="panel panel-sign">
     <section class="panel">
@@ -26,6 +11,7 @@
         </header>
         <div class="panel-body">
             <form class="form-horizontal form-bordered" ng-submit="student.submitAnswer(PaperForm.data)" name="PaperForm" novalidate>
+
                 <div ng-init="paperInfo=student.getRouterParamsPaper();">
                     <!--username-->
                     <input type="hidden" ng-model="PaperForm.data.username" value="{{main.username}}" ng-init="PaperForm.data.username=main.username">
@@ -35,20 +21,22 @@
                     <input type="hidden" ng-model="PaperForm.data.paperNo" value="paperInfo[1]" ng-init="PaperForm.data.paperNo =paperInfo[1]">
                 </div>
                 <div ng-init="questions = student.getPaper(paperInfo)"> </div>
+
                 <!--mcq question-->
                 <div class="form-group" ng-if="PaperForm.data.paperType=='mcq'" ng-show="PaperForm.data.paperType=='mcq'">
+
                     <header class="panel-heading">
                         <h2 class="panel-title">MCQ Question Paper - {{PaperForm.data.paperNo}}</h2>
                     </header>
+
                     <div class="panel-body">
                         <div class="form-group" ng-repeat="question in questions">
-                            <!--<div ng-model="PaperForm.data.Ans = "checking Ans""></div>-->
+
                             <section class="panel panel-featured panel-featured-dark">
                                 <label class="col-md-12" for="question">[{{$index +1}}] - {{question.question}}</label>
                                 <div class="radio">
                                     <label>
-                                        <!--answers[$index] instead use answers[question_id]  -- u can set the question_id from be -->
-							            <input type="radio" ng-required="!PaperForm.data.answers[$index]" ng-model="PaperForm.data.answers[$index]" name="{{question.question}}"  value="{{question.correctAns}}" >
+                                        <input type="radio" ng-required="!PaperForm.data.answers[$index]" ng-model="PaperForm.data.answers[$index]" name="{{question.question}}"  value="{{question.correctAns}}" >
 							            {{question.correctAns}}
 							            </label>
                                 </div>
@@ -106,3 +94,22 @@
         </div>
     </section>
 </div>
+
+<br>
+<!--Displaying success and Error Messages-->
+
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="main.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="student.successMsg">
+    <div class="alert alert-success">{{student.successMsg}}</div>
+</div>
+
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="student.errorMsg">
+    <div class="alert alert-danger">{{student.errorMsg}}</div>
+</div>
+<!--end-->

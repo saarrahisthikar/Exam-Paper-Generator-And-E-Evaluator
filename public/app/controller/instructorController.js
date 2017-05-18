@@ -3,18 +3,16 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
     .controller('instructorController', function (Course, $timeout, $location, Question, Auth, CourseDetails, Paper, $routeParams, PaperDetails) {
         var app = this;
         app.errorMsg = false;
+
         // addCourse
         app.addCourse = function (courseData, valid) {
 
             app.errorMsg = false;
-            console.log('course data is submitted');
-            console.log(courseData);
+
             if (valid) {
-                console.log('inside valid');
+                //  create course
                 Course.create(courseData).then(function (data) {
-                    console.log(data);
                     if (data.data.success) {
-                        console.log(data.data.success);
                         app.loading = false;
                         app.successMsg = data.data.message;
                         $timeout(function () {
@@ -32,42 +30,39 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
             } else {
                 app.errorMsg = "Please ensure that the form is filled properly";
             }
+
         };
 
-
+        // get curseID fron the route
         app.getRouterParams = function () {
             return $routeParams.courseID;
         };
 
-
+        // generate paper
         app.generatePaper = function (paperData, valid) {
 
-            console.log('paper data is submitted');
-            console.log(paperData);
             app.paperMCQ = false;
             app.paperStructured = false;
             app.errorMsg = false;
 
+            // front end view geneartion
             if (paperData.paperType == 'mcq') {
                 app.paperMCQ = true;
             } else if (paperData.paperType == 'structured') {
                 app.paperStructured = true;
             }
 
+            // form valid functioanlity
             if (valid) {
-                console.log('inside valid');
                 Paper.generate(paperData).then(function (data) {
-                    console.log(data + "inside mcq");
                     if (data.data.success) {
-                        console.log(data.data.success);
                         app.successMsg = data.data.message;
 
                         $timeout(function () {
                             app.paper = data.data.paper.question;
-                            //   app.paper.question=app.shuffle(app.paper.question);
                             paperData = null;
                             app.successMsg = false;
-                            $location.path('/showGeneratedPaper');
+                            $location.path('/showPapers');
                         }, 2000);
 
                     } else {
@@ -83,15 +78,17 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
         // Add questions
         app.addQuestion = function (questionData, valid) {
+
             app.courseErrorMsg = false;
 
+            // if form is valid         
             if (valid) {
 
                 //adding mcq question 
                 if ((questionData.questionType) == 'mcq' && !(questionData.correctAns == undefined || questionData.wrongAns1 == undefined || questionData.wrongAns2 == undefined || questionData.wrongAns3 == undefined || questionData.wrongAns4 == undefined)) {
 
+                    // add mcq question
                     Question.addMCQ(questionData).then(function (data) {
-                        console.log(data + "inside mcq");
                         if (data.data.success) {
                             console.log(data.data.success);
                             app.loading = false;
@@ -111,10 +108,10 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                     });
                     //adding structured question 
                 } else if ((questionData.questionType == 'structured') && !(questionData.keyWord1 == undefined || questionData.keyWord2 == undefined || questionData.keyWord3 == undefined || questionData.keyWord4 == undefined)) {
+
+                    //    add structured question
                     Question.addStructured(questionData).then(function (data) {
-                        console.log(data);
                         if (data.data.success) {
-                            console.log(data.data.success);
                             app.loading = false;
                             app.successMsg = data.data.message;
                             $timeout(function () {
@@ -132,16 +129,14 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                     });
                 } else {
                     app.courseErrorMsg = "Feilds cannot be empty";
-                    console.log("Feilds cannot be empty");
                 }
 
             } else {
-                console.log("UNdefined ............");
                 app.courseErrorMsg = "Please ensure that the form is filled properly";
-                console.log('invalid');
             }
         };
 
+        // shuffle front end question answer order
         app.shuffle = function (array) {
 
             for (var i = array.length - 1; i > 0; i--) {
@@ -154,9 +149,12 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
 
         };
 
+        // get paper details
         app.getPaperDetails = function (paperInfo) {
+
             app.paperDetails = [];
-            console.log(paperInfo.questionType);
+
+            //  get paper details
             PaperDetails.getPaperDetails(paperInfo).then(function (data) {
                 console.log("inside paper details");
                 var i = 0;
@@ -167,44 +165,52 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                 }
 
             });
+
             return app.paperDetails;
+
         };
 
-
+        // get the question main details
         app.questionPaper = []
+
         app.getRouterParamsPaper = function () {
-            console.log($routeParams.questionType);
-            console.log($routeParams.paperNo);
+
             app.questionPaper.push($routeParams.questionType);
             app.questionPaper.push($routeParams.paperNo);
-            console.log(app.questionPaper);
+
             return app.questionPaper;
+
         };
 
+        // get papers
         app.getPaper = function (questionPaperDetails) {
-            console.log('inside questionPaperDetails' + questionPaperDetails);
+
             app.questionPaperInfo = [];
+
+            // get paper details
             PaperDetails.getPaper(questionPaperDetails).then(function (data) {
-                console.log('inside getPaper');
-                console.log(data.data.paperQuestions.question[0]);
+
                 var i = 0;
                 while (data.data.paperQuestions.question[i]) {
                     console.log(data.data.paperQuestions.question[i]);
                     app.questionPaperInfo.push(data.data.paperQuestions.question[i]);
                     i = i + 1;
                 }
+
             });
+
             return app.questionPaperInfo;
+
         };
 
+        // making question paper public
         app.makePublic = function (data) {
+
             app.loading = true;
-            console.log('inside make public' + data.paperNo);
-            console.log('inside make public' + data.paperType);
+
+            //   making public
             PaperDetails.makePublic(data).then(function (data) {
-                console.log(data);
                 if (data.data.success) {
-                    console.log(data.data.success);
                     app.loading = false;
                     app.successMsg = data.data.message;
                     $timeout(function () {
@@ -219,21 +225,28 @@ angular.module('instructorController', ['instructorServices', 'authServices', 'c
                     app.errorMsg = data.data.message;
                 }
             })
+
         };
 
+        // get course details
         app.getCourseDetails = function (username) {
+
             app.courseDetails = [];
+
+            // get course details
             CourseDetails.getCourseDetails(username).then(function (data) {
-                console.log("inside get Course");
+
                 var i = 0;
                 while (data.data.courseDetails[i]) {
                     console.log(data.data.courseDetails[i]);
                     app.courseDetails.push(data.data.courseDetails[i]);
                     i = i + 1;
                 }
-            });
-            return app.courseDetails;
-        };
 
+            });
+
+            return app.courseDetails;
+
+        };
 
     });

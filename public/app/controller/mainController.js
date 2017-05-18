@@ -3,6 +3,7 @@
 angular.module('mainController', ['authServices', 'userServices'])
 
     .controller('mainController', function ($http, $location, $timeout, Auth, $route, $rootScope, $interval, $window, User, AuthToken) {
+
         // console.log('This is the main controller');
         var app = this;
         var loadme = false;
@@ -51,7 +52,7 @@ angular.module('mainController', ['authServices', 'userServices'])
             app.isAdmin = false;
             app.isInstructor = false;
             app.isStudent = false;
-            
+
             var loggedIn = false;
             if (Auth.isLoggedIn()) {
                 app.loggedIn = true;
@@ -59,9 +60,6 @@ angular.module('mainController', ['authServices', 'userServices'])
 
                 // getting user details from the database
                 Auth.getUser().then(function (data) {
-                    console.log(data);
-
-
 
                     app.name = data.data.name;
                     app.userType = data.data.userType;
@@ -85,12 +83,14 @@ angular.module('mainController', ['authServices', 'userServices'])
                 app.loadme = true;
                 app.loggedIn = false;
             }
+
         });
 
         app.checkSession(); // Ensure check is ran check, even if user refreshes
 
         // Function to open bootstrap modal     
         var showModal = function (option) {
+
             app.choiceMade = false; // Clear choiceMade on startup
             app.modalHeader = undefined; // Clear modalHeader on startup
             app.modalBody = undefined; // Clear modalBody on startup
@@ -115,13 +115,15 @@ angular.module('mainController', ['authServices', 'userServices'])
                     $location.path('/'); // Change route to clear user object
                     hideModal(); // Close modal
                 }, 4000);
-
             }
+
         };
 
         // Function that allows user to renew their token to stay logged in (activated when user presses 'yes')
         app.renewSession = function () {
+
             app.choiceMade = true; // Set to true to stop 10-second check in option 1
+
             // Function to retrieve a new token for the user
             User.renewSession(app.username).then(function (data) {
                 // Check if token was obtained
@@ -132,22 +134,28 @@ angular.module('mainController', ['authServices', 'userServices'])
                     app.modalBody = data.data.message; // Set error message
                 }
             });
+
             hideModal(); // Close modal
+
         };
 
         // Function to expire session and logout (activated when user presses 'no)
         app.endSession = function () {
+
             app.choiceMade = true; // Set to true to stop 10-second check in option 1
             hideModal(); // Hide modal
             // After 1 second, activate modal option 2 (log out)
             $timeout(function () {
                 showModal(2); // logout user
             }, 1000);
+
         };
 
         // Function to hide the modal
         var hideModal = function () {
+
             $("#myModal").modal('hide'); // Hide modal once criteria met
+
         };
 
         // main.login(loginData);
@@ -156,10 +164,9 @@ angular.module('mainController', ['authServices', 'userServices'])
             app.errorMsg = false;
             app.loading = false;
 
-            //console.log('login check');
 
             Auth.login(app.loginData).then(function (data) {
-                //console.log(data);
+
                 if (data.data.success) {// Checks whether the login is a success
                     app.loading = false;
                     app.successMsg = data.data.message;
@@ -172,23 +179,16 @@ angular.module('mainController', ['authServices', 'userServices'])
                         $route.reload();
                         app.checkSession();
                     }, 2000);
-
                 } else {
                     app.loading = false;
                     app.errorMsg = data.data.message;
-
                 }
+
             });
 
         };
 
         this.logout = function () {
-            // Auth.logout();
-            // $location.path('/logout');
-            // $timeout(function () {
-            //     $location.path('/');
-            // }, 2000);
-
 
             showModal(2); // Activate modal that logs out user
 

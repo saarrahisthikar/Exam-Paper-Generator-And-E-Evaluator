@@ -1,15 +1,17 @@
 angular.module('studentController', ['studentServices', 'paperServices', 'authServices', 'courseServices', 'chart.js'])
-    // console.log('inside student controller');
 
     .controller('studentController', function ($q, StudentMarks, CheckPaper, $routeParams, PaperDetails, $scope, Auth, CourseDetails, StudentCourse, $timeout, $location) {
 
         var app = this;
         app.loading = false;
 
-
+        // getting enrolled courses
         app.getEnrolledCourses = function () {
+
             app.enrollDetails = [];
-            if (Auth.getUser() != undefined) {
+
+            if (Auth.getUser() != undefined) { // checking the availability of the username
+                // get username
                 Auth.getUser().then(function (data) {
                     console.log("front end username " + data.data.username);
                     StudentCourse.getCourses(data.data.username).then(function (data) {
@@ -24,54 +26,61 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
                     });
                 });
             }
+
             return app.enrollDetails;
+
         }
 
 
+        // get router parameters
         app.getRouterParams = function () {
             return $routeParams.courseID;
         };
 
+        // get router params for question paper
         app.questionPaper = []
+
         app.getRouterParamsPaper = function () {
-            console.log($routeParams.questionType);
-            console.log($routeParams.paperNo);
             app.questionPaper.push($routeParams.questionType);
             app.questionPaper.push($routeParams.paperNo);
-            console.log(app.questionPaper);
+
             return app.questionPaper;
+
         };
 
+        // get paper details
         app.getPaperDetails = function (paperInfo) {
+
             app.paperDetails = [];
-            console.log(paperInfo);
+
+            //  get paper details
             PaperDetails.getPublicPaperDetails(paperInfo).then(function (data) {
-                console.log("inside paper details");
+
                 var i = 0;
-                console.log(data);
                 while (data.data.paperDetails[i]) {
-                    console.log(data.data.paperDetails[i]);
                     app.paperDetails.push(data.data.paperDetails[i]);
                     i = i + 1;
                 }
 
             });
+
             return app.paperDetails;
+
         };
 
+        // enrolling to courses
         app.enroll = function (moduleCode, username) {
 
-            console.log('inside enroll ' + moduleCode + " " + username);
             app.loading = true;
             app.errorMsg = false;
 
+            // student enrolling to courses
             StudentCourse.enroll(moduleCode, username).then(function (data) {
                 if (data.data.success) {
-                    console.log(data.data.success);
                     app.loading = false;
                     app.successMsg = data.data.message;
                     $timeout(function () {
-                        $location.path('/viewCourses');
+                        $location.path('stuViewCourses/'+username);
                     }, 2000);
                 } else {
                     // functionalities when an error occurs
@@ -80,21 +89,22 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
                     app.errorMsg = data.data.message;
                 }
             });
-        };
-        // checking whether the student is enrolled
 
+        };
+
+        // checking whether the student is enrolled
         app.enrolled = false;
+
+        // checking whether student is enrolled
         app.checkStudentEnrolment = function (moduleCode, username) {
 
             StudentCourse.isEnrolled(moduleCode, username).then(function (data) {
                 if (data.data.success) {
-
                     app.successMsg = data.data.message;
                     console.log("output " + true);
                     app.enrolled = true;
                 } else {
                     // functionalities when an error occurs
-
                     app.errorMsg = data.data.message;
                     console.log("output " + false);
                     app.enrolled = false;
@@ -104,27 +114,34 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
 
         }
 
+        // get paper
         app.getPaper = function (questionPaperDetails) {
-            console.log('inside questionPaperDetails' + questionPaperDetails);
+
             app.questionPaperInfo = [];
+
+            //  get question paper
             PaperDetails.getPaper(questionPaperDetails).then(function (data) {
-                console.log('inside getPaper');
-                console.log(data.data.paperQuestions.question[0]);
+
                 var i = 0;
                 while (data.data.paperQuestions.question[i]) {
-                    console.log(data.data.paperQuestions.question[i]);
                     app.questionPaperInfo.push(data.data.paperQuestions.question[i]);
                     i = i + 1;
                 }
+
             });
+
             return app.questionPaperInfo;
+
         };
 
+        // submitting answers
         app.submitAnswer = function (paperAns) {
 
+            // correcting the paper and returning the marks
             CheckPaper.getMarks(paperAns).then(function (data) {
+
                 app.errorMsg = false;
-                console.log("Data : " + JSON.stringify(data.data));
+
                 if (data.data.success) {
                     console.log(data.data.success);
                     app.successMsg = data.data.message;
@@ -138,13 +155,8 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
                     app.errorMsg = data.data.message;
                 }
 
-
-                console.log("inside get paper percentage :" + JSON.stringify(data.data.data));
             });
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + JSON.stringify(paperAns));
-            console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperType);
-            console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + paperAns.paperNo);
-            console.log("question Tyyyyyyyyyyyyyyyyyyyyyyyyyype" + JSON.stringify(paperAns.answers));
+
         }
 
         // Get marks from the router
@@ -154,12 +166,10 @@ angular.module('studentController', ['studentServices', 'paperServices', 'authSe
 
         // Generate progress report
         app.genProgressChart = function (username) {
-            console.log("generating graph for : " + username);
+
             StudentMarks.getProgress(username).then(function (data) {
 
                 if (data.data.success) {
-
-                    console.log("marks : " + JSON.stringify(data.data.marks['marks']));
 
                     $scope.labels = [];
                     $scope.series = ['Series A'];

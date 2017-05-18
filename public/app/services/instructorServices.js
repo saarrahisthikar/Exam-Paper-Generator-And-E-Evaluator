@@ -1,7 +1,9 @@
 angular.module('instructorServices', [])
 
     .factory('Course', function ($http) {
+      
         courseFactory = {};
+      
         // creating instructor
         courseFactory.create = function (courseData) {
             return $http.post('/api/createCourse', courseData);
@@ -10,7 +12,9 @@ angular.module('instructorServices', [])
         return courseFactory;
 
     })
+    
     .factory('Question', function ($http) {
+    
         questionFactory = {};
 
         // creating mcq questions

@@ -1,7 +1,9 @@
 angular.module('paperServices', [])
 
     .factory('PaperDetails', function ($http) {
+
         paperDetailFactory = {};
+
         // all paper details
         paperDetailFactory.getPaperDetails = function (paperInfo) {
             return $http.get('/api/getPaperDetails/' + paperInfo.courseID + '/' + paperInfo.questionType);
@@ -9,8 +11,8 @@ angular.module('paperServices', [])
 
         //get public paper details
         paperDetailFactory.getPublicPaperDetails = function (paperInfo) {
-            console.log(paperInfo);
             return $http.get('/api/getPublicPaperDetails/' + paperInfo.courseID + '/' + paperInfo.questionType);
+
         };
 
         //get a particular paper
@@ -28,10 +30,11 @@ angular.module('paperServices', [])
     })
 
     .factory('CheckPaper', function ($http) {
+
         checkPaperFactory = {};
+
         // all paper details
         checkPaperFactory.getMarks = function (answers) {
-            console.log("inside checkPaperFactory " + answers);
             return $http.post('/api/getPaperMarks', answers);
         };
 

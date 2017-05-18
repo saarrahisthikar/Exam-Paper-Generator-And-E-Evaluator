@@ -174,43 +174,6 @@
 										<span>Dashboard</span>
 									</a>
 								</li>
-								<!--admin-->
-								<!--view students-->
-								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
-									<a href="/viewStudents">
-										<!--direct to student list-->
-										<!--<i class="fa fa-home" aria-hidden="true"></i>-->
-										<i class="fa fa-group"></i>
-										<span>Students</span>
-									</a>
-								</li>
-								<!--view instructor-->
-								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
-									<a href="/viewInstructors">
-										<!--direct to instructor list-->
-										<i class="fa fa-graduation-cap"></i>
-										<span>Instructors</span>
-									</a>
-								</li>
-
-								<!--add instructor-->
-
-								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
-									<a href="/addInstructor">
-										<!--direct to add instructort-->
-										<i class="fa fa-user-plus"></i>
-										<span>Add Instructor</span>
-									</a>
-								</li>
-								<!--view courses student-->
-								<!--
-								<li class="nav-active">
-									<a href="/viewCourses">
-										<!--direct to add instructort-->
-								<!--<i class="el el-address-book"></i>
-										<span>All Courses</span>
-									</a>
-								</li>-->
 
 
 								<!--view courses by anyone-->
@@ -222,15 +185,35 @@
 									</a>
 								</li>
 
-								<!--view courses by student-->
-								<li class="nav-active" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
-									<a href="/stuViewCourses/{{main.username}}">
+								<!--admin-->
+
+								<!--add instructor-->
+								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
+									<a href="/addInstructor">
 										<!--direct to add instructort-->
-										<i class="glyphicon glyphicon-book"></i>
-										<span>All Courses</span>
+										<i class="fa fa-user-plus"></i>
+										<span>Add Instructor</span>
 									</a>
 								</li>
 
+								<!--view instructor-->
+								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
+									<a href="/viewInstructors">
+										<!--direct to instructor list-->
+										<i class="fa fa-graduation-cap"></i>
+										<span>Instructors</span>
+									</a>
+								</li>
+
+								<!--view students-->
+								<li ng-show="main.isAdmin && !main.isStudent && !main.isInstructor">
+									<a href="/viewStudents">
+										<!--direct to student list-->
+										<!--<i class="fa fa-home" aria-hidden="true"></i>-->
+										<i class="fa fa-group"></i>
+										<span>Students</span>
+									</a>
+								</li>
 
 								<!--instructor-->
 
@@ -281,12 +264,14 @@
 									</a>
 								</li>
 
-								<!--add course-->
+								<!--student-->
+
+								<!--view courses by student-->
 								<li class="nav-active" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
-									<a href="/viewProgress">
+									<a href="/stuViewCourses/{{main.username}}">
 										<!--direct to add instructort-->
-										<i class="fa fa-line-chart"></i>
-										<span>View Progress</span>
+										<i class="glyphicon glyphicon-book"></i>
+										<span>All Courses</span>
 									</a>
 								</li>
 
@@ -302,7 +287,14 @@
 									</ul>
 									</li>
 
-
+									<!--view progress-->
+									<li class="nav-active" ng-show="!main.isAdmin && main.isStudent && !main.isInstructor">
+										<a href="/viewProgress">
+											<!--direct to add instructort-->
+											<i class="fa fa-line-chart"></i>
+											<span>View Progress</span>
+										</a>
+									</li>
 						</nav>
 					</div>
 					<script>

@@ -1,24 +1,8 @@
+<!--Generate question paper-->
 
 <header class="page-header">
     <h2>Generate Question Paper</h2>
 </header>
-
-<!--displaying error and success messages-->
-
-<!--displaying the loading symbol-->
-
-<!--displaying the success message-->
-<div class="row show-hide-message" ng-show="instructor.successMsg">
-    <div class="alert alert-success">{{instructor.successMsg}}</div>
-</div>
-
-
-<!--displaying the error message-->
-<div class="row show-hide-message" ng-show="instructor.errorMsg ">
-    <div class="alert alert-danger">{{instructor.errorMsg}}</div>
-</div>
-<!------------>
-
 
 <div class="panel panel-sign">
     <section class="panel">
@@ -31,6 +15,7 @@
 
             <form class="form-horizontal form-bordered" ng-submit="instructor.generatePaper(GeneratePaperForm.paperData,GeneratePaperForm.$valid);"
                 name="GeneratePaperForm" novalidate>
+
                 <!--username-->
                 <input type="hidden" ng-model="GeneratePaperForm.paperData.username" value="{{main.username}}" ng-init="GeneratePaperForm.paperData.username=main.username">
 
@@ -46,16 +31,19 @@
                         </div>
                     </div>
                 </div>
+
                 <!--adding the question type-->
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Question Type <span class="required" aria-required="true">*</span></label>
                     <div class="col-sm-9">
+
                         <!--type-mcq-->
                         <div class="radio-custom radio-primary">
                             <input id="mcq" name="paperType" type="radio" value="mcq" ng-model="GeneratePaperForm.paperData.paperType" required="" aria-required="true"
                                 required>
                                 <label for="mcq">MCQ</label>
                         </div>
+
                         <!--type-structured-->
                         <div class="radio-custom radio-primary">
                             <input id="structured" name="paperType" type="radio" ng-model="GeneratePaperForm.paperData.paperType" value="structured">
@@ -65,21 +53,25 @@
                         <p ng-show="(!GeneratePaperForm.paperType.$pristine && GeneratePaperForm.paperType.$error.required)|| (GeneratePaperForm.$submitted && GeneratePaperForm.paperType.$error.required)">*required</p>
                     </div>
                 </div>
+
                 <!--adding the Difficulty Level-->
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Difficulty Level <span class="required" aria-required="true">*</span></label>
                     <div class="col-sm-9">
+
                         <!--easy-->
                         <div class="radio-custom radio-primary">
                             <input id="easy" name="difficultyLevel" type="radio" ng-model="GeneratePaperForm.paperData.difficultyLevel" value="easy"
                                 required="" aria-required="true" required>
                                 <label for="easy">Easy</label>
                         </div>
+
                         <!--moderate-->
                         <div class="radio-custom radio-primary">
                             <input id="medium" name="difficultyLevel" ng-model="GeneratePaperForm.paperData.difficultyLevel" type="radio" value="medium">
                             <label for="medium">Medium</label>
                         </div>
+
                         <!--difficult-->
                         <div class="radio-custom radio-primary">
                             <input id="difficult" name="difficultyLevel" type="radio" ng-model="GeneratePaperForm.paperData.difficultyLevel" value="difficult">
@@ -89,6 +81,7 @@
                     </div>
                     <p ng-show="(!GeneratePaperForm.difficultyLevel.$pristine && GeneratePaperForm.difficultyLevel.$error.required)|| (GeneratePaperForm.$submitted && GeneratePaperForm.difficultyLevel.$error.required)">*required</p>
                 </div>
+
                 <!--Numberof Questions-->
                 <div class="form-group mb-lg" ng-class="{'has-success':(GeneratePaperForm.noQues.$valid && !GeneratePaperForm.noQues.$pristine), 'has-error':(!GeneratePaperForm.noQues.$valid && !GeneratePaperForm.noQues.$pristine) ||(GeneratePaperForm.$submitted && !GeneratePaperForm.noQues.$valid)}">
                     <label class="col-md-3 control-label" for="noQues">Number of Question</label>
@@ -98,10 +91,25 @@
                             <p ng-show="(!GeneratePaperForm.noQues.$pristine && GeneratePaperForm.noQues.$error.required)|| (GeneratePaperForm.$submitted && GeneratePaperForm.noQues.$error.required)">*required</p>
                     </div>
                 </div>
+
                 <br>
                 <button ng-disabled="GeneratePaperForm.$invalid" class="btn btn-primary">Generate</button>
                 </form>
         </div>
     </section>
 </div>
+
+
+<!--displaying error and success messages-->
+
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="instructor.successMsg">
+    <div class="alert alert-success">{{instructor.successMsg}}</div>
 </div>
+
+
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="instructor.errorMsg ">
+    <div class="alert alert-danger">{{instructor.errorMsg}}</div>
+</div>
+<!------------>

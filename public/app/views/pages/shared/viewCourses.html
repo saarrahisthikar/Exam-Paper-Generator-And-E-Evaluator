@@ -4,7 +4,7 @@
 
 <div class="panel panel-sign">
 
-    <!--if not a student-->
+    <!--if not a student view course details-->
     <div ng-init=" courseDetails=shared.getAllCourses();">
 
         <div ng-repeat="course in courseDetails">
@@ -17,8 +17,11 @@
                 <div class="panel-body">
                     <code>{{course.description}}</code>
                     <br>
+                </div>
             </section>
-            </div>
+
         </div>
+
     </div>
+
 </div>

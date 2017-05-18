@@ -1,9 +1,7 @@
-//console.log('Testing route configuration');
 
 var app = angular.module('appRoutes', ['ngRoute'])
 
 app.config(function ($routeProvider, $locationProvider) {
-    //console.log('This is from routes')
 
     $routeProvider
 
@@ -43,6 +41,14 @@ app.config(function ($routeProvider, $locationProvider) {
             authenticated: true
         })
 
+        // can be accessed by anyone
+        .when('/viewCourses', {
+            templateUrl: 'app/views/pages/shared/viewCourses.html',
+            authenticated: false,
+            controller: 'sharedController',
+            controllerAs: 'shared'
+        })
+
         // admin
 
         // accessing the addInstructors page
@@ -63,6 +69,7 @@ app.config(function ($routeProvider, $locationProvider) {
             authenticated: true,
             permission: 'admin'
         })
+        
         // accessing the viewStudents page
         .when('/viewStudents', {
             templateUrl: 'app/views/pages/admin/viewStudents.html',
@@ -146,14 +153,6 @@ app.config(function ($routeProvider, $locationProvider) {
         })
 
         //student
-        // accessing the viewCourses page
-        // can be accessed by anyone
-        .when('/viewCourses', {
-            templateUrl: 'app/views/pages/shared/viewCourses.html',
-            authenticated: false,
-            controller: 'sharedController',
-            controllerAs: 'shared'
-        })
 
         //show question type and papers
         .when('/stuShowCoursePapers/:courseID', {
@@ -164,7 +163,7 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'student'
         })
 
-         // can be accessed by anyone
+        // student view courses
         .when('/stuViewCourses/:username', {
             templateUrl: 'app/views/pages/student/viewCourses.html',
             authenticated: true,
@@ -182,6 +181,7 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'student'
         })
 
+        //view marks
         .when('/viewMarks/:marks', {
             templateUrl: 'app/views/pages/student/viewMarks.html',
             authenticated: true,
@@ -190,7 +190,8 @@ app.config(function ($routeProvider, $locationProvider) {
             permission: 'student'
         })
 
-         .when('/viewProgress', {
+        // view progress
+        .when('/viewProgress', {
             templateUrl: 'app/views/pages/student/viewProgress.html',
             authenticated: true,
             controller: 'studentController',

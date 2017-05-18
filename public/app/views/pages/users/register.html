@@ -2,26 +2,6 @@
     <h1>User Registration</h1>
 </div>
 
-<!--displaying error and success messages-->
-
-<!--displaying the loading symbol-->
-<div class="jumbotron text-center" ng-show="register.loading">
-    <span class="glyphicon glyphicon-repeat spinner"></span>
-</div>
-
-<br>
-<!--displaying the success message-->
-<div class="row show-hide-message" ng-show="register.successMsg">
-    <div class="alert alert-success">{{register.successMsg}}</div>
-</div>
-
-<br>
-<!--displaying the error message-->
-<div class="row show-hide-message" ng-show="register.errorMsg">
-    <div class="alert alert-danger">{{register.errorMsg}}</div>
-</div>
-<!------------>
-
 <div class="center-sign">
     <a href="/" class="logo pull-left">
         <img src="assets/images/logo.png" height="54" alt="Porto Admin">
@@ -34,6 +14,7 @@
         <div class="panel-body">
             <form ng-submit="register.regUser(regForm.regData,regForm.$valid);" name="regForm" novalidate>
                 <br>
+
                 <!--The name of the user and validation-->
                 <div class="form-group mb-lg" ng-class="{ 'has-success':(regForm.name.$valid && !regForm.name.$pristine), 'has-error':(!regForm.name.$valid && !regForm.name.$pristine) || (!regForm.name.$valid && regForm.$submitted) }">
                     <label>Name</label>
@@ -46,6 +27,7 @@
                             <li>length should be between 3 and 100</li>
                         </ul>
                 </div>
+
                 <!--The username of the user and validation-->
                 <div class="form-group mb-lg" ng-class="{'has-success':(regForm.username.$valid && !regForm.username.$pristine), 'has-error':(!regForm.username.$valid && !regForm.username.$pristine) ||(regForm.$submitted && !regForm.username.$valid)}">
                     <label>Username</label>
@@ -58,6 +40,7 @@
                             <li>length should be between 3 and 100</li>
                         </ul>
                 </div>
+
                 <!--The email of the user and validation-->
                 <div class="form-group mb-lg" ng-class="{'has-success':(regForm.email.$valid && !regForm.email.$pristine), 'has-error':(!regForm.email.$valid && !regForm.email.$pristine) ||(regForm.$submitted && !regForm.email.$valid)}">
                     <label>E-mail Address</label>
@@ -71,6 +54,7 @@
                             <li>length should be between 3 and 100</li>
                         </ul>
                 </div>
+
                 <!--The password of the user and validation-->
                 <div class="form-group mb-none">
                     <div class="row">
@@ -98,20 +82,40 @@
                         </div>
                     </div>
                 </div>
+
                 <!--user type- hidden field-->
                 <div>
                     <input type="hidden" name="userType" value="student" ng-init="register.regData.userType=student" ng-model="register.regData.userType">
                 </div>
+
                 <!--submission of the form-->
                 <div class="row">
                     <div class="col-sm-3 text-left">
                         <button ng-disabled="regForm.$invalid" type="submit" class="btn btn-primary">Sign Up</button>
                     </div>
                 </div>
+                
             </form>
         </div>
     </div>
 </div>
 
-<!--<span>{{regForm}}</span>-->
 <br>
+
+<!--displaying error and success messages-->
+
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="register.successMsg">
+    <div class="alert alert-success">{{register.successMsg}}</div>
+</div>
+
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="register.errorMsg">
+    <div class="alert alert-danger">{{register.errorMsg}}</div>
+</div>
+<!------------>

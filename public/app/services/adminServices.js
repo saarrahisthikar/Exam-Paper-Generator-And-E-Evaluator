@@ -1,7 +1,9 @@
 angular.module('adminServices', [])
 
     .factory('StudentDetails', function ($http) {
+
         studentDetailsFactory = {};
+
         // student enrolling
         studentDetailsFactory.getStudentDetails = function () {
             return $http.get('/api/studentInfo');
@@ -11,11 +13,14 @@ angular.module('adminServices', [])
     })
 
     .factory('InstructorDetails', function ($http) {
+
         instructorDetailsFactory = {};
+
         // get instructor details
         instructorDetailsFactory.getInstructorDetails = function () {
             return $http.get('/api/instructorInfo');
         };
 
         return instructorDetailsFactory;
+
     });

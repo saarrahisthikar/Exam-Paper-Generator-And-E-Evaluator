@@ -5,11 +5,15 @@
 </header>
 
 <div class="panel panel-sign">
+
     <section class="panel">
+
         <header class="panel-heading">
             <h2 class="panel-title">Course Papers</h2>
         </header>
+
         <div class="panel-body">
+
             <form class="form-horizontal form-bordered" name="showCoursePapers" novalidate>
                 <!--username-->
                 <input type="hidden" ng-model="courseForm.courseData.username" value="{{main.username}}" ng-init="showCoursePapers.data.username=main.username">
@@ -32,7 +36,9 @@
                         </div>
                     </div>
                 </div>
+
                 <div ng-init="showCoursePapers.data.courseID=student.getRouterParams();">
+
                     <!--mcq question-->
                     <div class="form-group" ng-if="showCoursePapers.data.questionType=='mcq'" ng-show="showCoursePapers.data.questionType=='mcq'">
 
@@ -74,6 +80,9 @@
                     <!---->
                 </div>
             </form>
+
         </div>
+
     </section>
+
 </div>

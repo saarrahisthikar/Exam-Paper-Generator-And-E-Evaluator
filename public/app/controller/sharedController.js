@@ -5,8 +5,12 @@ angular.module('sharedController', ['courseServices', 'userServices'])
 
         var app = this;
 
+        // get course details
         app.getAllCourses = function () {
+
             app.courseDetails = [];
+
+            //   get course details  
             CourseDetails.getAllCourses().then(function (data) {
                 console.log("inside get Course");
                 var i = 0;
@@ -16,7 +20,9 @@ angular.module('sharedController', ['courseServices', 'userServices'])
                     i = i + 1;
                 }
             });
+
             return app.courseDetails;
+
         }
 
     });

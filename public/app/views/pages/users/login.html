@@ -4,24 +4,6 @@
 	<h1>Login</h1>
 </div>
 
-<!--Displaying success and Error Messages-->
-
-<!--displaying the loading symbol-->
-<div class="jumbotron text-center" ng-show="main.loading">
-	<span class="glyphicon glyphicon-repeat spinner"></span>
-</div>
-<br>
-<!--displaying the success message-->
-<div class="row show-hide-message" ng-show="main.successMsg">
-	<div class="alert alert-success">{{main.successMsg}}</div>
-</div>
-<br>
-<!--displaying the error message-->
-<div class="row show-hide-message" ng-show="main.errorMsg">
-	<div class="alert alert-danger">{{main.errorMsg}}</div>
-</div>
-<!--end-->
-
 <!--Start of the login form-->
 <div class="center-sign">
 	<a href="/" class="logo pull-left">
@@ -41,17 +23,19 @@
 				<br><br>
 				<div class="form-group mb-lg" ng-class="{ 'has-success':(loginForm.username.$valid && !loginForm.username.$pristine), 'has-error':(!loginForm.username.$valid && !loginForm.username.$pristine) || (!loginForm.username.$valid && loginForm.$submitted) }">
 					<label for="username">Username : </label>
-					<input class="form-control" type="text" name="username" id="username" placeholder="Username" ng-model="main.loginData.username" required>
-					<p ng-show="(!loginForm.username.$pristine && loginForm.username.$error.required)|| (loginForm.$submitted && loginForm.username.$error.required)">*required</p>
+					<input class="form-control" type="text" name="username" id="username" placeholder="Username" ng-model="main.loginData.username"
+						required>
+						<p ng-show="(!loginForm.username.$pristine && loginForm.username.$error.required)|| (loginForm.$submitted && loginForm.username.$error.required)">*required</p>
 				</div>
 				<br>
 
 				<!--enter password-->
 				<div class="form-group mb-lg" ng-class="{ 'has-success':(loginForm.password.$valid && !loginForm.password.$pristine), 'has-error':(!loginForm.password.$valid && !loginForm.password.$pristine) || (!loginForm.password.$valid && loginForm.$submitted) }">
 					<label for="password">Password : </label>
-					<input class="form-control" type="password" name="password" id="password" placeholder="Password" ng-model="main.loginData.password" required>
-					<p ng-show="(!loginForm.password.$pristine && loginForm.password.$error.required)|| (loginForm.$submitted && loginForm.password.$error.required)">*required</p>
-					<br>
+					<input class="form-control" type="password" name="password" id="password" placeholder="Password" ng-model="main.loginData.password"
+						required>
+						<p ng-show="(!loginForm.password.$pristine && loginForm.password.$error.required)|| (loginForm.$submitted && loginForm.password.$error.required)">*required</p>
+						<br>
 				</div>
 				<div class="row">
 
@@ -64,3 +48,22 @@
 		</div>
 	</div>
 </div>
+
+
+<!--Displaying success and Error Messages-->
+
+<!--displaying the loading symbol-->
+<div class="jumbotron text-center" ng-show="main.loading">
+	<span class="glyphicon glyphicon-repeat spinner"></span>
+</div>
+
+<!--displaying the success message-->
+<div class="row show-hide-message" ng-show="main.successMsg">
+	<div class="alert alert-success">{{main.successMsg}}</div>
+</div>
+
+<!--displaying the error message-->
+<div class="row show-hide-message" ng-show="main.errorMsg">
+	<div class="alert alert-danger">{{main.errorMsg}}</div>
+</div>
+<!--end-->

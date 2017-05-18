@@ -20,23 +20,27 @@ app.use('/api', appRoutes);
 
 //connection
 mongoose.connect('mongodb://saarrah:saarrah@ds141450.mlab.com:41450/exam-professor', function (err) {
+
     if (err) {
         console.log('failed connecting to the database');
     } else {
         console.log('successfully connected to the database');
     }
+
 });
 
 //loading the index.html
 app.get('*', function (req, res) {
-    // res.sendFile(path.join(__dirname+'/public/index.html'));
 
     res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
+
 });
 
 //server listening
 app.listen(port, function () {
+
     console.log('server listening on port ' + port);
+
 });
 
 

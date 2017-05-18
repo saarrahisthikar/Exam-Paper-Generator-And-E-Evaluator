@@ -1,17 +1,9 @@
-//console.log('Testing user controller');
-
 angular.module('userController', ['userServices'])
 
-    /**  .config(function () { 
-          console.log('inside userController')}
-  
-      );
-      */
+
     .controller('registerController', function ($http, $location, $timeout, User) {
-        //   console.log('inside register controller');
 
         var app = this;
-
 
         // register student
         this.regUser = function (regData, valid) {
@@ -44,38 +36,36 @@ angular.module('userController', ['userServices'])
         };
 
         // registering instructor
-
         this.regInstructor = function (regData, valid) {
+
             app.errorMsg = false;
-                      app.loading = true;
-            console.log('Instructor register form submitted');
-            //console.log(this.regData);
+            app.loading = true;
+
             if (valid) {
+                // creating instructor
                 User.createInstructor(app.regData).then(function (data) {
+
                     if (data.data.success) {
-                        console.log(data.data.success);
                         app.loading = false;
                         app.successMsg = data.data.message;
-                        console.log(app.successMsg);
                         $timeout(function () {
-                            app.regData=null;
-                            app.loading=false;
-                            app.successMsg=false;
-                            $location.path('/addInstructor');
+                            app.regData = null;
+                            app.loading = false;
+                            app.successMsg = false;
+                            $location.path('/');
                         }, 2000);
-
                     } else {
                         app.loading = false;
                         console.log(data.data.success);
                         console.log(data.data.message);
                         app.errorMsg = data.data.message;
-                        
                     }
                 });
             } else {
                 app.loading = false;
                 app.errormsg = "Please ensure that the form is filled properly";
             }
+
         };
 
         //checkUsernmae
@@ -84,6 +74,7 @@ angular.module('userController', ['userServices'])
             var userInvalid = false;
             var usernameMsg = true;
 
+            // checking the username
             User.checkUsernmae(app.regData).then(function (data) {
                 if (data.data.success) {
                     app.usernameInvalid = false;
@@ -94,6 +85,7 @@ angular.module('userController', ['userServices'])
                 }
             }
             );
+
         }
 
         // check Email
@@ -102,6 +94,7 @@ angular.module('userController', ['userServices'])
             var emailInvalid = false;
             var emailMsg = true;
 
+            // checking the availability of email
             User.checkEmail(app.regData).then(function (data) {
                 if (data.data.success) {
                     app.emailInvalid = false;
@@ -113,8 +106,10 @@ angular.module('userController', ['userServices'])
             }
             );
         }
+
     })
 
+    // confirm password
     .directive('match', function () {
         return {
             restrict: 'A',
@@ -122,8 +117,6 @@ angular.module('userController', ['userServices'])
                 $scope.confirmed = false;
                 $scope.doConfirm = function (values) {
                     values.forEach(function (ele) {
-                        // console.log(ele);
-                        //console.log($scope.confirm)
                         if ($scope.confirm == ele) {
                             $scope.confirmed = true;
                         } else {
@@ -136,12 +129,10 @@ angular.module('userController', ['userServices'])
             link: function (scope, element, attrs) {
                 attrs.$observe('match', function () {
                     scope.matches = JSON.parse(attrs.match);
-                    // console.log(attrs.match);
                     scope.doConfirm(scope.matches);
                 });
                 scope.$watch('confirm', function () {
                     scope.matches = JSON.parse(attrs.match);
-                    // console.log(attrs.match);
                     scope.doConfirm(scope.matches);
                 });
             }

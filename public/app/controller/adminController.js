@@ -9,12 +9,12 @@ angular.module('adminController', ['adminServices'])
 
         //get student details
         app.getStudentDetails = function () {
-            
+
             app.students = [];
 
+            // get student details 
             StudentDetails.getStudentDetails().then(function (data) {
 
-                console.log("student : " + JSON.stringify(data.data));
                 var i = 0;
                 while (data.data.student[i]) {
                     console.log(data.data.student[i]);
@@ -32,6 +32,7 @@ angular.module('adminController', ['adminServices'])
 
             app.instructors = [];
 
+            // get instructor information
             InstructorDetails.getInstructorDetails().then(function (data) {
 
                 console.log("instructor : " + JSON.stringify(data.data));

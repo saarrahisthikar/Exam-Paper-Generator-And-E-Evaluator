@@ -1,4 +1,4 @@
-<!--adding courses-->
+<!--show course papers-->
 
 <header class="page-header">
     <h2>Course Papers</h2>
@@ -10,6 +10,7 @@
             <h2 class="panel-title">Course Papers</h2>
         </header>
         <div class="panel-body">
+
             <form class="form-horizontal form-bordered" name="showCoursePapers" novalidate>
 
                 <!--question type-->
@@ -30,48 +31,53 @@
                         </div>
                     </div>
                 </div>
-                <div ng-init="showCoursePapers.data.courseID=instructor.getRouterParams();">
-                    <!--mcq question-->
-                    <div  class="form-group" ng-if="showCoursePapers.data.questionType=='mcq'"ng-show="showCoursePapers.data.questionType=='mcq'">
-                          
-                            <header class="panel-heading">
-                                <h2 class="panel-title">MCQ Question</h2>
-                            </header>
 
-                            <div ng-init="paper=instructor.getPaperDetails(showCoursePapers.data);">
-                                <section class="panel panel-featured panel-featured-dark" ng-repeat="paper in paper">
-                                    <header class="panel-heading">
-                                        <a href="/viewPaper/{{showCoursePapers.data.questionType}}/{{paper.paperNo}}">
-                                            <i class="el el-address-book"></i>
-                                            <h2 class="panel-title">{{paper.paperNo}} - Paper</h2>
-                                        </a>
-                                    </header>
-                                </section>
-                            </div>
-                     </div>
+                <div ng-init="showCoursePapers.data.courseID=instructor.getRouterParams();">
+
+                    <!--mcq question-->
+                    <div class="form-group" ng-if="showCoursePapers.data.questionType=='mcq'" ng-show="showCoursePapers.data.questionType=='mcq'">
+
+                        <header class="panel-heading">
+                            <h2 class="panel-title">MCQ Question</h2>
+                        </header>
+
+                        <div ng-init="paper=instructor.getPaperDetails(showCoursePapers.data);">
+                            <section class="panel panel-featured panel-featured-dark" ng-repeat="paper in paper">
+                                <header class="panel-heading">
+                                    <a href="/viewPaper/{{showCoursePapers.data.questionType}}/{{paper.paperNo}}">
+                                        <i class="el el-address-book"></i>
+                                        <h2 class="panel-title">{{paper.paperNo}} - Paper</h2>
+                                    </a>
+                                </header>
+                            </section>
+                        </div>
+                    </div>
 
                     <!--structured question-->
-                    <div class="form-group" ng-if="showCoursePapers.data.questionType=='structured'"ng-show="showCoursePapers.data.questionType=='structured'">
-              
-                            <header class="panel-heading">
-                                <h2 class="panel-title">Structured Question</h2>
-                            </header>
+                    <div class="form-group" ng-if="showCoursePapers.data.questionType=='structured'" ng-show="showCoursePapers.data.questionType=='structured'">
 
-                            <div ng-init="paper=instructor.getPaperDetails(showCoursePapers.data);">
-                                <section class="panel panel-featured panel-featured-dark" ng-repeat="paper in paper">
-                                    <header class="panel-heading">
-                                        <a href="/viewPaper/{{showCoursePapers.data.questionType}}/{{paper.paperNo}}">
-                                            <i class="el el-address-book"></i>
-                                            <h2 class="panel-title">{{paper.paperNo}} - Paper</h2>
-                                        </a>
-                                    </header>
-                                </section>
-                            </div>
+                        <header class="panel-heading">
+                            <h2 class="panel-title">Structured Question</h2>
+                        </header>
+
+                        <div ng-init="paper=instructor.getPaperDetails(showCoursePapers.data);">
+                            <section class="panel panel-featured panel-featured-dark" ng-repeat="paper in paper">
+                                <header class="panel-heading">
+                                    <a href="/viewPaper/{{showCoursePapers.data.questionType}}/{{paper.paperNo}}">
+                                        <i class="el el-address-book"></i>
+                                        <h2 class="panel-title">{{paper.paperNo}} - Paper</h2>
+                                    </a>
+                                </header>
+                            </section>
+                        </div>
+
                     </div>
 
                     <!---->
                 </div>
+
             </form>
+
         </div>
     </section>
 </div>

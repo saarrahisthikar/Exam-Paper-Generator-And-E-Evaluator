@@ -34,20 +34,6 @@ var usernameValidator = [
     })
 ];
 
-// validating the password
-// var passwordValidator = [
-//     validate({
-//         validator: 'matches',
-//         arguments: /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,100}$/,
-//         message: 'Password should contain at least one lowerase letter, one uppercase letter, a special character and a number'
-//     }),
-//     validate({
-//         validator: 'isLength',
-//         arguments: [8, 100],
-//         message: 'username should be between {ARGS[0]} and {ARGS[1]} characters'
-//     })
-// ];
-
 // validating the email
 var emailValidator = [
     validate({
