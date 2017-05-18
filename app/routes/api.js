@@ -161,8 +161,8 @@ module.exports = function (router) {
                                 from: 'QuizAndEvaluator-Admin, quizandevaluator@gmail.com',
                                 to: user.email,
                                 subject: 'Addition of Instructor',
-                                text: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system. Username :' + user.username + 'Password : ' + password + 'You can activate your account using this link : http://localhost:3000/login. Thank You!!!',
-                                html: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system.<br><br><b>Username : </b>' + user.username + '<br><b>Password : </b>' + password + '<br><br><br>You can activate your account using this link : <a href="http://localhost:3000/login">http://localhost:3000/login.</a><br><br><br>Thank You!!!'
+                                text: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system. Username :' + user.username + 'Password : ' + password + 'You can activate your account using this link : https://quiz-and-evaluator.herokuapp.com/login. Thank You!!!',
+                                html: 'Hello ' + user.name + '. Your account of Exam Paper Generator And E-Evaluator for instructor access was created. This e-mail contains login details to the system.<br><br><b>Username : </b>' + user.username + '<br><b>Password : </b>' + password + '<br><br><br>You can activate your account using this link : <a href="https://quiz-and-evaluator.herokuapp.com/login">https://quiz-and-evaluator.herokuapp.com/login.</a><br><br><br>Thank You!!!'
                             };
 
                             //sending mail to client
